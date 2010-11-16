@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.Wf", "Ninject.Extensions.Wf\Ninject.Extensions.Wf.csproj", "{FE55376A-4BA8-40F4-9D60-CE7B26B98E7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.Wf.Test", "Ninject.Extensions.Wf.Test\Ninject.Extensions.Wf.Test.csproj", "{44A3DEC0-B5A2-4AB2-B0C1-1895F06C142E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE55376A-4BA8-40F4-9D60-CE7B26B98E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE55376A-4BA8-40F4-9D60-CE7B26B98E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE55376A-4BA8-40F4-9D60-CE7B26B98E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE55376A-4BA8-40F4-9D60-CE7B26B98E7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44A3DEC0-B5A2-4AB2-B0C1-1895F06C142E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44A3DEC0-B5A2-4AB2-B0C1-1895F06C142E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44A3DEC0-B5A2-4AB2-B0C1-1895F06C142E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44A3DEC0-B5A2-4AB2-B0C1-1895F06C142E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyProductAttribute("Ninject.Extensions.Wf: WF Extension for Ninject")]
 [assembly: AssemblyCompanyAttribute("bbv Software Services AG")]
-[assembly: AssemblyCopyrightAttribute("Copyright © 2010 bbv Software Services AG")]
+[assembly: AssemblyCopyrightAttribute("Copyright © 2009-2010 bbv Software Services AG and contributors")]
 [assembly: AssemblyVersionAttribute("2.1.0.0")]
 [assembly: ComVisibleAttribute(false)]
 [assembly: CLSCompliantAttribute(true)]
