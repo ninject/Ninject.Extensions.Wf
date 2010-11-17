@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ninject.Extensions.Wf</RootNamespace>
     <AssemblyName>Ninject.Extensions.Wf.Test</AssemblyName>
-	<SignAssembly>true</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Ninject.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -33,19 +33,61 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\tools\moq\net-3.5\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\lib\Ninject\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\..\tools\xunit.net\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-      <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\ActivityDependencyInjectionTest.cs" />
+    <Compile Include="Extensions\ActivityResolverTest.cs" />
+    <Compile Include="Extensions\Model\Dependency.cs" />
+    <Compile Include="Extensions\Model\IDependency.cs" />
+    <Compile Include="Extensions\Model\TestActivityWithDependency.cs" />
+    <Compile Include="Extensions\Model\TestActivityWithDependencyAndAttribute.cs" />
+    <Compile Include="IDictionaryExtensions.cs" />
+    <Compile Include="ObjectExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ninject.Extensions.Wf\Ninject.Extensions.Wf.csproj">
+      <Project>{FE55376A-4BA8-40F4-9D60-CE7B26B98E7A}</Project>
+      <Name>Ninject.Extensions.Wf</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <XamlAppdef Include="Extensions\SimpleFlat.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </XamlAppdef>
+  </ItemGroup>
+  <ItemGroup>
+    <XamlAppdef Include="Extensions\SimpleHierarchy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </XamlAppdef>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
