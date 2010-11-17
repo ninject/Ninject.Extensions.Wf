@@ -19,7 +19,33 @@
 
 namespace Ninject.Extensions.Wf
 {
+    using System;
+    using System.Collections.Generic;
+    using Xunit;
+
     public class IDictionaryExtensionsTest
     {
+
+        [Fact]
+        public void FromDictionary_WhenDictionaryIsNull_MustThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => IDictionaryExtensions.FromDict<Input>(null));
+        }
+
+        [Fact]
+        public void FromDictionary_WhenDictionaryEmpty_MustReturnUninitializedObject()
+        {
+            Input input = new Dictionary<string, object>().FromDict<Input>();
+            
+            Assert.Null(input.Name);
+            Assert.Null(input.Surname);
+        }
+
+        private class Input
+        {
+            public string Name { get; set; }
+
+            public string Surname { get; set; }
+        }
     }
 }

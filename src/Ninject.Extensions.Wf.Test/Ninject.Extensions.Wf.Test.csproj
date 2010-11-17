@@ -64,7 +64,7 @@
     <Compile Include="Extensions\Model\IDependency.cs" />
     <Compile Include="Extensions\Model\TestActivityWithDependency.cs" />
     <Compile Include="Extensions\Model\TestActivityWithDependencyAndAttribute.cs" />
-    <Compile Include="IDictionaryExtensions.cs" />
+    <Compile Include="IDictionaryExtensionsTest.cs" />
     <Compile Include="ObjectExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

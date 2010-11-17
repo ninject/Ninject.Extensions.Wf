@@ -26,13 +26,13 @@ namespace Ninject.Extensions.Wf
         [Fact]
         public void ToDictionary_WhenNoPropertiesDefined_MustReturnEmptyDictionary()
         {
-            Assert.Empty(new Empty().ToDictionary());
+            Assert.Empty(new Empty().ToDict());
         }
 
         [Fact]
         public void ToDictionary_WhenOnlyProperties_MustReturnDictionaryFilledWithPropertyNameAndValue()
         {
-            var result = new PropertyOnly { SomeData = "Foo", SomeInt = 2 }.ToDictionary();
+            var result = new PropertyOnly { SomeData = "Foo", SomeInt = 2 }.ToDict();
 
             Assert.Equal(3, result.Count);
             Assert.Equal("Foo", result["SomeData"]);
@@ -42,7 +42,7 @@ namespace Ninject.Extensions.Wf
         [Fact]
         public void ToDictionary_WhenInheritedProperties_MustReturnDictionaryFilledAlsoWithInheritedPropertiesAndValues()
         {
-            var result = new Inherited { SomeData = "Foo", SomeInt = 2, SomeDouble = 1.0d }.ToDictionary();
+            var result = new Inherited { SomeData = "Foo", SomeInt = 2, SomeDouble = 1.0d }.ToDict();
 
             Assert.Equal(3, result.Count);
             Assert.Equal("Foo", result["SomeData"]);

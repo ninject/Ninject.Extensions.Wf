@@ -19,13 +19,30 @@
 
 namespace Ninject.Extensions.Wf
 {
+    using System;
+    using System.Linq;
     using System.Collections.Generic;
 
     public static class IDictionaryExtensions
     {
-        public static T FromDictionary<T>(this IDictionary<string, object> dictionary)
+        public static T FromDict<T>(this IDictionary<string, object> dictionary)
+            where T : class, new()
         {
-            return default(T);
+            if (dictionary == null)
+            {
+                throw new ArgumentNullException("dictionary");
+            }
+
+            var t = new T();
+
+            var publicProperties = t.GetType().GetProperties().ToDictionary(k => k.Name, v => v);
+
+            foreach (KeyValuePair<string, object> pair in dictionary)
+            {
+                
+            }
+
+            return t;
         }
     }
 }
