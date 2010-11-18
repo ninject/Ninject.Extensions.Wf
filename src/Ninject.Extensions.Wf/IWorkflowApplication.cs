@@ -21,6 +21,7 @@ namespace Ninject.Extensions.Wf
 {
     using System;
     using System.Activities;
+    using System.Collections.Generic;
     using System.Runtime.DurableInstancing;
 
     public interface IWorkflowApplication : IResolveExtensions
@@ -33,5 +34,7 @@ namespace Ninject.Extensions.Wf
         Guid Id { get; }
         Action<WorkflowApplicationCompletedEventArgs> Completed { set; get; }
         Action<WorkflowApplicationAbortedEventArgs> Aborted { set; get; }
+        void Initialize(Activity workflowDefinition);
+        void Initialize(Activity workflowDefinition, IDictionary<string, object> inputs);
     }
 }

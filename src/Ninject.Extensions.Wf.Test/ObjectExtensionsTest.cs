@@ -34,7 +34,7 @@ namespace Ninject.Extensions.Wf
         {
             var result = new PropertyOnly { SomeData = "Foo", SomeInt = 2 }.ToDict();
 
-            Assert.Equal(3, result.Count);
+            Assert.Equal(2, result.Count);
             Assert.Equal("Foo", result["SomeData"]);
             Assert.Equal(2, result["SomeInt"]);
         }

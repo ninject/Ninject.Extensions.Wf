@@ -24,73 +24,144 @@ namespace Ninject.Extensions.Wf
     using System.Activities.Hosting;
     using System.Collections.Generic;
     using System.Runtime.DurableInstancing;
+    using Extensions;
 
     public class NinjectWorkflowApplication : ExtensionResolver, IWorkflowApplication
     {
-        private readonly WorkflowApplication workflowApplication;
+        private WorkflowApplication workflowApplication;
 
-        public NinjectWorkflowApplication(Activity workflowDefinition, IKernel kernel)
+        public NinjectWorkflowApplication(IKernel kernel)
             : base(kernel)
         {
-            this.workflowApplication = new WorkflowApplication(workflowDefinition);
-        }
-
-        public NinjectWorkflowApplication(Activity workflowDefinition, IDictionary<string, object> inputs, IKernel kernel)
-            : base(kernel)
-        {
-            this.workflowApplication = new WorkflowApplication(workflowDefinition, inputs);
         }
 
         protected override WorkflowInstanceExtensionManager Extensions
         {
-            get { return this.workflowApplication.Extensions; }
+            get { return this.Application.Extensions; }
+        }
+
+        private WorkflowApplication Application
+        {
+            get
+            {
+                if (this.workflowApplication == null)
+                {
+                    throw new InvalidOperationException("The WorkflowApplication must be initialized first!");
+                }
+
+                return this.workflowApplication;
+            }
+
+            set
+            {
+                this.workflowApplication = value;
+            }
         }
 
         public Action<WorkflowApplicationAbortedEventArgs> Aborted
         {
-            get { return this.workflowApplication.Aborted; }
-            set { this.workflowApplication.Aborted = value; }
+            get { return this.Application.Aborted; }
+            set { this.Application.Aborted = value; }
         }
 
         public Action<WorkflowApplicationEventArgs> Unloaded
         {
-            get { return this.workflowApplication.Unloaded; }
-            set { this.workflowApplication.Unloaded = value; }
+            get { return this.Application.Unloaded; }
+            set { this.Application.Unloaded = value; }
         }
 
         public Func<WorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle
         {
-            get { return this.workflowApplication.PersistableIdle; }
-            set { this.workflowApplication.PersistableIdle = value; }
+            get { return this.Application.PersistableIdle; }
+            set { this.Application.PersistableIdle = value; }
         }
 
         public Func<WorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException
         {
-            get { return this.workflowApplication.OnUnhandledException; }
-            set { this.workflowApplication.OnUnhandledException = value; }
+            get { return this.Application.OnUnhandledException; }
+            set { this.Application.OnUnhandledException = value; }
         }
 
         public InstanceStore InstanceStore
         {
-            get { return this.workflowApplication.InstanceStore; }
-            set { this.workflowApplication.InstanceStore = value; }
+            get { return this.Application.InstanceStore; }
+            set { this.Application.InstanceStore = value; }
         }
 
         public Action<WorkflowApplicationIdleEventArgs> Idle
         {
-            get { return this.workflowApplication.Idle; }
-            set { this.workflowApplication.Idle = value; }
+            get { return this.Application.Idle; }
+            set { this.Application.Idle = value; }
         }
 
         public Guid Id
         {
-            get { return this.workflowApplication.Id; }
+            get { return this.Application.Id; }
         }
 
         public Action<WorkflowApplicationCompletedEventArgs> Completed
         {
-            get { return this.workflowApplication.Completed; }
-            set { this.workflowApplication.Completed = value; }
+            get { return this.Application.Completed; }
+            set { this.Application.Completed = value; }
+        }
+
+        public void Initialize(Activity workflowDefinition)
+        {
+            this.Application = new WorkflowApplication(workflowDefinition);
+
+            this.AddExtensions();
+        }
+
+        public void Initialize(Activity workflowDefinition, IDictionary<string, object> inputs)
+        {
+            this.Application = new WorkflowApplication(workflowDefinition, inputs);
+
+            this.AddExtensions();
+        }
+
+        public void Unload()
+        {
+            this.Application.Unload();
+        }
+
+        public void Unload(TimeSpan timeout)
+        {
+            this.Application.Unload(timeout);
+        }
+
+        public void Terminate(string reason)
+        {
+            this.Application.Terminate(reason);
+        }
+
+        public void Terminate(Exception reason)
+        {
+            this.Application.Terminate(reason);
+        }
+
+        public void Terminate(string reason, TimeSpan timeout)
+        {
+            this.Application.Terminate(reason, timeout);
+        }
+
+        public void Terminate(Exception reason, TimeSpan timeout)
+        {
+            this.Application.Terminate(reason, timeout);
+        }
+
+        public void Run()
+        {
+            this.Application.Run();
+        }
+
+        public void Run(TimeSpan timeout)
+        {
+            this.Application.Run(timeout);
+        }
+
+        private void AddExtensions()
+        {
+            this.AddSingletonExtension<ActivityDependencyInjection>();
         }
     }
 }

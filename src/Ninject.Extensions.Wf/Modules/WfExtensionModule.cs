@@ -31,6 +31,7 @@ namespace Ninject.Extensions.Wf.Modules
         public override void Load()
         {
             this.Bind<IActivityResolver>().To<ActivityResolver>();
+            this.Bind<ActivityDependencyInjection>().ToSelf();
         }
     }
 }

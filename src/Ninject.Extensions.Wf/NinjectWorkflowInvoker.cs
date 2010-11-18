@@ -23,21 +23,38 @@ namespace Ninject.Extensions.Wf
     using System.Activities;
     using System.Activities.Hosting;
     using System.Collections.Generic;
-    using Infrastructure;
+    using Extensions;
 
     public class NinjectWorkflowInvoker : ExtensionResolver, IWorkflowInvoker
     {
-        private readonly WorkflowInvoker workflowInvoker;
+        private WorkflowInvoker workflowInvoker;
 
-        public NinjectWorkflowInvoker(Activity activity, IKernel kernel)
+        public NinjectWorkflowInvoker(IKernel kernel)
             : base(kernel)
         {
-            this.workflowInvoker = new WorkflowInvoker(activity);
         }
 
         protected override WorkflowInstanceExtensionManager Extensions
         {
-            get { return this.workflowInvoker.Extensions; }
+            get { return this.Invoker.Extensions; }
+        }
+
+        private WorkflowInvoker Invoker
+        {
+            get
+            {
+                if (this.workflowInvoker == null)
+                {
+                    throw new InvalidOperationException("The WorkflowInvoker must be initialized first!");
+                }
+
+                return this.workflowInvoker;
+            }
+
+            set
+            {
+                this.workflowInvoker = value;
+            }
         }
 
         /// <summary>
@@ -56,7 +73,7 @@ namespace Ninject.Extensions.Wf
         /// asynchronous invoke operations.</param>
         public void InvokeAsync(IDictionary<string, object> inputs, TimeSpan timeout, object userState)
         {
-            this.workflowInvoker.InvokeAsync(inputs, timeout, userState);
+            this.Invoker.InvokeAsync(inputs, timeout, userState);
         }
 
         /// <summary>
@@ -71,7 +88,7 @@ namespace Ninject.Extensions.Wf
         /// asynchronous invoke operations.</param>
         public void InvokeAsync(IDictionary<string, object> inputs, object userState)
         {
-            this.workflowInvoker.InvokeAsync(inputs, userState);
+            this.Invoker.InvokeAsync(inputs, userState);
         }
 
         /// <summary>
@@ -86,7 +103,7 @@ namespace Ninject.Extensions.Wf
         /// thrown.</param>
         public void InvokeAsync(IDictionary<string, object> inputs, TimeSpan timeout)
         {
-            this.workflowInvoker.InvokeAsync(inputs, timeout);
+            this.Invoker.InvokeAsync(inputs, timeout);
         }
 
         /// <summary>
@@ -98,7 +115,7 @@ namespace Ninject.Extensions.Wf
         /// workflow, keyed by argument name.</param>
         public void InvokeAsync(IDictionary<string, object> inputs)
         {
-            this.workflowInvoker.InvokeAsync(inputs);
+            this.Invoker.InvokeAsync(inputs);
         }
 
         /// <summary>
@@ -113,7 +130,7 @@ namespace Ninject.Extensions.Wf
         /// asynchronous invoke operations.</param>
         public void InvokeAsync(TimeSpan timeout, object userState)
         {
-            this.workflowInvoker.InvokeAsync(timeout, userState);
+            this.Invoker.InvokeAsync(timeout, userState);
         }
 
         /// <summary>
@@ -122,7 +139,7 @@ namespace Ninject.Extensions.Wf
         /// <param name="timeout">The interval in which the workflow must complete before it is aborted and a System.TimeoutException is thrown.</param>
         public void InvokeAsync(TimeSpan timeout)
         {
-            this.workflowInvoker.InvokeAsync(timeout);
+            this.Invoker.InvokeAsync(timeout);
         }
 
         /// <summary>
@@ -130,7 +147,14 @@ namespace Ninject.Extensions.Wf
         /// </summary>
         public void InvokeAsync()
         {
-            this.workflowInvoker.InvokeAsync();
+            this.Invoker.InvokeAsync();
+        }
+
+        public void Initialize(Activity workflowDefinition)
+        {
+            this.Invoker = new WorkflowInvoker(workflowDefinition);
+
+            this.AddSingletonExtension<ActivityDependencyInjection>();
         }
     }
 }

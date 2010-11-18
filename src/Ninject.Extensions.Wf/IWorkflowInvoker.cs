@@ -20,6 +20,7 @@
 namespace Ninject.Extensions.Wf
 {
     using System;
+    using System.Activities;
     using System.Collections.Generic;
 
     public interface IWorkflowInvoker : IResolveExtensions
@@ -95,5 +96,7 @@ namespace Ninject.Extensions.Wf
         /// Invokes a workflow asynchronously.
         /// </summary>
         void InvokeAsync();
+
+        void Initialize(Activity workflowDefinition);
     }
 }
