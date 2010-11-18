@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="IDependency.cs" company="bbv Software Services AG">
+// <copyright file="Dependency.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,10 +17,9 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Extensions.Model
+namespace Ninject.Extensions.Wf.Injection.Model
 {
-    public interface IDependency
+    public class Dependency : IDependency
     {
-        
     }
 }

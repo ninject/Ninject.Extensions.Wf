@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Ninject.Extensions.Wf.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Ninject.Extensions.Wf.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject">
@@ -50,19 +52,22 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ExtensionResolver.cs" />
-    <Compile Include="Extensions\ActivityDependencyInjection.cs" />
-    <Compile Include="Extensions\ActivityResolver.cs" />
-    <Compile Include="Extensions\IActivityResolver.cs" />
-    <Compile Include="IDictionaryExtensions.cs" />
-    <Compile Include="IResolveExtensions.cs" />
+    <Compile Include="Extensions\ExtensionResolver.cs" />
+    <Compile Include="Injection\ActivityDependencyInjection.cs" />
+    <Compile Include="Injection\ActivityResolver.cs" />
+    <Compile Include="Injection\IActivityResolver.cs" />
+    <Compile Include="Extensions\IDictionaryExtensions.cs" />
+    <Compile Include="Extensions\IResolveExtensions.cs" />
     <Compile Include="IWorkflowApplication.cs" />
     <Compile Include="IWorkflowInvoker.cs" />
     <Compile Include="Modules\WfExtensionModule.cs" />
     <Compile Include="NinjectWorkflowApplication.cs" />
+    <Compile Include="Extensions\NinjectWorkflowApplicationExtensions.cs" />
     <Compile Include="NinjectWorkflowInvoker.cs" />
-    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="Extensions\NinjectWorkflowInvokerExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\WorkflowInvokerExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

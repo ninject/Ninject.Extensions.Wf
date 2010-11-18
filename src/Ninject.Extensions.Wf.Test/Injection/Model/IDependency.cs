@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="IActivityResolver.cs" company="bbv Software Services AG">
+// <copyright file="IDependency.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,22 +17,10 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Extensions
+namespace Ninject.Extensions.Wf.Injection.Model
 {
-    using System.Activities;
-    using System.Collections.Generic;
-
-    /// <summary>
-    /// The implementor must take care of resolving all activities which are
-    /// lying under a given root activity.
-    /// </summary>
-    public interface IActivityResolver
+    public interface IDependency
     {
-        /// <summary>
-        /// Gets the activities which are under a given root activity.
-        /// </summary>
-        /// <param name="root">The root activity.</param>
-        /// <returns>All activities under root.</returns>
-        IEnumerable<Activity> GetActivities(Activity root);
+        
     }
 }

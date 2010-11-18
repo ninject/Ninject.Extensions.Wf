@@ -17,7 +17,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf
+namespace Ninject.Extensions.Wf.Extensions
 {
     using System.Activities.Hosting;
 

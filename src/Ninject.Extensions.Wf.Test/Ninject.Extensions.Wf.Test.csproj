@@ -58,16 +58,16 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ExtensionResolverTest.cs" />
-    <Compile Include="Extensions\ActivityDependencyInjectionTest.cs" />
-    <Compile Include="Extensions\ActivityResolverTest.cs" />
-    <Compile Include="Extensions\Model\Dependency.cs" />
-    <Compile Include="Extensions\Model\IDependency.cs" />
-    <Compile Include="Extensions\Model\TestActivityWithDependency.cs" />
-    <Compile Include="Extensions\Model\TestActivityWithDependencyAndAttribute.cs" />
-    <Compile Include="IDictionaryExtensionsTest.cs" />
+    <Compile Include="Extensions\ExtensionResolverTest.cs" />
+    <Compile Include="Injection\ActivityDependencyInjectionTest.cs" />
+    <Compile Include="Injection\ActivityResolverTest.cs" />
+    <Compile Include="Injection\Model\Dependency.cs" />
+    <Compile Include="Injection\Model\IDependency.cs" />
+    <Compile Include="Injection\Model\TestActivityWithDependency.cs" />
+    <Compile Include="Injection\Model\TestActivityWithDependencyAndAttribute.cs" />
+    <Compile Include="Extensions\IDictionaryExtensionsTest.cs" />
     <Compile Include="KernelProvidingBase.cs" />
-    <Compile Include="ObjectExtensionsTest.cs" />
+    <Compile Include="Extensions\ObjectExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,13 +77,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <XamlAppdef Include="Extensions\SimpleFlat.xaml">
+    <XamlAppdef Include="Injection\SimpleFlat.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </XamlAppdef>
   </ItemGroup>
   <ItemGroup>
-    <XamlAppdef Include="Extensions\SimpleHierarchy.xaml">
+    <XamlAppdef Include="Injection\SimpleHierarchy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </XamlAppdef>

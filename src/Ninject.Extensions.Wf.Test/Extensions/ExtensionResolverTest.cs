@@ -17,11 +17,11 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf
+namespace Ninject.Extensions.Wf.Extensions
 {
     using System;
     using System.Activities.Hosting;
-    using Extensions.Model;
+    using Ninject.Extensions.Wf.Injection.Model;
     using Moq;
     using Moq.Protected;
     using Xunit;

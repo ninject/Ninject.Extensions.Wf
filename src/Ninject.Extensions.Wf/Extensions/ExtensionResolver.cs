@@ -17,11 +17,10 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf
+namespace Ninject.Extensions.Wf.Extensions
 {
-    using System;
     using System.Activities.Hosting;
-    using Infrastructure;
+    using Ninject.Infrastructure;
 
     /// <summary>
     /// Base class which provides extension on kernel resolving ability.

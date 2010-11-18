@@ -24,6 +24,7 @@ namespace Ninject.Extensions.Wf
     using System.Activities.Hosting;
     using System.Collections.Generic;
     using Extensions;
+    using Injection;
 
     public class NinjectWorkflowInvoker : ExtensionResolver, IWorkflowInvoker
     {
@@ -77,26 +78,6 @@ namespace Ninject.Extensions.Wf
         }
 
         /// <summary>
-        /// Invokes a workflow asynchronously using the specified input object
-        /// as input parameters, the specified time-out interval, and a unique
-        /// identifier.
-        /// </summary>
-        /// <typeparam name="TInput">The type of the input.</typeparam>
-        /// <param name="inputs">The input object which is turned into a
-        /// dictionary by <see cref="ObjectExtensions.ToDict"/>.</param>
-        /// <param name="timeout">The interval in which the workflow must
-        /// complete before it is aborted and a System.TimeoutException is
-        /// thrown.</param>
-        /// <param name="userState">A user-provided object used to distinguish
-        /// this particular asynchronous invoke operation from other current
-        /// asynchronous invoke operations.</param>
-        public void InvokeAsync<TInput>(TInput inputs, TimeSpan timeout, object userState)
-            where TInput : class
-        {
-            this.InvokeAsync(inputs.ToDict(), timeout, userState);
-        }
-
-        /// <summary>
         /// Invokes a workflow asynchronously using the specified
         /// System.Collections.Generic.IDictionary{TKey,TValue} of input
         /// parameters and a unique identifier.
@@ -109,21 +90,6 @@ namespace Ninject.Extensions.Wf
         public void InvokeAsync(IDictionary<string, object> inputs, object userState)
         {
             this.Invoker.InvokeAsync(inputs, userState);
-        }
-
-        /// <summary>
-        /// Invokes a workflow asynchronously using the specified input object
-        /// as input parameters and a unique identifier.
-        /// </summary>
-        /// <typeparam name="TInput">The type of the input.</typeparam>
-        /// <param name="inputs">The input object which is turned into a
-        /// dictionary by <see cref="ObjectExtensions.ToDict"/>.</param>
-        /// <param name="userState">A user-provided object used to distinguish
-        /// this particular asynchronous invoke operation from other current
-        /// asynchronous invoke operations.</param>
-        public void InvokeAsync<TInput>(TInput inputs, object userState)
-        {
-            this.InvokeAsync(inputs.ToDict(), userState);
         }
 
         /// <summary>
@@ -142,22 +108,6 @@ namespace Ninject.Extensions.Wf
         }
 
         /// <summary>
-        /// Invokes a workflow asynchronously using the specified input object
-        /// as input parameters and the specified time-out interval.
-        /// </summary>
-        /// <typeparam name="TInput">The type of the input.</typeparam>
-        /// <param name="inputs">The input object which is turned into a
-        /// dictionary by <see cref="ObjectExtensions.ToDict"/>.</param>
-        /// <param name="timeout">The interval in which the workflow must
-        /// complete before it is aborted and a System.TimeoutException is
-        /// thrown.</param>
-        public void InvokeAsync<TInput>(TInput inputs, TimeSpan timeout)
-            where TInput : class
-        {
-            this.InvokeAsync(inputs.ToDict(), timeout);
-        }
-
-        /// <summary>
         /// Invokes a workflow asynchronously using the specified
         /// System.Collections.Generic.IDictionary{TKey,TValue} of input
         /// parameters.
@@ -167,19 +117,6 @@ namespace Ninject.Extensions.Wf
         public void InvokeAsync(IDictionary<string, object> inputs)
         {
             this.Invoker.InvokeAsync(inputs);
-        }
-
-        /// <summary>
-        /// Invokes a workflow asynchronously using the specified input object
-        /// as input parameters.
-        /// </summary>
-        /// <typeparam name="TInput">The type of the input.</typeparam>
-        /// <param name="inputs">The input object which is turned into a
-        /// dictionary by <see cref="ObjectExtensions.ToDict"/>.</param>
-        public void InvokeAsync<TInput>(TInput inputs)
-            where TInput : class
-        {
-            this.InvokeAsync(inputs.ToDict());
         }
 
         /// <summary>
@@ -212,6 +149,26 @@ namespace Ninject.Extensions.Wf
         public void InvokeAsync()
         {
             this.Invoker.InvokeAsync();
+        }
+
+        public IDictionary<string,object> Invoke()
+        {
+            return this.Invoker.Invoke();
+        }
+
+        public IDictionary<string,object> Invoke(TimeSpan timeout)
+        {
+            return this.Invoker.Invoke(timeout);
+        }
+
+        public IDictionary<string,object> Invoke(IDictionary<string,object> inputs)
+        {
+            return this.Invoker.Invoke(inputs);
+        }
+
+        public IDictionary<string,object> Invoke(IDictionary<string,object> inputs, TimeSpan timeout)
+        {
+            return this.Invoker.Invoke(inputs, timeout);
         }
 
         public void Initialize(Activity workflowDefinition)

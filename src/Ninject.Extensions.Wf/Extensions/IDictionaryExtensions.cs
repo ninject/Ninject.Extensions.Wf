@@ -17,15 +17,17 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf
+namespace Ninject.Extensions.Wf.Extensions
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reflection;
 
     public static class IDictionaryExtensions
     {
-        public static T FromDict<T>(this IDictionary<string, object> dictionary)
+        public static T ToObject<T>(this IDictionary<string, object> dictionary)
             where T : class, new()
         {
             if (dictionary == null)
@@ -37,12 +39,28 @@ namespace Ninject.Extensions.Wf
 
             var publicProperties = t.GetType().GetProperties().ToDictionary(k => k.Name, v => v);
 
+            if (SizeIsNotEqual(dictionary, publicProperties) || KeysAreNotEqual(dictionary, publicProperties))
+            {
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "Provided dictionary cannot to mapped to target {0}", typeof(T).FullName));
+            }
+
             foreach (KeyValuePair<string, object> pair in dictionary)
             {
-                
+                PropertyInfo propertyInfo = publicProperties[pair.Key];
+                propertyInfo.SetValue(t, pair.Value, null);
             }
 
             return t;
+        }
+
+        private static bool KeysAreNotEqual(IDictionary<string, object> dictionary, Dictionary<string, PropertyInfo> publicProperties)
+        {
+            return publicProperties.Keys.Except(dictionary.Keys).Count() != 0;
+        }
+
+        private static bool SizeIsNotEqual(IDictionary<string, object> dictionary, Dictionary<string, PropertyInfo> publicProperties)
+        {
+            return publicProperties.Count() != dictionary.Count();
         }
     }
 }

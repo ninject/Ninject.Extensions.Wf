@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="IDictionaryExtensionsTest.cs" company="bbv Software Services AG">
+// <copyright file="IActivityResolver.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,35 +17,22 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf
+namespace Ninject.Extensions.Wf.Injection
 {
-    using System;
+    using System.Activities;
     using System.Collections.Generic;
-    using Xunit;
 
-    public class IDictionaryExtensionsTest
+    /// <summary>
+    /// The implementor must take care of resolving all activities which are
+    /// lying under a given root activity.
+    /// </summary>
+    public interface IActivityResolver
     {
-
-        [Fact]
-        public void FromDictionary_WhenDictionaryIsNull_MustThrowArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => IDictionaryExtensions.FromDict<Input>(null));
-        }
-
-        [Fact]
-        public void FromDictionary_WhenDictionaryEmpty_MustReturnUninitializedObject()
-        {
-            Input input = new Dictionary<string, object>().FromDict<Input>();
-            
-            Assert.Null(input.Name);
-            Assert.Null(input.Surname);
-        }
-
-        private class Input
-        {
-            public string Name { get; set; }
-
-            public string Surname { get; set; }
-        }
+        /// <summary>
+        /// Gets the activities which are under a given root activity.
+        /// </summary>
+        /// <param name="root">The root activity.</param>
+        /// <returns>All activities under root.</returns>
+        IEnumerable<Activity> GetActivities(Activity root);
     }
 }

@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="ObjectExtensions.cs" company="bbv Software Services AG">
+// <copyright file="TestActivityWithDependencyAndAttribute.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,25 +17,21 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf
+namespace Ninject.Extensions.Wf.Injection.Model
 {
-    using System.Collections.Generic;
+    using System.Activities;
 
-    public static class ObjectExtensions
+    public class TestActivityWithDependencyAndAttribute : CodeActivity
     {
-        public static IDictionary<string, object> ToDict(this object value)
+        /// <summary>
+        /// When implemented in a derived class, performs the execution of the activity.
+        /// </summary>
+        /// <param name="context">The execution context under which the activity executes.</param>
+        protected override void Execute(CodeActivityContext context)
         {
-            var dictionary = new Dictionary<string, object>();
-
-            var publicProperties =
-                value.GetType().GetProperties();
-            
-            foreach (var publicProperty in publicProperties)
-            {
-                dictionary.Add(publicProperty.Name, publicProperty.GetValue(value, null));    
-            }
-
-            return dictionary;
         }
+
+        [Inject]
+        public IDependency Dependency { get; set; }
     }
 }

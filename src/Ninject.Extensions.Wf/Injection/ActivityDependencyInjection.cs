@@ -17,13 +17,13 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Extensions
+namespace Ninject.Extensions.Wf.Injection
 {
     using System;
     using System.Activities.Hosting;
     using System.Collections.Generic;
     using System.Linq;
-    using Infrastructure;
+    using Ninject.Infrastructure;
 
     /// <summary>
     /// Extension which resolves all activities recursively and builds them up

@@ -25,6 +25,7 @@ namespace Ninject.Extensions.Wf
     using System.Collections.Generic;
     using System.Runtime.DurableInstancing;
     using Extensions;
+    using Injection;
 
     public class NinjectWorkflowApplication : ExtensionResolver, IWorkflowApplication
     {
@@ -117,12 +118,6 @@ namespace Ninject.Extensions.Wf
             this.Application = new WorkflowApplication(workflowDefinition, inputs);
 
             this.AddExtensions();
-        }
-
-        public void Initialize<TInput>(Activity workflowDefinition, TInput inputs)
-            where TInput : class
-        {
-            this.Initialize(workflowDefinition, inputs.ToDict());
         }
 
         public void Unload()

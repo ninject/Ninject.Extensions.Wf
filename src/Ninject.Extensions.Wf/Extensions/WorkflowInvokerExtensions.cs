@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="WfExtensionModule.cs" company="bbv Software Services AG">
+// <copyright file="WorkflowInvokerExtensions.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,23 +17,16 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Modules
+namespace Ninject.Extensions.Wf.Extensions
 {
-    using Injection;
-    using Ninject.Modules;
+    using System.Activities;
 
-    /// <summary>
-    /// This module loads all wf extension requirements into the kernel
-    /// </summary>
-    public class WfExtensionModule : NinjectModule
+    public static class WorkflowInvokerExtensions
     {
-        /// <summary>
-        /// Loads the module into the kernel.
-        /// </summary>
-        public override void Load()
+        public static TOutput Invoke<TInput, TOutput>(this WorkflowInvoker workflowInvoker, TInput inputs) 
+            where TOutput : class, new()
         {
-            this.Bind<IActivityResolver>().To<ActivityResolver>();
-            this.Bind<ActivityDependencyInjection>().ToSelf();
+            return workflowInvoker.Invoke(inputs.ToDict()).ToObject<TOutput>();
         }
     }
 }

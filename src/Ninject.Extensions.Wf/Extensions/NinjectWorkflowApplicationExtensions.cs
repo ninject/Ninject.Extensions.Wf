@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="Dependency.cs" company="bbv Software Services AG">
+// <copyright file="NinjectWorkflowApplicationExtensions.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,9 +17,16 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Extensions.Model
+namespace Ninject.Extensions.Wf.Extensions
 {
-    public class Dependency : IDependency
+    using System.Activities;
+
+    public static class NinjectWorkflowApplicationExtensions
     {
+        public static void Initialize<TInput>(this IWorkflowApplication application, Activity workflowDefinition, TInput inputs)
+            where TInput : class
+        {
+            application.Initialize(workflowDefinition, inputs.ToDict());
+        }
     }
 }
