@@ -36,5 +36,8 @@ namespace Ninject.Extensions.Wf
         Action<WorkflowApplicationAbortedEventArgs> Aborted { set; get; }
         void Initialize(Activity workflowDefinition);
         void Initialize(Activity workflowDefinition, IDictionary<string, object> inputs);
+
+        void Initialize<TInput>(Activity workflowDefinition, TInput inputs)
+            where TInput : class;
     }
 }

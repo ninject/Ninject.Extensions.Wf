@@ -119,6 +119,12 @@ namespace Ninject.Extensions.Wf
             this.AddExtensions();
         }
 
+        public void Initialize<TInput>(Activity workflowDefinition, TInput inputs)
+            where TInput : class
+        {
+            this.Initialize(workflowDefinition, inputs.ToDict());
+        }
+
         public void Unload()
         {
             this.Application.Unload();
