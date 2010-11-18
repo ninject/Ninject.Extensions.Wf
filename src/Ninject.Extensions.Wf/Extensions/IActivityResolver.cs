@@ -22,8 +22,17 @@ namespace Ninject.Extensions.Wf.Extensions
     using System.Activities;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// The implementor must take care of resolving all activities which are
+    /// lying under a given root activity.
+    /// </summary>
     public interface IActivityResolver
     {
+        /// <summary>
+        /// Gets the activities which are under a given root activity.
+        /// </summary>
+        /// <param name="root">The root activity.</param>
+        /// <returns>All activities under root.</returns>
         IEnumerable<Activity> GetActivities(Activity root);
     }
 }

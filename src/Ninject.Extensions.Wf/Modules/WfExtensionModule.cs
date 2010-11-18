@@ -19,10 +19,12 @@
 
 namespace Ninject.Extensions.Wf.Modules
 {
-    using System;
     using Extensions;
     using Ninject.Modules;
 
+    /// <summary>
+    /// This module loads all wf extension requirements into the kernel
+    /// </summary>
     public class WfExtensionModule : NinjectModule
     {
         /// <summary>

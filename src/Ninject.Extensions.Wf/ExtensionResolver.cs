@@ -23,8 +23,15 @@ namespace Ninject.Extensions.Wf
     using System.Activities.Hosting;
     using Infrastructure;
 
+    /// <summary>
+    /// Base class which provides extension on kernel resolving ability.
+    /// </summary>
     public abstract class ExtensionResolver : IResolveExtensions, IHaveKernel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtensionResolver"/> class.
+        /// </summary>
+        /// <param name="kernel">The kernel.</param>
         protected ExtensionResolver(IKernel kernel)
         {
             this.Kernel = kernel;
@@ -35,16 +42,34 @@ namespace Ninject.Extensions.Wf
         /// </summary>
         public IKernel Kernel { get; private set; }
 
+        /// <summary>
+        /// Gets the extensions. The inheritor must return the used extension manager.
+        /// </summary>
+        /// <value>The extensions.</value>
         protected abstract WorkflowInstanceExtensionManager Extensions
         {
             get;
         }
 
+        /// <summary>
+        /// Adds a single ton
+        /// </summary>
+        /// <typeparam name="TExtension">The extension to add.</typeparam>
+        /// <remarks>This is independent from the scope defined on the ninject
+        /// kernel. The scoping of the
+        /// <see cref="WorkflowInstanceExtensionManager"/> is applied.</remarks>
         public void AddSingletonExtension<TExtension>() where TExtension : class
         {
             this.Extensions.Add(this.Kernel.Get<TExtension>());
         }
 
+        /// <summary>
+        /// Adds an extension with a transient scope to the underlying workflow.
+        /// </summary>
+        /// <typeparam name="TExtension">The extension to add.</typeparam>
+        /// <remarks>This is independent from the scope defined on the ninject
+        /// kernel. The scoping of the
+        /// <see cref="WorkflowInstanceExtensionManager"/> is applied.</remarks>
         public void AddTransientExtension<TExtension>() where TExtension : class
         {
             this.Extensions.Add(() => this.Kernel.Get<TExtension>());

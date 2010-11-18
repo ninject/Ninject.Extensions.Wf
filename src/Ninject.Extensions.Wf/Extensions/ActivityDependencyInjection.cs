@@ -25,11 +25,26 @@ namespace Ninject.Extensions.Wf.Extensions
     using System.Linq;
     using Infrastructure;
 
+    /// <summary>
+    /// Extension which resolves all activities recursively and builds them up
+    /// with the provided kernel.
+    /// </summary>
     public class ActivityDependencyInjection : IWorkflowInstanceExtension, IHaveKernel
     {
+        /// <summary>
+        /// The kernel
+        /// </summary>
         private readonly IKernel kernel;
-        private IActivityResolver activityResolver;
 
+        /// <summary>
+        /// Enables to extension to resolve activities
+        /// </summary>
+        private readonly IActivityResolver activityResolver;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActivityDependencyInjection"/> class.
+        /// </summary>
+        /// <param name="kernel">The kernel.</param>
         public ActivityDependencyInjection(IKernel kernel)
         {
             this.kernel = kernel;
