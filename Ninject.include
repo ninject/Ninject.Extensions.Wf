@@ -30,7 +30,7 @@
 	<property name="version.revision" value="${version::get-revision(version::parse(version))}" dynamic="true"/>
 	<property name="build.version" value="${version.major}.${version.minor}.${version.build}.${version.revision}" dynamic="true"/>
 	<property name="build.config" value="debug" overwrite="false"/>
-	<property name="build.platform" value="net-3.5" overwrite="false"/>
+	<property name="build.platform" value="net-4.0" overwrite="false"/>
 	<property name="build.asminfo" value="SharedAssemblyInfo.cs"/>
 
 	<property name="package" value="false" readonly="false" overwrite="false"/>
@@ -109,7 +109,7 @@
 	<target name="build" depends="InitializeBuildSystem all"/>
 	<target name="InitializeBuildSystem" depends="DetectOperatingSystemArchitecture create-assembly-info"/>
 	
-	<target name="create-assembly-info" depends="get-git-revision">
+	<target name="create-assembly-info" depends="">
 		<echo message="##teamcity[buildNumber '${build.version}']" />
 		<asminfo output="${path.build.assemblyinfo}" language="CSharp">
 			<imports>

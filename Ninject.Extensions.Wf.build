@@ -10,7 +10,7 @@
 	<property name="dependencies" value="Ninject" overwrite="false"/>
 
 	<include buildfile="Ninject.include" />
-	<target name="all" depends="core csl"/>
+	<target name="all" depends="core"/>
 
 	<target name="core" depends="init">
 		<csc noconfig="true" warnaserror="true" target="library" debug="${build.debug}" optimize="${build.optimize}" define="${build.defines}" output="${current.path.build}/${product.assembly}" doc="${current.path.build}/${product.docfile}" keyfile="${path.src}/${product.keyfile}">
@@ -22,8 +22,8 @@
 			<references>
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
-				<include name="System.ServiceModel.dll"/>
-				<include name="System.ServiceModel.Activation.dll"/>
+				<include name="System.Activities.dll"/>
+				<include name="System.Runtime.DurableInstancing.dll"/>
 				<include name="System.Web.dll"/>
 				<include name="System.Core.dll"/>
 				<include name="${path.lib}/Ninject/${build.platform}/Ninject.dll"/>
@@ -44,8 +44,8 @@
             <references basedir="${current.path.build}">
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
-				<include name="System.ServiceModel.dll"/>
-				<include name="System.ServiceModel.Activation.dll"/>
+				<include name="System.Activities.dll"/>
+				<include name="System.Runtime.DurableInstancing.dll"/>
 				<include name="System.Web.dll"/>
 				<include name="System.Core.dll"/>
                 <include name="${path.lib}/CommonServiceLocator/Microsoft.Practices.ServiceLocation.dll"/>
@@ -79,7 +79,7 @@
 			<references basedir="${current.path.test}">
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
-				<include name="System.ServiceModel.dll"/>
+				<include name="System.Activities.dll"/>
 				<include name="System.Web.dll"/>
 				<include name="System.Core.dll"/>
 				<include name="Moq.dll"/>
@@ -87,7 +87,6 @@
                 <include name="xunit.should.dll"/>
 				<include name="${product.assembly}"/>
 				<include name="${path.lib}/Ninject/${build.platform}/Ninject.dll"/>
-				<include name="${path.lib}/Ninject.Extensions.ContextPreservation/${build.platform}/Ninject.Extensions.ContextPreservation.dll"/>
 			</references>
 			<nowarn>
 				<warning number="1584"/>
@@ -136,7 +135,6 @@
                 <include name="UnitDrivenLight.dll"/>
 				<include name="${product.assembly}"/>
 				<include name="${path.lib}/Ninject/${build.platform}/Ninject.dll"/>
-				<include name="${path.lib}/Ninject.Extensions.ContextPreservation/${build.platform}/Ninject.Extensions.ContextPreservation.dll"/>
             </references>
             <nowarn>
                 <warning number="1584"/>
