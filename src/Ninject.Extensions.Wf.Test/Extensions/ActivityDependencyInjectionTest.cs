@@ -26,21 +26,18 @@ namespace Ninject.Extensions.Wf.Extensions
     using Moq;
     using Xunit;
 
-    public class ActivityDependencyInjectionTest
+    public class ActivityDependencyInjectionTest : KernelProvidingBase
     {
         private ActivityDependencyInjection testee;
-        private StandardKernel kernel;
         private Mock<IActivityResolver> activityResolver;
 
         public ActivityDependencyInjectionTest()
         {
-            this.kernel = new StandardKernel(new NinjectSettings { LoadExtensions = false });
-
             this.activityResolver = new Mock<IActivityResolver>();
-            this.kernel.Bind<IActivityResolver>().ToConstant(this.activityResolver.Object);
+            this.Kernel.Bind<IActivityResolver>().ToConstant(this.activityResolver.Object);
 
 
-            this.testee = new ActivityDependencyInjection(this.kernel);
+            this.testee = new ActivityDependencyInjection(this.Kernel);
         }
 
         [Fact]
@@ -119,7 +116,7 @@ namespace Ninject.Extensions.Wf.Extensions
 
         private void SetupDependencyBinding()
         {
-            this.kernel.Bind<IDependency>().To<Dependency>();
+            this.Kernel.Bind<IDependency>().To<Dependency>();
         }
 
         private WorkflowInvoker SetupWorkflowInvoker(Activity activity)

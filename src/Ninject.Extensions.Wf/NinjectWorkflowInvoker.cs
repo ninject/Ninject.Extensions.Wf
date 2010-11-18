@@ -21,24 +21,24 @@ namespace Ninject.Extensions.Wf
 {
     using System;
     using System.Activities;
+    using System.Activities.Hosting;
     using System.Collections.Generic;
     using Infrastructure;
 
-    public class NinjectWorkflowInvoker : IWorkflowInvoker, IHaveKernel
+    public class NinjectWorkflowInvoker : ExtensionResolver, IWorkflowInvoker
     {
-        private WorkflowInvoker workflowInvoker;
+        private readonly WorkflowInvoker workflowInvoker;
 
         public NinjectWorkflowInvoker(Activity activity, IKernel kernel)
+            : base(kernel)
         {
-            this.Kernel = kernel;
-
             this.workflowInvoker = new WorkflowInvoker(activity);
         }
 
-        /// <summary>
-        /// Gets the kernel.
-        /// </summary>
-        public IKernel Kernel { get; private set; }
+        protected override WorkflowInstanceExtensionManager Extensions
+        {
+            get { return this.workflowInvoker.Extensions; }
+        }
 
         /// <summary>
         /// Invokes a workflow asynchronously with the specified
@@ -56,7 +56,7 @@ namespace Ninject.Extensions.Wf
         /// asynchronous invoke operations.</param>
         public void InvokeAsync(IDictionary<string, object> inputs, TimeSpan timeout, object userState)
         {
-            throw new NotImplementedException();
+            this.workflowInvoker.InvokeAsync(inputs, timeout, userState);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Ninject.Extensions.Wf
         /// asynchronous invoke operations.</param>
         public void InvokeAsync(IDictionary<string, object> inputs, object userState)
         {
-            throw new NotImplementedException();
+            this.workflowInvoker.InvokeAsync(inputs, userState);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Ninject.Extensions.Wf
         /// thrown.</param>
         public void InvokeAsync(IDictionary<string, object> inputs, TimeSpan timeout)
         {
-            throw new NotImplementedException();
+            this.workflowInvoker.InvokeAsync(inputs, timeout);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Ninject.Extensions.Wf
         /// workflow, keyed by argument name.</param>
         public void InvokeAsync(IDictionary<string, object> inputs)
         {
-            throw new NotImplementedException();
+            this.workflowInvoker.InvokeAsync(inputs);
         }
 
         /// <summary>
@@ -113,6 +113,7 @@ namespace Ninject.Extensions.Wf
         /// asynchronous invoke operations.</param>
         public void InvokeAsync(TimeSpan timeout, object userState)
         {
+            this.workflowInvoker.InvokeAsync(timeout, userState);
         }
 
         /// <summary>
@@ -121,6 +122,7 @@ namespace Ninject.Extensions.Wf
         /// <param name="timeout">The interval in which the workflow must complete before it is aborted and a System.TimeoutException is thrown.</param>
         public void InvokeAsync(TimeSpan timeout)
         {
+            this.workflowInvoker.InvokeAsync(timeout);
         }
 
         /// <summary>
@@ -128,6 +130,7 @@ namespace Ninject.Extensions.Wf
         /// </summary>
         public void InvokeAsync()
         {
+            this.workflowInvoker.InvokeAsync();
         }
     }
 }

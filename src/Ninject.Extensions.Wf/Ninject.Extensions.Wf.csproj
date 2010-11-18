@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.DurableInstancing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,12 +50,16 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ExtensionResolver.cs" />
     <Compile Include="Extensions\ActivityDependencyInjection.cs" />
     <Compile Include="Extensions\ActivityResolver.cs" />
     <Compile Include="Extensions\IActivityResolver.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
+    <Compile Include="IResolveExtensions.cs" />
+    <Compile Include="IWorkflowApplication.cs" />
     <Compile Include="IWorkflowInvoker.cs" />
     <Compile Include="Modules\WfExtensionModule.cs" />
+    <Compile Include="NinjectWorkflowApplication.cs" />
     <Compile Include="NinjectWorkflowInvoker.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

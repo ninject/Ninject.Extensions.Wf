@@ -58,6 +58,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ExtensionResolverTest.cs" />
     <Compile Include="Extensions\ActivityDependencyInjectionTest.cs" />
     <Compile Include="Extensions\ActivityResolverTest.cs" />
     <Compile Include="Extensions\Model\Dependency.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Extensions\Model\TestActivityWithDependency.cs" />
     <Compile Include="Extensions\Model\TestActivityWithDependencyAndAttribute.cs" />
     <Compile Include="IDictionaryExtensionsTest.cs" />
+    <Compile Include="KernelProvidingBase.cs" />
     <Compile Include="ObjectExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
