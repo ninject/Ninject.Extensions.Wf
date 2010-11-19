@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject">
-      <HintPath>..\..\lib\Ninject\Ninject.dll</HintPath>
+      <HintPath>..\..\lib\Ninject\net-4.0\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
@@ -52,7 +52,11 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="EventArgs\NinjectBookmarkInfo.cs" />
+    <Compile Include="EventArgs\NinjectBookmarkScopeInfo.cs" />
+    <Compile Include="EventArgs\NinjectWorkflowApplicationAbortedEventArgs.cs" />
     <Compile Include="EventArgs\NinjectWorkflowApplicationCompletedEventArgs.cs" />
+    <Compile Include="EventArgs\NinjectWorkflowApplicationIdleEventArgs.cs" />
     <Compile Include="Extensions\ExtensionResolver.cs" />
     <Compile Include="Injection\ActivityDependencyInjection.cs" />
     <Compile Include="Injection\ActivityResolver.cs" />

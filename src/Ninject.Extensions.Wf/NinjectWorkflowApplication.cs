@@ -32,6 +32,12 @@ namespace Ninject.Extensions.Wf
     {
         private Action<NinjectWorkflowApplicationCompletedEventArgs> completedAction;
 
+        private Action<NinjectWorkflowApplicationAbortedEventArgs> abortedAction;
+
+        private Action<NinjectWorkflowApplicationEventArgs> unloadedAction;
+
+        private Func<NinjectWorkflowApplicationIdleEventArgs, PersistableIdleAction> persistableIdleFunction;
+
         private WorkflowApplication workflowApplication;
 
         public NinjectWorkflowApplication(IKernel kernel)
@@ -62,22 +68,42 @@ namespace Ninject.Extensions.Wf
             }
         }
 
-        public Action<WorkflowApplicationAbortedEventArgs> Aborted
+        public Action<NinjectWorkflowApplicationAbortedEventArgs> Aborted
         {
-            get { return this.Application.Aborted; }
-            set { this.Application.Aborted = value; }
+            get
+            {
+                return this.abortedAction;
+            }
+
+            set
+            {
+                this.abortedAction = value;
+                this.Application.Aborted = args => this.abortedAction(new NinjectWorkflowApplicationAbortedEventArgs(args));
+            }
         }
 
-        public Action<WorkflowApplicationEventArgs> Unloaded
+        public Action<NinjectWorkflowApplicationEventArgs> Unloaded
         {
-            get { return this.Application.Unloaded; }
-            set { this.Application.Unloaded = value; }
+            get { return this.unloadedAction; }
+            set
+            {
+                this.unloadedAction = value;
+                this.Application.Unloaded = args => this.unloadedAction(new NinjectWorkflowApplicationEventArgs(args));
+            }
         }
 
-        public Func<WorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle
+        public Func<NinjectWorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle
         {
-            get { return this.Application.PersistableIdle; }
-            set { this.Application.PersistableIdle = value; }
+            get
+            {
+                return this.persistableIdleFunction;
+            }
+
+            set
+            {
+                this.persistableIdleFunction = value;
+                this.Application.PersistableIdle = args => this.persistableIdleFunction(new NinjectWorkflowApplicationIdleEventArgs(args));
+            }
         }
 
         public Func<WorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException

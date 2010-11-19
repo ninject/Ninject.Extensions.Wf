@@ -27,14 +27,14 @@ namespace Ninject.Extensions.Wf
 
     public interface IWorkflowApplication : IResolveExtensions
     {
-        Action<WorkflowApplicationEventArgs> Unloaded { set; get; }
-        Func<WorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle { set; get; }
+        Action<NinjectWorkflowApplicationEventArgs> Unloaded { set; get; }
+        Func<NinjectWorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle { set; get; }
         Func<WorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException { set; get; }
         InstanceStore InstanceStore { set; get; }
         Action<WorkflowApplicationIdleEventArgs> Idle { set; get; }
         Guid Id { get; }
         Action<NinjectWorkflowApplicationCompletedEventArgs> Completed { set; get; }
-        Action<WorkflowApplicationAbortedEventArgs> Aborted { set; get; }
+        Action<NinjectWorkflowApplicationAbortedEventArgs> Aborted { set; get; }
         void Initialize(Activity workflowDefinition);
         void Initialize(Activity workflowDefinition, IDictionary<string, object> inputs);
         void Unload();
