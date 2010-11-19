@@ -160,6 +160,56 @@ namespace Ninject.Extensions.Wf
             this.Application.Run(timeout);
         }
 
+        public BookmarkResumptionResult ResumeBookmark(string bookmarkName, object value)
+        {
+            return this.Application.ResumeBookmark(bookmarkName, value);
+        }
+
+        public BookmarkResumptionResult ResumeBookmark(Bookmark bookmark, object value)
+        {
+            return this.Application.ResumeBookmark(bookmark, value);
+        }
+
+        public BookmarkResumptionResult ResumeBookmark(string bookmarkName, object value, TimeSpan timeout)
+        {
+            return this.Application.ResumeBookmark(bookmarkName, value, timeout);
+        }
+
+        public BookmarkResumptionResult ResumeBookmark(Bookmark bookmark, object value, TimeSpan timeout)
+        {
+            return this.Application.ResumeBookmark(bookmark, value, timeout);
+        }
+
+        public void Persist()
+        {
+            this.Application.Persist();
+        }
+
+        public void Persist(TimeSpan timeout)
+        {
+            this.Application.Persist(timeout);
+        }
+
+        public void LoadRunnableInstance()
+        {
+            this.Application.LoadRunnableInstance();
+        }
+
+        public void LoadRunnableInstance(TimeSpan timeout)
+        {
+            this.Application.LoadRunnableInstance(timeout);
+        }
+
+        public void Load(Guid instanceId)
+        {
+            this.Application.Load(instanceId);
+        }
+
+        public void Load(Guid instanceId, TimeSpan timeout)
+        {
+            this.Application.Load(instanceId, timeout);
+        }
+
         private void AddExtensions()
         {
             this.AddSingletonExtension<ActivityDependencyInjection>();

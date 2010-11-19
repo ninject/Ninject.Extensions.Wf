@@ -103,5 +103,11 @@ namespace Ninject.Extensions.Wf
         IDictionary<string,object> Invoke(TimeSpan timeout);
         IDictionary<string,object> Invoke(IDictionary<string,object> inputs);
         IDictionary<string,object> Invoke(IDictionary<string,object> inputs, TimeSpan timeout);
+        IDictionary<string,object> EndInvoke(IAsyncResult result);
+        void CancelAsync(object userState);
+        IAsyncResult BeginInvoke(AsyncCallback callback, object state);
+        IAsyncResult BeginInvoke(TimeSpan timeout, AsyncCallback callback, object state);
+        IAsyncResult BeginInvoke(IDictionary<string,object> inputs, AsyncCallback callback, object state);
+        IAsyncResult BeginInvoke(IDictionary<string,object> inputs, TimeSpan timeout, AsyncCallback callback, object state);
     }
 }

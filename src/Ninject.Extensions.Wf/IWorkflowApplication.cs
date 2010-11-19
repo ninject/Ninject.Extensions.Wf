@@ -37,5 +37,22 @@ namespace Ninject.Extensions.Wf
         Action<WorkflowApplicationAbortedEventArgs> Aborted { set; get; }
         void Initialize(Activity workflowDefinition);
         void Initialize(Activity workflowDefinition, IDictionary<string, object> inputs);
+        void Unload();
+        void Unload(TimeSpan timeout);
+        void Terminate(string reason);
+        void Terminate(Exception reason);
+        void Terminate(string reason, TimeSpan timeout);
+        void Run();
+        void Run(TimeSpan timeout);
+        BookmarkResumptionResult ResumeBookmark(string bookmarkName, object value);
+        BookmarkResumptionResult ResumeBookmark(Bookmark bookmark, object value);
+        BookmarkResumptionResult ResumeBookmark(string bookmarkName, object value, TimeSpan timeout);
+        BookmarkResumptionResult ResumeBookmark(Bookmark bookmark, object value, TimeSpan timeout);
+        void Persist();
+        void Persist(TimeSpan timeout);
+        void LoadRunnableInstance();
+        void LoadRunnableInstance(TimeSpan timeout);
+        void Load(Guid instanceId);
+        void Load(Guid instanceId, TimeSpan timeout);
     }
 }

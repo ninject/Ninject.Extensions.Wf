@@ -171,6 +171,36 @@ namespace Ninject.Extensions.Wf
             return this.Invoker.Invoke(inputs, timeout);
         }
 
+        public IDictionary<string,object> EndInvoke(IAsyncResult result)
+        {
+            return this.Invoker.EndInvoke(result);
+        }
+
+        public void CancelAsync(object userState)
+        {
+            this.Invoker.CancelAsync(userState);
+        }
+
+        public IAsyncResult BeginInvoke(AsyncCallback callback, object state)
+        {
+            return this.Invoker.BeginInvoke(callback, state);
+        }
+
+        public IAsyncResult BeginInvoke(TimeSpan timeout, AsyncCallback callback, object state)
+        {
+            return this.Invoker.BeginInvoke(timeout, callback, state);
+        }
+
+        public IAsyncResult BeginInvoke(IDictionary<string,object> inputs, AsyncCallback callback, object state)
+        {
+            return this.Invoker.BeginInvoke(inputs, callback, state);
+        }
+
+        public IAsyncResult BeginInvoke(IDictionary<string,object> inputs, TimeSpan timeout, AsyncCallback callback, object state)
+        {
+            return this.Invoker.BeginInvoke(inputs, timeout, callback, state);
+        }
+
         public void Initialize(Activity workflowDefinition)
         {
             this.Invoker = new WorkflowInvoker(workflowDefinition);
