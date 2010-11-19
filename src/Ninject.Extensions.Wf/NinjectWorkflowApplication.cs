@@ -23,6 +23,7 @@ namespace Ninject.Extensions.Wf
     using System.Activities;
     using System.Activities.Hosting;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Runtime.DurableInstancing;
     using Extensions;
     using Injection;
@@ -208,6 +209,56 @@ namespace Ninject.Extensions.Wf
         public void Load(Guid instanceId, TimeSpan timeout)
         {
             this.Application.Load(instanceId, timeout);
+        }
+
+        public ReadOnlyCollection<BookmarkInfo> GetBookmarks()
+        {
+            return this.Application.GetBookmarks();
+        }
+
+        public ReadOnlyCollection<BookmarkInfo> GetBookmarks(TimeSpan timeout)
+        {
+            return this.Application.GetBookmarks(timeout);
+        }
+
+        public void EndUnload(IAsyncResult result)
+        {
+            this.Application.EndUnload(result);
+        }
+
+        public void EndTerminate(IAsyncResult result)
+        {
+            this.Application.EndTerminate(result);
+        }
+
+        public void EndRun(IAsyncResult result)
+        {
+            this.Application.EndRun(result);
+        }
+
+        public BookmarkResumptionResult EndResumeBookmark(IAsyncResult result)
+        {
+            return this.Application.EndResumeBookmark(result);
+        }
+
+        public void EndPersist(IAsyncResult result)
+        {
+            this.Application.EndPersist(result);
+        }
+
+        public void EndLoadRunnableInstance(IAsyncResult result)
+        {
+            this.Application.EndLoadRunnableInstance(result);
+        }
+
+        public void EndLoad(IAsyncResult result)
+        {
+            this.Application.EndLoad(result);
+        }
+
+        public void EndCancel(IAsyncResult result)
+        {
+            this.Application.EndCancel(result);
         }
 
         private void AddExtensions()
