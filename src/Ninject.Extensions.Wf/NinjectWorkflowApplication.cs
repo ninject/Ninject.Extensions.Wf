@@ -30,6 +30,8 @@ namespace Ninject.Extensions.Wf
 
     public class NinjectWorkflowApplication : ExtensionResolver, IWorkflowApplication
     {
+        private Action<NinjectWorkflowApplicationCompletedEventArgs> completedAction;
+
         private WorkflowApplication workflowApplication;
 
         public NinjectWorkflowApplication(IKernel kernel)
@@ -101,10 +103,18 @@ namespace Ninject.Extensions.Wf
             get { return this.Application.Id; }
         }
 
-        public Action<WorkflowApplicationCompletedEventArgs> Completed
+        public Action<NinjectWorkflowApplicationCompletedEventArgs> Completed
         {
-            get { return this.Application.Completed; }
-            set { this.Application.Completed = value; }
+            get
+            {
+                return this.completedAction;
+            }
+
+            set
+            {
+                this.completedAction = value;
+                this.Application.Completed = args => this.completedAction(new NinjectWorkflowApplicationCompletedEventArgs(args));
+            }
         }
 
         public void Initialize(Activity workflowDefinition)

@@ -52,6 +52,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="EventArgs\NinjectWorkflowApplicationCompletedEventArgs.cs" />
     <Compile Include="Extensions\ExtensionResolver.cs" />
     <Compile Include="Injection\ActivityDependencyInjection.cs" />
     <Compile Include="Injection\ActivityResolver.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Modules\WfExtensionModule.cs" />
     <Compile Include="NinjectWorkflowApplication.cs" />
     <Compile Include="Extensions\NinjectWorkflowApplicationExtensions.cs" />
+    <Compile Include="EventArgs\NinjectWorkflowApplicationEventArgs.cs" />
     <Compile Include="NinjectWorkflowInvoker.cs" />
     <Compile Include="Extensions\NinjectWorkflowInvokerExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />

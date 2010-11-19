@@ -33,7 +33,7 @@ namespace Ninject.Extensions.Wf
         InstanceStore InstanceStore { set; get; }
         Action<WorkflowApplicationIdleEventArgs> Idle { set; get; }
         Guid Id { get; }
-        Action<WorkflowApplicationCompletedEventArgs> Completed { set; get; }
+        Action<NinjectWorkflowApplicationCompletedEventArgs> Completed { set; get; }
         Action<WorkflowApplicationAbortedEventArgs> Aborted { set; get; }
         void Initialize(Activity workflowDefinition);
         void Initialize(Activity workflowDefinition, IDictionary<string, object> inputs);
