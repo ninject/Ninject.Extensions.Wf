@@ -29,9 +29,9 @@ namespace Ninject.Extensions.Wf
     {
         Action<NinjectWorkflowApplicationEventArgs> Unloaded { set; get; }
         Func<NinjectWorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle { set; get; }
-        Func<WorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException { set; get; }
+        Func<NinjectWorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException { set; get; }
         InstanceStore InstanceStore { set; get; }
-        Action<WorkflowApplicationIdleEventArgs> Idle { set; get; }
+        Action<NinjectWorkflowApplicationIdleEventArgs> Idle { set; get; }
         Guid Id { get; }
         Action<NinjectWorkflowApplicationCompletedEventArgs> Completed { set; get; }
         Action<NinjectWorkflowApplicationAbortedEventArgs> Aborted { set; get; }

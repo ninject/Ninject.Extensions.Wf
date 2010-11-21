@@ -38,6 +38,10 @@ namespace Ninject.Extensions.Wf
 
         private Func<NinjectWorkflowApplicationIdleEventArgs, PersistableIdleAction> persistableIdleFunction;
 
+        private Func<NinjectWorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> unhandledExceptionFunction;
+
+        private Action<NinjectWorkflowApplicationIdleEventArgs> idleAction;
+
         private WorkflowApplication workflowApplication;
 
         public NinjectWorkflowApplication(IKernel kernel)
@@ -106,10 +110,18 @@ namespace Ninject.Extensions.Wf
             }
         }
 
-        public Func<WorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException
+        public Func<NinjectWorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException
         {
-            get { return this.Application.OnUnhandledException; }
-            set { this.Application.OnUnhandledException = value; }
+            get
+            {
+                return this.unhandledExceptionFunction;
+            }
+
+            set
+            {
+                this.unhandledExceptionFunction = value;
+                this.Application.OnUnhandledException = args => this.unhandledExceptionFunction(new NinjectWorkflowApplicationUnhandledExceptionEventArgs(args));
+            }
         }
 
         public InstanceStore InstanceStore
@@ -118,10 +130,14 @@ namespace Ninject.Extensions.Wf
             set { this.Application.InstanceStore = value; }
         }
 
-        public Action<WorkflowApplicationIdleEventArgs> Idle
+        public Action<NinjectWorkflowApplicationIdleEventArgs> Idle
         {
-            get { return this.Application.Idle; }
-            set { this.Application.Idle = value; }
+            get { return this.idleAction; }
+            set
+            {
+                this.idleAction = value;
+                this.Application.Idle = args => this.idleAction(new NinjectWorkflowApplicationIdleEventArgs(args));
+            }
         }
 
         public Guid Id

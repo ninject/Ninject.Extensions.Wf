@@ -57,6 +57,7 @@
     <Compile Include="EventArgs\NinjectWorkflowApplicationAbortedEventArgs.cs" />
     <Compile Include="EventArgs\NinjectWorkflowApplicationCompletedEventArgs.cs" />
     <Compile Include="EventArgs\NinjectWorkflowApplicationIdleEventArgs.cs" />
+    <Compile Include="EventArgs\NinjectWorkflowApplicationUnhandledExceptionEventArgs.cs" />
     <Compile Include="Extensions\ExtensionResolver.cs" />
     <Compile Include="Injection\ActivityDependencyInjection.cs" />
     <Compile Include="Injection\ActivityResolver.cs" />
