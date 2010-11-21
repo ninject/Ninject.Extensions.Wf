@@ -23,6 +23,12 @@ namespace Ninject.Extensions.Wf
 
     public class NinjectBookmarkInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectBookmarkInfo"/> class.
+        /// </summary>
+        /// <param name="bookmarkName">Name of the bookmark.</param>
+        /// <param name="ownerDisplayName">Display name of the owner.</param>
+        /// <param name="bookmarkScopeInfo">The bookmark scope info.</param>
         public NinjectBookmarkInfo(string bookmarkName, string ownerDisplayName, NinjectBookmarkScopeInfo bookmarkScopeInfo)
         {
             this.BookmarkName = bookmarkName;
@@ -30,26 +36,40 @@ namespace Ninject.Extensions.Wf
             this.ScopeInfo = bookmarkScopeInfo;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectBookmarkInfo"/> class.
+        /// </summary>
+        /// <param name="bookmarkInfo">The bookmark info.</param>
         public NinjectBookmarkInfo(BookmarkInfo bookmarkInfo)
         {
-            this.BookmarkName = bookmarkInfo.BookmarkName;
-            this.OwnerDisplayName = bookmarkInfo.OwnerDisplayName;
-            this.ScopeInfo = new NinjectBookmarkScopeInfo(bookmarkInfo.ScopeInfo);
+            this.BookmarkInfo = bookmarkInfo;
+            this.BookmarkName = this.BookmarkInfo.BookmarkName;
+            this.OwnerDisplayName = this.BookmarkInfo.OwnerDisplayName;
+            this.ScopeInfo = new NinjectBookmarkScopeInfo(this.BookmarkInfo.ScopeInfo);
         }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.Hosting.BookmarkInfo.BookmarkName"]/*' />
         public string BookmarkName
         {
             get; private set;
         }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.Hosting.BookmarkInfo.OwnerDisplayName"]/*' />
         public string OwnerDisplayName
         {
             get; private set;
         }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.Hosting.BookmarkInfo.ScopeInfo"]/*' />
         public NinjectBookmarkScopeInfo ScopeInfo
         {
             get; private set;
         }
+
+        /// <summary>
+        /// Gets the underlying bookmark info.
+        /// </summary>
+        /// <value>The bookmark info.</value>
+        public BookmarkInfo BookmarkInfo { get; private set; }
     }
 }
