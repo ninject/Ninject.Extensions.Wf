@@ -64,11 +64,6 @@ namespace Ninject.Extensions.Wf.Extensions
             this.extensionManager.Verify(mgr => mgr.Add(It.IsAny<Func<IDependency>>()));
         }
 
-        private void SetupDependencyBinding()
-        {
-            this.Kernel.Bind<IDependency>().To<Dependency>();
-        }
-
         private void SetupWorkflowInstanceExtensionManager()
         {
             this.mockedTestee.Protected().SetupGet<WorkflowInstanceExtensionManager>("Extensions").Returns(this.extensionManager.Object);

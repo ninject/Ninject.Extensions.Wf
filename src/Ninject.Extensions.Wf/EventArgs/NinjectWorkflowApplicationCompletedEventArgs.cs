@@ -39,7 +39,7 @@ namespace Ninject.Extensions.Wf
             this.TerminationException = this.Arguments.TerminationException;
         }
 
-        public WorkflowApplicationCompletedEventArgs Arguments
+        public new WorkflowApplicationCompletedEventArgs Arguments
         {
             get { return (WorkflowApplicationCompletedEventArgs)base.Arguments; }
         }

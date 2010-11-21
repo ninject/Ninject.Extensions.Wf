@@ -114,11 +114,6 @@ namespace Ninject.Extensions.Wf.Injection
                 .Returns(new List<Activity> { root });
         }
 
-        private void SetupDependencyBinding()
-        {
-            this.Kernel.Bind<IDependency>().To<Dependency>();
-        }
-
         private WorkflowInvoker SetupWorkflowInvoker(Activity activity)
         {
             WorkflowInvoker invoker = new WorkflowInvoker(activity);

@@ -31,6 +31,7 @@ namespace Ninject.Extensions.Wf.Injection.Model
         {
         }
 
+        [RequiredArgument]
         [Inject]
         public IDependency Dependency { get; set; }
     }

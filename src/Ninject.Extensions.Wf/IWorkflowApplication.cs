@@ -21,38 +21,171 @@ namespace Ninject.Extensions.Wf
 {
     using System;
     using System.Activities;
+    using System.Activities.Hosting;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Runtime.DurableInstancing;
     using Extensions;
 
     public interface IWorkflowApplication : IResolveExtensions
     {
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Unloaded"]/*' />
+        /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
         Action<NinjectWorkflowApplicationEventArgs> Unloaded { set; get; }
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.PersistableIdle"]/*' />
+        /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
         Func<NinjectWorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle { set; get; }
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.OnUnhandledException"]/*' />
+        /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
         Func<NinjectWorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException { set; get; }
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.InstanceStore"]/*' />
         InstanceStore InstanceStore { set; get; }
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Idle"]/*' />
+        /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
         Action<NinjectWorkflowApplicationIdleEventArgs> Idle { set; get; }
         Guid Id { get; }
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Completed"]/*' />
+        /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
         Action<NinjectWorkflowApplicationCompletedEventArgs> Completed { set; get; }
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Aborted"]/*' />
+        /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
         Action<NinjectWorkflowApplicationAbortedEventArgs> Aborted { set; get; }
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.#ctor(System.Activities.Activity)"]/*' />
+        /// <remarks>Adds the necessary extensions to build up workflows with ninject.</remarks>
         void Initialize(Activity workflowDefinition);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.#ctor(System.Activities.Activity,System.Collections.Generic.IDictionary{System.String,System.Object})"]/*' />
+        /// <remarks>Adds the necessary extensions to build up workflows with ninject.</remarks>
         void Initialize(Activity workflowDefinition, IDictionary<string, object> inputs);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Unload"]/*' />
         void Unload();
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Unload(System.TimeSpan)"]/*' />
         void Unload(TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Terminate(System.String)"]/*' />
         void Terminate(string reason);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Terminate(System.Exception)"]/*' />
         void Terminate(Exception reason);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Terminate(System.String,System.TimeSpan)"]/*' />
         void Terminate(string reason, TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Run"]/*' />
         void Run();
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Run(System.TimeSpan)"]/*' />
         void Run(TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.ResumeBookmark(System.String,System.Object)"]/*' />
         BookmarkResumptionResult ResumeBookmark(string bookmarkName, object value);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.ResumeBookmark(System.Activities.Bookmark,System.Object)"]/*' />
         BookmarkResumptionResult ResumeBookmark(Bookmark bookmark, object value);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.ResumeBookmark(System.String,System.Object,System.TimeSpan)"]/*' />
         BookmarkResumptionResult ResumeBookmark(string bookmarkName, object value, TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.ResumeBookmark(System.Activities.Bookmark,System.Object,System.TimeSpan)"]/*' />
         BookmarkResumptionResult ResumeBookmark(Bookmark bookmark, object value, TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Persist"]/*' />
         void Persist();
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Persist(System.TimeSpan)"]/*' />
         void Persist(TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.LoadRunnableInstance"]/*' />
         void LoadRunnableInstance();
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.LoadRunnableInstance(System.TimeSpan)"]/*' />
         void LoadRunnableInstance(TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Load(System.Guid)"]/*' />
         void Load(Guid instanceId);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Load(System.Guid,System.TimeSpan)"]/*' />
         void Load(Guid instanceId, TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.GetBookmarks"]/*' />
+        ReadOnlyCollection<BookmarkInfo> GetBookmarks();
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.GetBookmarks(System.TimeSpan)"]/*' />
+        ReadOnlyCollection<BookmarkInfo> GetBookmarks(TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.EndUnload(System.IAsyncResult)"]/*' />
+        void EndUnload(IAsyncResult result);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.EndTerminate(System.IAsyncResult)"]/*' />
+        void EndTerminate(IAsyncResult result);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.EndRun(System.IAsyncResult)"]/*' />
+        void EndRun(IAsyncResult result);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.EndResumeBookmark(System.IAsyncResult)"]/*' />
+        BookmarkResumptionResult EndResumeBookmark(IAsyncResult result);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.EndPersist(System.IAsyncResult)"]/*' />
+        void EndPersist(IAsyncResult result);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.EndLoadRunnableInstance(System.IAsyncResult)"]/*' />
+        void EndLoadRunnableInstance(IAsyncResult result);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.EndLoad(System.IAsyncResult)"]/*' />
+        void EndLoad(IAsyncResult result);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.EndCancel(System.IAsyncResult)"]/*' />
+        void EndCancel(IAsyncResult result);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Cancel"]/*' />
+        void Cancel();
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.Cancel(System.TimeSpan)"]/*' />
+        void Cancel(TimeSpan timeout);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginUnload(System.AsyncCallback,System.Object)"]/*' />
+        IAsyncResult BeginUnload(AsyncCallback callback, object state);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginUnload(System.TimeSpan,System.AsyncCallback,System.Object)"]/*' />
+        IAsyncResult BeginUnload(TimeSpan timeout, AsyncCallback callback, object state);
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginTerminate(System.String,System.AsyncCallback,System.Object)"]/*' />
+        IAsyncResult BeginTerminate(string reason, AsyncCallback callback, object state);
+
+        
+        IAsyncResult BeginTerminate(Exception reason, AsyncCallback callback, object state);
+
+        
+        IAsyncResult BeginTerminate(string reason, TimeSpan timeout, AsyncCallback callback, object state);
+
+        
+        IAsyncResult BeginTerminate(Exception reason, TimeSpan timeout, AsyncCallback callback, object state);
+
+        
+        IAsyncResult BeginRun(AsyncCallback callback, object state);
+
+        
+        IAsyncResult BeginRun(TimeSpan timeout, AsyncCallback callback, object state);
+
+        
+        IAsyncResult BeginResumeBookmark(string bookmarkName, object value, AsyncCallback callback, object state);
+
+        
+        IAsyncResult BeginResumeBookmark(string bookmarkName, object value, TimeSpan timeout,
+                                                         AsyncCallback callback, object state);
+
+        IAsyncResult BeginResumeBookmark(Bookmark bookmark, object value, AsyncCallback callback, object state);
+
+        IAsyncResult BeginResumeBookmark(Bookmark bookmark, object value, TimeSpan timeout,
+                                                         AsyncCallback callback, object state);
     }
 }

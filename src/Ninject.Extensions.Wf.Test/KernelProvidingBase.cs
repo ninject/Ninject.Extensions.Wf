@@ -20,6 +20,7 @@
 namespace Ninject.Extensions.Wf
 {
     using System;
+    using Injection.Model;
 
     public class KernelProvidingBase : IDisposable
     {
@@ -52,6 +53,11 @@ namespace Ninject.Extensions.Wf
             {
                 this.Kernel.Dispose();
             }
+        }
+
+        protected void SetupDependencyBinding()
+        {
+            this.Kernel.Bind<IDependency>().To<Dependency>();
         }
     }
 }
