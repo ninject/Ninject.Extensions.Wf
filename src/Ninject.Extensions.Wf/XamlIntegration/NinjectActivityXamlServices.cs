@@ -25,21 +25,22 @@ namespace Ninject.Extensions.Wf.XamlIntegration
     using System.IO;
     using System.Xaml;
     using System.Xml;
+    using Injection;
 
     /// <summary>
     /// Wraps the functionality of the ActivityXamlServices
     /// </summary>
     public class NinjectActivityXamlServices : INinjectActivityXamlServices
     {
-        private readonly IKernel kernel;
+        private readonly IActivityInjector activityInjector;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NinjectActivityXamlServices"/> class.
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
-        public NinjectActivityXamlServices(IKernel kernel)
+        /// <param name="activityInjector">The activity injector.</param>
+        public NinjectActivityXamlServices(IActivityInjector activityInjector)
         {
-            this.kernel = kernel;
+            this.activityInjector = activityInjector;
         }
 
         /// <inheritdoc />
@@ -112,7 +113,7 @@ namespace Ninject.Extensions.Wf.XamlIntegration
         {
             var activity = activityLoader();
 
-            this.kernel.Inject(activity);
+            this.activityInjector.Inject(activity);
 
             return activity;
         }
