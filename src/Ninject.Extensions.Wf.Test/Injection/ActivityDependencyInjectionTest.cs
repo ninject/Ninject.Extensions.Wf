@@ -21,21 +21,19 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System;
     using System.Activities;
-    using System.Collections.Generic;
-    using Model;
+    using System.Activities.Statements;
     using Moq;
     using Xunit;
 
     public class ActivityDependencyInjectionTest : KernelProvidingBase
     {
         private ActivityDependencyInjection testee;
-        private Mock<IActivityResolver> activityResolver;
+        private Mock<IActivityInjector> activityInjector;
 
         public ActivityDependencyInjectionTest()
         {
-            this.activityResolver = new Mock<IActivityResolver>();
-            this.Kernel.Bind<IActivityResolver>().ToConstant(this.activityResolver.Object);
-
+            this.activityInjector = new Mock<IActivityInjector>();
+            this.Kernel.Bind<IActivityInjector>().ToConstant(this.activityInjector.Object);
 
             this.testee = new ActivityDependencyInjection(this.Kernel);
         }
@@ -54,64 +52,14 @@ namespace Ninject.Extensions.Wf.Injection
         }
 
         [Fact]
-        public void SetInstance_MustResolveActivitiesWithWorkflowDefinition()
+        public void SetInstance_MustInjectWithWorkflowDefinition()
         {
-            TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
-            WorkflowInvoker invoker = this.SetupWorkflowInvoker(activityWithDependencyAndAttribute);
+            var activity = new WriteLine();
+            WorkflowInvoker invoker = this.SetupWorkflowInvoker(activity);
 
             invoker.Invoke();
 
-            this.activityResolver.Verify(resolver => resolver.GetActivities(activityWithDependencyAndAttribute));
-        }
-
-        [Fact]
-        public void SetInstance_WhenBindingDefined_WhenInjectAttributeDefined_MustFullFillDependencyOnActivity()
-        {
-            this.SetupDependencyBinding();
-
-            TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
-
-            this.SetupResolver(activityWithDependencyAndAttribute);
-
-            WorkflowInvoker invoker = this.SetupWorkflowInvoker(activityWithDependencyAndAttribute);
-
-            invoker.Invoke();
-
-            Assert.NotNull(activityWithDependencyAndAttribute.Dependency);
-        }
-
-        [Fact]
-        public void SetInstance_WhenBindingDefined_WhenInjectAttributeNotDefined_MustNotFullFillDependencyOnActivity()
-        {
-            this.SetupDependencyBinding();
-
-            TestActivityWithDependency activityWithDependency = SetupActivityWithDependency();
-
-            this.SetupResolver(activityWithDependency);
-
-            WorkflowInvoker invoker = this.SetupWorkflowInvoker(activityWithDependency);
-
-            invoker.Invoke();
-
-            Assert.Null(activityWithDependency.Dependency);
-        }
-
-        [Fact]
-        public void SetInstance_WhenBindingNotDefined_WhenInjectAttributeDefined_MustMustThrowActivationException()
-        {
-            TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
-
-            this.SetupResolver(activityWithDependencyAndAttribute);
-
-            WorkflowInvoker invoker = this.SetupWorkflowInvoker(activityWithDependencyAndAttribute);
-
-            Assert.Throws<ActivationException>(() => invoker.Invoke());
-        }
-
-        private void SetupResolver(Activity root)
-        {
-            this.activityResolver.Setup(resolver => resolver.GetActivities(root))
-                .Returns(new List<Activity> { root });
+            this.activityInjector.Verify(injector => injector.Inject(activity));
         }
 
         private WorkflowInvoker SetupWorkflowInvoker(Activity activity)
@@ -119,16 +67,6 @@ namespace Ninject.Extensions.Wf.Injection
             WorkflowInvoker invoker = new WorkflowInvoker(activity);
             invoker.Extensions.Add(this.testee);
             return invoker;
-        }
-
-        private static TestActivityWithDependencyAndAttribute SetupActivityWithDependencyAttribute()
-        {
-            return new TestActivityWithDependencyAndAttribute();
-        }
-
-        private static TestActivityWithDependency SetupActivityWithDependency()
-        {
-            return new TestActivityWithDependency();
         }
     }
 }

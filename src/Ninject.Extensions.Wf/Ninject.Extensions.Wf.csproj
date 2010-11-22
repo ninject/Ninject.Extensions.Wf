@@ -61,7 +61,9 @@
     <Compile Include="EventArgs\NinjectWorkflowApplicationUnhandledExceptionEventArgs.cs" />
     <Compile Include="Extensions\ExtensionResolver.cs" />
     <Compile Include="Injection\ActivityDependencyInjection.cs" />
+    <Compile Include="Injection\ActivityInjector.cs" />
     <Compile Include="Injection\ActivityResolver.cs" />
+    <Compile Include="Injection\IActivityInjector.cs" />
     <Compile Include="Injection\IActivityResolver.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IResolveExtensions.cs" />

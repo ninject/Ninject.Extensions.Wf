@@ -29,37 +29,37 @@ namespace Ninject.Extensions.Wf.XamlIntegration
     /// </summary>
     public interface INinjectActivityXamlServices
     {
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.Load(System.IO.Stream)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.Load(System.IO.Stream)"]/*' />
         Activity Load(Stream stream);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.Load(System.String)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.Load(System.String)"]/*' />
         Activity Load(string fileName);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.Load(System.IO.TextReader)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.Load(System.IO.TextReader)"]/*' />
         Activity Load(TextReader textReader);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.Load(System.Xml.XmlReader)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.Load(System.Xml.XmlReader)"]/*' />
         Activity Load(XmlReader xmlReader);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.Load(System.Xaml.XamlReader)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.Load(System.Xaml.XamlReader)"]/*' />
         Activity Load(XamlReader xamlReader);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.CreateReader(System.IO.Stream)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.CreateReader(System.IO.Stream)"]/*' />
         XamlReader CreateReader(Stream stream);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.CreateReader(System.Xaml.XamlReader)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.CreateReader(System.Xaml.XamlReader)"]/*' />
         XamlReader CreateReader(XamlReader innerReader);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.CreateReader(System.Xaml.XamlReader,System.Xaml.XamlSchemaContext)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.CreateReader(System.Xaml.XamlReader,System.Xaml.XamlSchemaContext)"]/*' />
         XamlReader CreateReader(XamlReader innerReader, XamlSchemaContext schemaContext);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.CreateBuilderReader(System.Xaml.XamlReader)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.CreateBuilderReader(System.Xaml.XamlReader)"]/*' />
         XamlReader CreateBuilderReader(XamlReader innerReader);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.CreateBuilderReader(System.Xaml.XamlReader,System.Xaml.XamlSchemaContext)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.CreateBuilderReader(System.Xaml.XamlReader,System.Xaml.XamlSchemaContext)"]/*' />
         XamlReader CreateBuilderReader(XamlReader innerReader, XamlSchemaContext schemaContext);
 
-        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.ActivityXamlServices.CreateBuilderReader(System.Xaml.XamlWriter)"]/*' />
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.XamlIntegration.ActivityXamlServices.CreateBuilderWriter(System.Xaml.XamlWriter)"]/*' />
         XamlWriter CreateBuilderWriter(XamlWriter innerWriter);
     }
 }

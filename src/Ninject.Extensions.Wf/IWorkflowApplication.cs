@@ -31,31 +31,33 @@ namespace Ninject.Extensions.Wf
     {
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Unloaded"]/*' />
         /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
-        Action<NinjectWorkflowApplicationEventArgs> Unloaded { set; get; }
+        Action<NinjectWorkflowApplicationEventArgs> Unloaded { get; set; }
 
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.PersistableIdle"]/*' />
         /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
-        Func<NinjectWorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle { set; get; }
+        Func<NinjectWorkflowApplicationIdleEventArgs, PersistableIdleAction> PersistableIdle { get; set; }
 
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.OnUnhandledException"]/*' />
         /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
-        Func<NinjectWorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException { set; get; }
+        Func<NinjectWorkflowApplicationUnhandledExceptionEventArgs, UnhandledExceptionAction> OnUnhandledException { get; set; }
 
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.InstanceStore"]/*' />
-        InstanceStore InstanceStore { set; get; }
+        InstanceStore InstanceStore { get; set; }
 
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Idle"]/*' />
         /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
-        Action<NinjectWorkflowApplicationIdleEventArgs> Idle { set; get; }
+        Action<NinjectWorkflowApplicationIdleEventArgs> Idle { get; set; }
+
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Id"]/*' />
         Guid Id { get; }
 
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Completed"]/*' />
         /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
-        Action<NinjectWorkflowApplicationCompletedEventArgs> Completed { set; get; }
+        Action<NinjectWorkflowApplicationCompletedEventArgs> Completed { get; set; }
 
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Aborted"]/*' />
         /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
-        Action<NinjectWorkflowApplicationAbortedEventArgs> Aborted { set; get; }
+        Action<NinjectWorkflowApplicationAbortedEventArgs> Aborted { get; set; }
 
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.#ctor(System.Activities.Activity)"]/*' />
         /// <remarks>Adds the necessary extensions to build up workflows with ninject.</remarks>

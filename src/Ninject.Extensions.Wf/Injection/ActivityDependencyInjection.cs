@@ -37,9 +37,9 @@ namespace Ninject.Extensions.Wf.Injection
         private readonly IKernel kernel;
 
         /// <summary>
-        /// Enables to extension to resolve activities
+        /// Enables to extension to inject dependencies into activities
         /// </summary>
-        private readonly IActivityResolver activityResolver;
+        private readonly IActivityInjector activityInjector;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActivityDependencyInjection"/> class.
@@ -49,9 +49,9 @@ namespace Ninject.Extensions.Wf.Injection
         {
             this.kernel = kernel;
 
-            this.activityResolver = this.kernel.TryGet<IActivityResolver>();
+            this.activityInjector = this.kernel.TryGet<IActivityInjector>();
 
-            if (this.activityResolver == null)
+            if (this.activityInjector == null)
             {
                 throw new InvalidOperationException("WfExtensionModule must be loaded!");
             }
@@ -82,12 +82,7 @@ namespace Ninject.Extensions.Wf.Injection
         /// <param name="instance">The target workflow instance to set.</param>
         public void SetInstance(WorkflowInstanceProxy instance)
         {
-            var activities = this.activityResolver.GetActivities(instance.WorkflowDefinition);
-
-            foreach (var activity in activities)
-            {
-                this.kernel.Inject(activity);
-            }
+            this.activityInjector.Inject(instance.WorkflowDefinition);
         }
     }
 }

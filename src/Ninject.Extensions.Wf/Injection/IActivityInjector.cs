@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="WfExtensionModule.cs" company="bbv Software Services AG">
+// <copyright file="IActivityInjector.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,26 +17,12 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Modules
+namespace Ninject.Extensions.Wf.Injection
 {
-    using Injection;
-    using Ninject.Modules;
+    using System.Activities;
 
-    /// <summary>
-    /// This module loads all wf extension requirements into the kernel
-    /// </summary>
-    public class WfExtensionModule : NinjectModule
+    public interface IActivityInjector
     {
-        /// <summary>
-        /// Loads the module into the kernel.
-        /// </summary>
-        public override void Load()
-        {
-            this.Bind<IActivityResolver>().To<ActivityResolver>();
-            this.Bind<IActivityInjector>().To<ActivityInjector>();
-            this.Bind<ActivityDependencyInjection>().ToSelf();
-            this.Bind<IWorkflowApplication>().To<NinjectWorkflowApplication>();
-            this.Bind<IWorkflowInvoker>().To<NinjectWorkflowInvoker>();
-        }
+        void Inject(Activity root);
     }
 }

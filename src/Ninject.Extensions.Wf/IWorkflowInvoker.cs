@@ -26,24 +26,25 @@ namespace Ninject.Extensions.Wf
 
     public interface IWorkflowInvoker : IResolveExtensions
     {
-
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowInvoker.InvokeAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.TimeSpan,System.Object)"]/*' />
         void InvokeAsync(IDictionary<string, object> inputs, TimeSpan timeout, object userState);
 
-
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowInvoker.InvokeAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.Object)"]/*' />
         void InvokeAsync(IDictionary<string, object> inputs, object userState);
 
-
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowInvoker.InvokeAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.TimeSpan)"]/*' />
         void InvokeAsync(IDictionary<string, object> inputs, TimeSpan timeout);
 
-
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowInvoker.InvokeAsync(System.Collections.Generic.IDictionary{System.String,System.Object})"]/*' />
         void InvokeAsync(IDictionary<string, object> inputs);
 
-
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowInvoker.InvokeAsync(System.TimeSpan,System.Object)"]/*' />
         void InvokeAsync(TimeSpan timeout, object userState);
 
-
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowInvoker.InvokeAsync(System.TimeSpan)"]/*' />
         void InvokeAsync(TimeSpan timeout);
 
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowInvoker.InvokeAsync"]/*' />
         void InvokeAsync();
 
         void Initialize(Activity workflowDefinition);
