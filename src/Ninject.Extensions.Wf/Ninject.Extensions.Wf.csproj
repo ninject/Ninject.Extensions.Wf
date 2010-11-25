@@ -42,6 +42,7 @@
     <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.DurableInstancing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -78,8 +79,6 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\WorkflowInvokerExtensions.cs" />
-    <Compile Include="XamlIntegration\INinjectActivityXamlServices.cs" />
-    <Compile Include="XamlIntegration\NinjectActivityXamlServices.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
