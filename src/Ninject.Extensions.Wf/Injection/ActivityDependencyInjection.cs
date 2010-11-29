@@ -23,18 +23,18 @@ namespace Ninject.Extensions.Wf.Injection
     using System.Activities.Hosting;
     using System.Collections.Generic;
     using System.Linq;
-    using Ninject.Infrastructure;
+    using Syntax;
 
     /// <summary>
     /// Extension which resolves all activities recursively and builds them up
     /// with the provided kernel.
     /// </summary>
-    public class ActivityDependencyInjection : IWorkflowInstanceExtension, IHaveKernel
+    public class ActivityDependencyInjection : IWorkflowInstanceExtension
     {
         /// <summary>
         /// The kernel
         /// </summary>
-        private readonly IKernel kernel;
+        private readonly IResolutionRoot resolutionRoot;
 
         /// <summary>
         /// Enables to extension to inject dependencies into activities
@@ -44,25 +44,17 @@ namespace Ninject.Extensions.Wf.Injection
         /// <summary>
         /// Initializes a new instance of the <see cref="ActivityDependencyInjection"/> class.
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
-        public ActivityDependencyInjection(IKernel kernel)
+        /// <param name="resolutionRoot">The kernel.</param>
+        public ActivityDependencyInjection(IResolutionRoot resolutionRoot)
         {
-            this.kernel = kernel;
+            this.resolutionRoot = resolutionRoot;
 
-            this.activityInjector = this.kernel.TryGet<IActivityInjector>();
+            this.activityInjector = this.resolutionRoot.TryGet<IActivityInjector>();
 
             if (this.activityInjector == null)
             {
                 throw new InvalidOperationException("WfExtensionModule must be loaded!");
             }
-        }
-
-        /// <summary>
-        /// Gets the kernel.
-        /// </summary>
-        public IKernel Kernel
-        {
-            get { return this.kernel; }
         }
 
         /// <summary>

@@ -65,6 +65,7 @@
     <Compile Include="Injection\ActivityInjector.cs" />
     <Compile Include="Injection\ActivityResolver.cs" />
     <Compile Include="Injection\IActivityInjector.cs" />
+    <Compile Include="Injection\IActivityInjectorExtension.cs" />
     <Compile Include="Injection\IActivityResolver.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IResolveExtensions.cs" />

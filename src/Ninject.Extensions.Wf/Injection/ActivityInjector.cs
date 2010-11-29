@@ -21,8 +21,9 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System;
     using System.Activities;
+    using Infrastructure;
 
-    public class ActivityInjector : IActivityInjector
+    public class ActivityInjector : IActivityInjector, IHaveKernel
     {
         private readonly IKernel kernel;
         private readonly IActivityResolver activityResolver;
@@ -46,6 +47,11 @@ namespace Ninject.Extensions.Wf.Injection
             {
                 this.kernel.Inject(activity);
             }
+        }
+
+        public IKernel Kernel
+        {
+            get { return this.kernel; }
         }
     }
 }
