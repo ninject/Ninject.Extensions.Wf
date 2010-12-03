@@ -19,13 +19,12 @@
 
 namespace Ninject.Extensions.Wf.Injection
 {
-    using System;
     using System.Activities;
     using System.Activities.Statements;
     using Moq;
     using Xunit;
 
-    public class ActivityDependencyInjectionTest : KernelProvidingBase
+    public class ActivityDependencyInjectionTest
     {
         private ActivityDependencyInjection testee;
         private Mock<IActivityInjector> activityInjector;
@@ -33,16 +32,8 @@ namespace Ninject.Extensions.Wf.Injection
         public ActivityDependencyInjectionTest()
         {
             this.activityInjector = new Mock<IActivityInjector>();
-            this.Kernel.Bind<IActivityInjector>().ToConstant(this.activityInjector.Object);
 
-            this.testee = new ActivityDependencyInjection(this.Kernel);
-        }
-
-        [Fact]
-        public void Constructor_MustThrowInvalidOperationExceptionWhenRequiredBindingsNotDefined()
-        {
-            var k = new StandardKernel(new NinjectSettings { LoadExtensions = false });
-            Assert.Throws<InvalidOperationException>(() => new ActivityDependencyInjection(k));
+            this.testee = new ActivityDependencyInjection(this.activityInjector.Object);
         }
 
         [Fact]

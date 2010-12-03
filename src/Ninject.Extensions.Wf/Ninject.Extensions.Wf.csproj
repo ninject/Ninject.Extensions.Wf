@@ -64,11 +64,14 @@
     <Compile Include="Injection\ActivityDependencyInjection.cs" />
     <Compile Include="Injection\ActivityInjector.cs" />
     <Compile Include="Injection\ActivityResolver.cs" />
+    <Compile Include="Injection\Extensions\FuncActivityInjectorExtension.cs" />
+    <Compile Include="Injection\Extensions\IInjectOnKernelExtension.cs" />
     <Compile Include="Injection\IActivityInjector.cs" />
     <Compile Include="Injection\IActivityInjectorExtension.cs" />
     <Compile Include="Injection\IActivityResolver.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IResolveExtensions.cs" />
+    <Compile Include="Injection\Extensions\InjectOnKernelExtension.cs" />
     <Compile Include="IWorkflowApplication.cs" />
     <Compile Include="IWorkflowInvoker.cs" />
     <Compile Include="Modules\WfExtensionModule.cs" />

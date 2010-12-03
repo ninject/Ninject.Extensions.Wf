@@ -51,7 +51,7 @@ namespace Ninject.Extensions.Wf.Extensions
         }
 
         /// <summary>
-        /// Adds a single ton
+        /// Adds an extension with a singleton scope to the underlying workflow.
         /// </summary>
         /// <typeparam name="TExtension">The extension to add.</typeparam>
         /// <remarks>This is independent from the scope defined on the ninject

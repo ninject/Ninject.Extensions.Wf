@@ -54,6 +54,9 @@
     <Reference Include="xunit">
       <HintPath>..\..\tools\xunit.net\xunit.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\..\tools\xunit.net\xunit.extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
@@ -63,6 +66,8 @@
     <Compile Include="Injection\ActivityDependencyInjectionTest.cs" />
     <Compile Include="Injection\ActivityInjectorTest.cs" />
     <Compile Include="Injection\ActivityResolverTest.cs" />
+    <Compile Include="Injection\Extensions\FuncActivityInjectorExtensionTest.cs" />
+    <Compile Include="Injection\Extensions\InjectOnKernelExtensionTest.cs" />
     <Compile Include="Injection\Model\Dependency.cs" />
     <Compile Include="Injection\Model\IDependency.cs" />
     <Compile Include="Injection\Model\TestActivityWithDependency.cs" />
@@ -93,6 +98,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

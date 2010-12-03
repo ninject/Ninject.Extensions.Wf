@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="NinjectWorkflowApplicationEventArgs.cs" company="bbv Software Services AG">
+// <copyright file="FuncActivityInjectorExtension.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,32 +17,35 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf
+namespace Ninject.Extensions.Wf.Injection
 {
     using System;
     using System.Activities;
 
-    public class NinjectWorkflowApplicationEventArgs : EventArgs
+    public class FuncActivityInjectorExtension : IActivityInjectorExtension
     {
-        private readonly WorkflowApplicationEventArgs workflowApplicationArguments;
+        private readonly Func<Activity, bool> canProcess;
+        private readonly Action<Activity> processAction;
 
-        public NinjectWorkflowApplicationEventArgs(Guid instanceId)
+        public FuncActivityInjectorExtension(Action<Activity> processAction)
+            : this(activity => true, processAction)
         {
-            this.InstanceId = instanceId;
         }
 
-        internal NinjectWorkflowApplicationEventArgs(WorkflowApplicationEventArgs workflowApplicationArguments)
+        public FuncActivityInjectorExtension(Func<Activity, bool> canProcess, Action<Activity> processAction)
         {
-            this.workflowApplicationArguments = workflowApplicationArguments;
-
-            this.InstanceId = this.Arguments.InstanceId;
+            this.processAction = processAction;
+            this.canProcess = canProcess;
         }
 
-        public WorkflowApplicationEventArgs Arguments
+        public bool CanProcess(Activity activity)
         {
-            get { return this.workflowApplicationArguments; }
+            return this.canProcess(activity);
         }
 
-        public Guid InstanceId { get; private set; }
+        public void Process(Activity activity)
+        {
+            this.processAction(activity);
+        }
     }
 }

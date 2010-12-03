@@ -37,6 +37,7 @@ namespace Ninject.Extensions.Wf.Modules
             this.Bind<ActivityDependencyInjection>().ToSelf();
             this.Bind<IWorkflowApplication>().To<NinjectWorkflowApplication>();
             this.Bind<IWorkflowInvoker>().To<NinjectWorkflowInvoker>();
+            this.Bind<IActivityInjectorExtension>().To<InjectOnKernelExtension>();
         }
     }
 }

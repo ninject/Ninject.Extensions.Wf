@@ -21,6 +21,7 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System.Activities;
     using System.Collections.Generic;
+    using System.Text;
     using Model;
     using Moq;
     using Xunit;
@@ -28,48 +29,79 @@ namespace Ninject.Extensions.Wf.Injection
     public class ActivityInjectorTest : KernelProvidingBase
     {
         private Mock<IActivityResolver> activityResolver;
+
+        private Mock<IActivityInjectorExtension> extension;
+
+        private Mock<IActivityInjectorExtension> anotherExtension;
+
+        private Mock<IInjectOnKernelExtension> injectOnKernelExtension;
+
         private ActivityInjector testee;
 
         public ActivityInjectorTest()
         {
+            this.extension = new Mock<IActivityInjectorExtension>();
+            this.anotherExtension = new Mock<IActivityInjectorExtension>();
+            this.injectOnKernelExtension = new Mock<IInjectOnKernelExtension>();
+
             this.activityResolver = new Mock<IActivityResolver>();
 
-            this.testee = new ActivityInjector(this.Kernel, this.activityResolver.Object);
+            this.testee = new ActivityInjector(this.activityResolver.Object, new List<IActivityInjectorExtension> { this.extension.Object, this.injectOnKernelExtension.Object, this.anotherExtension.Object });
         }
 
         [Fact]
-        public void Inject_WhenBindingDefined_WhenInjectAttributeDefined_MustFullFillDependencyOnActivity()
+        public void Inject_WhenCanProcessIndicatesTrue_MustProcessActivityOnExtension()
         {
             this.SetupDependencyBinding();
 
-            TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
-            this.SetupActivityResolver(activityWithDependencyAndAttribute);
+            var activity = this.SetupActivityResolver();
+            this.extension.Setup(e => e.CanProcess(activity)).Returns(true);
 
-            this.testee.Inject(activityWithDependencyAndAttribute);
+            this.testee.Inject(activity);
 
-            Assert.NotNull(activityWithDependencyAndAttribute.Dependency);
+            this.extension.Verify(e => e.Process(activity));
         }
 
         [Fact]
-        public void Inject_WhenBindingDefined_WhenInjectAttributeNotDefined_MustNotFullFillDependencyOnActivity()
+        public void Inject_WhenCanProcessIndicatesFalse_MustNotProcessActivityOnExtension()
         {
             this.SetupDependencyBinding();
 
-            TestActivityWithDependency activityWithDependency = SetupActivityWithDependency();
-            this.SetupActivityResolver(activityWithDependency);
+            var activity = this.SetupActivityResolver();
+            this.extension.Setup(e => e.CanProcess(activity)).Returns(false);
 
-            this.testee.Inject(activityWithDependency);
+            this.testee.Inject(activity);
 
-            Assert.Null(activityWithDependency.Dependency);
+            this.extension.Verify(e => e.Process(activity), Times.Never());
         }
 
         [Fact]
-        public void Inject_WhenBindingNotDefined_WhenInjectAttributeDefined_MustMustThrowActivationException()
+        public void Inject_MustFirstProcessIInjectOnKernelExtension()
+        {
+            var builder = new StringBuilder();
+            
+            this.SetupDependencyBinding();
+
+            var activity = this.SetupActivityResolver();
+            this.extension.Setup(e => e.CanProcess(activity)).Returns(true);
+            this.extension.Setup(e => e.Process(activity)).Callback<Activity>(a => builder.AppendLine("Extension"));
+
+            this.anotherExtension.Setup(e => e.CanProcess(activity)).Returns(true);
+            this.anotherExtension.Setup(e => e.Process(activity)).Callback<Activity>(a => builder.AppendLine("AnotherExtension"));
+
+            this.injectOnKernelExtension.Setup(e => e.CanProcess(activity)).Returns(true);
+            this.injectOnKernelExtension.Setup(e => e.Process(activity)).Callback<Activity>(a => builder.AppendLine("InjectOnKernelExtension"));
+
+            this.testee.Inject(activity);
+
+            Assert.Equal("InjectOnKernelExtension\r\nExtension\r\nAnotherExtension\r\n", builder.ToString());
+        }
+
+        private TestActivityWithDependencyAndAttribute SetupActivityResolver()
         {
             TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
             this.SetupActivityResolver(activityWithDependencyAndAttribute);
-
-            Assert.Throws<ActivationException>(() => this.testee.Inject(activityWithDependencyAndAttribute));
+            return activityWithDependencyAndAttribute;
         }
 
         private void SetupActivityResolver(Activity activity)

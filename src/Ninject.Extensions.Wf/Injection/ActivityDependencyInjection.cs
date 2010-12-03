@@ -19,11 +19,9 @@
 
 namespace Ninject.Extensions.Wf.Injection
 {
-    using System;
     using System.Activities.Hosting;
     using System.Collections.Generic;
     using System.Linq;
-    using Syntax;
 
     /// <summary>
     /// Extension which resolves all activities recursively and builds them up
@@ -32,11 +30,6 @@ namespace Ninject.Extensions.Wf.Injection
     public class ActivityDependencyInjection : IWorkflowInstanceExtension
     {
         /// <summary>
-        /// The kernel
-        /// </summary>
-        private readonly IResolutionRoot resolutionRoot;
-
-        /// <summary>
         /// Enables to extension to inject dependencies into activities
         /// </summary>
         private readonly IActivityInjector activityInjector;
@@ -44,17 +37,10 @@ namespace Ninject.Extensions.Wf.Injection
         /// <summary>
         /// Initializes a new instance of the <see cref="ActivityDependencyInjection"/> class.
         /// </summary>
-        /// <param name="resolutionRoot">The kernel.</param>
-        public ActivityDependencyInjection(IResolutionRoot resolutionRoot)
+        /// <param name="activityInjector">The activity injector.</param>
+        public ActivityDependencyInjection(IActivityInjector activityInjector)
         {
-            this.resolutionRoot = resolutionRoot;
-
-            this.activityInjector = this.resolutionRoot.TryGet<IActivityInjector>();
-
-            if (this.activityInjector == null)
-            {
-                throw new InvalidOperationException("WfExtensionModule must be loaded!");
-            }
+            this.activityInjector = activityInjector;
         }
 
         /// <summary>

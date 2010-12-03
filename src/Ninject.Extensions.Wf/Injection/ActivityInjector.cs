@@ -21,37 +21,39 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System;
     using System.Activities;
-    using Infrastructure;
+    using System.Collections.Generic;
+    using System.Linq;
 
-    public class ActivityInjector : IActivityInjector, IHaveKernel
+    public class ActivityInjector : IActivityInjector
     {
-        private readonly IKernel kernel;
         private readonly IActivityResolver activityResolver;
+        private readonly IEnumerable<IActivityInjectorExtension> extensions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActivityInjector"/> class.
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
         /// <param name="activityResolver">The activity resolver.</param>
-        public ActivityInjector(IKernel kernel, IActivityResolver activityResolver)
+        /// <param name="extensions">The extensions.</param>
+        public ActivityInjector(IActivityResolver activityResolver, IEnumerable<IActivityInjectorExtension> extensions)
         {
+            this.extensions = extensions;
             this.activityResolver = activityResolver;
-            this.kernel = kernel;
         }
 
         public void Inject(Activity root)
         {
             var activities = this.activityResolver.GetActivities(root);
 
+            var injectOnKernelExtension = this.extensions.OfType<IInjectOnKernelExtension>().Single();
+
             foreach (Activity activity in activities)
             {
-                this.kernel.Inject(activity);
-            }
-        }
+                Activity activity1 = activity;
 
-        public IKernel Kernel
-        {
-            get { return this.kernel; }
+                injectOnKernelExtension.Process(activity1);
+
+                this.extensions.Where(e => e.CanProcess(activity1) && !e.Equals(injectOnKernelExtension)).ToList().ForEach(e => e.Process(activity1));
+            }
         }
     }
 }
