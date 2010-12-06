@@ -6,15 +6,14 @@ Let us quickly dive into an example how this extension can be useful. Imagine yo
 
 	(1) Observes a given folder for file changes. When a new file arrives in the observed folder the workflow is resumed.
 	(2) The new file which is indicated by the file changed event is opened and parsed by an IParser implementation
-	(3) The parsed values are passed to a step which transformes the parsed values into a new format as specified by the ITransformer.
-	(4) The result is passed to the client which invoked the workflow.
+	(3) The result is passed to the client which invoked the workflow.
 	
 We have the following key problems now with classical Windows Workflow Foundation:
 
 	(1) How to get IFolderWatcher into the step which observes a given folder for file changes.
 	(2) How to get IParser into the step which parses the file
-	(3) How to get ITransformer into the step which transformes the parsed values
-	(4) For event processing we need extensions which might need external dependencies.
+	(3) For event processing we need extensions which might need external dependencies.
+	(4) How to unit test WorkflowInvoker and WorkflowApplication events like Completed, Faulted etc.
 
     public class FileInputTransformationWorkflow : Activity
     {
@@ -32,11 +31,10 @@ We have the following key problems now with classical Windows Workflow Foundatio
                     {
                         var path = new Variable<string>();
                         var parsedValues = new Variable<IDictionary<string, double>>();
-                        var transformedValues = new Variable<IDictionary<string, double>>();
 
                         return new Sequence
                             {
-                                Variables = { path, parsedValues, transformedValues },
+                                Variables = { path, parsedValues },
                                 Activities =
                                     {
                                         new ObserveFolderStep
@@ -50,11 +48,7 @@ We have the following key problems now with classical Windows Workflow Foundatio
                                                 FilePath = new InArgument<string>(path),
                                                 ParsedValues = new OutArgument<IDictionary<string, double>>(parsedValues),
                                             },
-                                        new TransformationStep
-                                            {
-                                                ParsedValues = new InArgument<IDictionary<string, double>>(parsedValues),
-                                                TransformedValues = new OutArgument<IDictionary<string, double>>(transformedValues),
-                                            },
+										...
                                     }
                             };
                     };
@@ -139,22 +133,8 @@ We have the following key problems now with classical Windows Workflow Foundatio
         }
     }
 	
-    public sealed class TransformationStep : CodeActivity
-    {
-        [RequiredArgument]
-        public InArgument<IDictionary<string, double>> ParsedValues { get; set; }
+How to hook into the injection chain?
 
-        public OutArgument<IDictionary<string, double>> TransformedValues { get; set; }
+this.Bind<IActivityInjectorExtension>().To<YourExtension>();
 
-        [Inject]
-        public ITransformer Transformer { get; set; }
-
-        protected override void Execute(CodeActivityContext context)
-        {
-            var parsed = this.ParsedValues.Get(context);
-
-            var transformed = this.Transformer.Transform(parsed);
-
-            this.TransformedValues.Set(context, transformed);
-        }
-    }
+The extensions are collected upon creation of the IActivityInjector. The order of the extension invocation is not predictable.	
