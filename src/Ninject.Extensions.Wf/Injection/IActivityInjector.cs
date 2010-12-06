@@ -21,8 +21,16 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System.Activities;
 
+    /// <summary>
+    /// The activity injector is responsible for processing all activities
+    /// starting from the given root activity.
+    /// </summary>
     public interface IActivityInjector
     {
+        /// <summary>
+        /// Begins the injection process starting from the root activity.
+        /// </summary>
+        /// <param name="root">The root activity.</param>
         void Inject(Activity root);
     }
 }

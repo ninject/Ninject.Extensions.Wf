@@ -19,9 +19,11 @@
 
 namespace Ninject.Extensions.Wf.Injection
 {
+    using System;
     using System.Activities;
     using System.Collections.Generic;
     using System.Text;
+    using Extensions;
     using Model;
     using Moq;
     using Xunit;
@@ -47,6 +49,21 @@ namespace Ninject.Extensions.Wf.Injection
             this.activityResolver = new Mock<IActivityResolver>();
 
             this.testee = new ActivityInjector(this.activityResolver.Object, new List<IActivityInjectorExtension> { this.extension.Object, this.injectOnKernelExtension.Object, this.anotherExtension.Object });
+        }
+
+        [Fact]
+        public void Constructor_MustThrowExceptionWhenNoInjectOnKernelExtensionContained()
+        {
+            Assert.Throws<InvalidOperationException>(
+                () =>
+                    {
+                        var extensions = new List<IActivityInjectorExtension>
+                                             {
+                                                 this.extension.Object,
+                                                 this.anotherExtension.Object
+                                             };
+                        new ActivityInjector(this.activityResolver.Object, extensions);
+                    });
         }
 
         [Fact]

@@ -21,10 +21,26 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System.Activities;
 
+    /// <summary>
+    /// An activity injector extension allows to hook into the injection
+    /// process. Registered activity injector extensions are processed after the
+    /// the internal extensions.
+    /// </summary>
     public interface IActivityInjectorExtension
     {
+        /// <summary>
+        /// Determines whether this instance can process the specified activity.
+        /// </summary>
+        /// <param name="activity">The activity.</param>
+        /// <returns>
+        /// <c>true</c> if this instance can process the specified activity; otherwise, <c>false</c>.
+        /// </returns>
         bool CanProcess(Activity activity);
 
+        /// <summary>
+        /// Processes the specified activity.
+        /// </summary>
+        /// <param name="activity">The activity.</param>
         void Process(Activity activity);
     }
 }

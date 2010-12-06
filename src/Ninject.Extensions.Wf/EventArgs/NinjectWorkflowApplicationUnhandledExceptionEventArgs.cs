@@ -40,13 +40,14 @@ namespace Ninject.Extensions.Wf
             this.ExceptionSourceInstanceId = workflowApplicationUnhandledExceptionEventArgs.ExceptionSourceInstanceId;
         }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationUnhandledExceptionEventArgs.UnhandledException"]/*' />
         public Exception UnhandledException { get; private set; }
 
-        public Activity ExceptionSource
-        { get; private set; }
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationUnhandledExceptionEventArgs.ExceptionSource"]/*' />
+        public Activity ExceptionSource { get; private set; }
 
-        public string ExceptionSourceInstanceId
-        { get; private set; }
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationUnhandledExceptionEventArgs.ExceptionSourceInstanceId"]/*' />
+        public string ExceptionSourceInstanceId { get; private set; }
 
         public new WorkflowApplicationUnhandledExceptionEventArgs Arguments
         {

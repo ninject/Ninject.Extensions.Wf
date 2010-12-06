@@ -20,6 +20,7 @@
 namespace Ninject.Extensions.Wf.Modules
 {
     using Injection;
+    using Injection.Extensions;
     using Ninject.Modules;
 
     /// <summary>

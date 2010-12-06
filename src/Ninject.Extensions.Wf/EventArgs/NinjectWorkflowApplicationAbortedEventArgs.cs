@@ -34,6 +34,7 @@ namespace Ninject.Extensions.Wf
             this.Reason = workflowApplicationAbortedEventArgs.Reason;
         }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationAbortedEventArgs.Reason"]/*' />
         public Exception Reason
         {
             get; private set;

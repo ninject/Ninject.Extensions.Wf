@@ -43,6 +43,7 @@ namespace Ninject.Extensions.Wf
             get { return this.workflowApplicationArguments; }
         }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationEventArgs.InstanceId"]/*' />
         public Guid InstanceId { get; private set; }
     }
 }

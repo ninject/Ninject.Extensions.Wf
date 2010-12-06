@@ -39,6 +39,7 @@ namespace Ninject.Extensions.Wf
                 .Select(info => new NinjectBookmarkInfo(info)).ToList().AsReadOnly();
         }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationIdleEventArgs.Bookmarks"]/*' />
         public ReadOnlyCollection<NinjectBookmarkInfo> Bookmarks
         {
             get;

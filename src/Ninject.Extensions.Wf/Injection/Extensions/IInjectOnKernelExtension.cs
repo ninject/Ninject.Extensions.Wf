@@ -17,8 +17,12 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Injection
+namespace Ninject.Extensions.Wf.Injection.Extensions
 {
+    /// <summary>
+    /// Special marker interface which differentiates the inject on kernel
+    /// extension from the other extensions.
+    /// </summary>
     internal interface IInjectOnKernelExtension : IActivityInjectorExtension
     {
     }

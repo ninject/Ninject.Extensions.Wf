@@ -23,11 +23,14 @@ namespace Ninject.Extensions.Wf.Injection
     using System.Activities;
     using System.Collections.Generic;
     using System.Linq;
+    using Extensions;
 
     public class ActivityInjector : IActivityInjector
     {
         private readonly IActivityResolver activityResolver;
+
         private readonly IEnumerable<IActivityInjectorExtension> extensions;
+        private readonly IInjectOnKernelExtension injectOnKernelExtension;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActivityInjector"/> class.
@@ -38,21 +41,31 @@ namespace Ninject.Extensions.Wf.Injection
         {
             this.extensions = extensions;
             this.activityResolver = activityResolver;
+            this.injectOnKernelExtension = extensions.OfType<IInjectOnKernelExtension>().SingleOrDefault();
+
+            if (this.injectOnKernelExtension == null)
+            {
+                throw new InvalidOperationException("IInjectOnKernelExtension not found!");
+            }
+
+            this.extensions = extensions.Where(e => !e.Equals(this.injectOnKernelExtension));
         }
 
+        /// <summary>
+        /// Begins the injection process starting from the root activity.
+        /// </summary>
+        /// <param name="root">The root activity.</param>
         public void Inject(Activity root)
         {
             var activities = this.activityResolver.GetActivities(root);
-
-            var injectOnKernelExtension = this.extensions.OfType<IInjectOnKernelExtension>().Single();
 
             foreach (Activity activity in activities)
             {
                 Activity activity1 = activity;
 
-                injectOnKernelExtension.Process(activity1);
+                this.injectOnKernelExtension.Process(activity1);
 
-                this.extensions.Where(e => e.CanProcess(activity1) && !e.Equals(injectOnKernelExtension)).ToList().ForEach(e => e.Process(activity1));
+                this.extensions.Where(e => e.CanProcess(activity1)).ToList().ForEach(e => e.Process(activity1));
             }
         }
     }

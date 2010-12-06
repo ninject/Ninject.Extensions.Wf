@@ -44,10 +44,13 @@ namespace Ninject.Extensions.Wf
             get { return (WorkflowApplicationCompletedEventArgs)base.Arguments; }
         }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationCompletedEventArgs.CompletionState"]/*' />
         public ActivityInstanceState CompletionState { get; private set; }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationCompletedEventArgs.Outputs"]/*' />
         public IDictionary<string, object> Outputs { get; private set; }
 
+        /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationCompletedEventArgs.TerminationException"]/*' />
         public Exception TerminationException { get; private set; }
     }
 }
