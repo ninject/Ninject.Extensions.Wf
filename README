@@ -1,0 +1,160 @@
+Dependency injection with Windows Workflow Foundation 4 can be very complex. 
+
+This extension allows to use property injection on Windows Workflow Activities. 
+
+Let us quickly dive into an example how this extension can be useful. Imagine you have a workflow which does the following:
+
+	(1) Observes a given folder for file changes. When a new file arrives in the observed folder the workflow is resumed.
+	(2) The new file which is indicated by the file changed event is opened and parsed by an IParser implementation
+	(3) The parsed values are passed to a step which transformes the parsed values into a new format as specified by the ITransformer.
+	(4) The result is passed to the client which invoked the workflow.
+	
+We have the following key problems now with classical Windows Workflow Foundation:
+
+	(1) How to get IFolderWatcher into the step which observes a given folder for file changes.
+	(2) How to get IParser into the step which parses the file
+	(3) How to get ITransformer into the step which transformes the parsed values
+	(4) For event processing we need extensions which might need external dependencies.
+
+    public class FileInputTransformationWorkflow : Activity
+    {
+        [RequiredArgument]
+        public InArgument<string> Filter { get; set; }
+
+		[RequiredArgument]
+        public InArgument<string> Folder { get; set; }
+
+        protected override Func<Activity> Implementation
+        {
+            get
+            {
+                return () =>
+                    {
+                        var path = new Variable<string>();
+                        var parsedValues = new Variable<IDictionary<string, double>>();
+                        var transformedValues = new Variable<IDictionary<string, double>>();
+
+                        return new Sequence
+                            {
+                                Variables = { path, parsedValues, transformedValues },
+                                Activities =
+                                    {
+                                        new ObserveFolderStep
+                                            {
+                                                Folder = new InArgument<string>(env => env.GetValue(this.Folder)),
+                                                Filter = new InArgument<string>(env => env.GetValue(this.Filter)),
+                                                Path = new OutArgument<string>(path),
+                                            },
+                                        new ParseDataStep
+                                            {
+                                                FilePath = new InArgument<string>(path),
+                                                ParsedValues = new OutArgument<IDictionary<string, double>>(parsedValues),
+                                            },
+                                        new TransformationStep
+                                            {
+                                                ParsedValues = new InArgument<IDictionary<string, double>>(parsedValues),
+                                                TransformedValues = new OutArgument<IDictionary<string, double>>(transformedValues),
+                                            },
+                                    }
+                            };
+                    };
+            }
+
+            set
+            {
+                base.Implementation = value;
+            }
+        }
+    }
+	
+    public sealed class ObserveFolderStep : NativeActivity
+    {
+        [RequiredArgument]
+        public InArgument<string> Filter { get; set; }
+
+
+        [RequiredArgument]
+        public InArgument<string> Folder { get; set; }
+
+        public OutArgument<string> Path { get; set; }
+
+        [Inject]
+        public IFolderWatcher FolderWatcher { get; set; }
+
+        protected override bool CanInduceIdle
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        protected override void CacheMetadata(NativeActivityMetadata metadata)
+        {
+            // Tell the runtime that we need this extension
+            metadata.RequireExtension(typeof(IObserveFolderExtension));
+
+            base.CacheMetadata(metadata);
+        }
+
+        protected override void Execute(NativeActivityContext context)
+        {
+            var observeExtension = context.GetExtension<IObserveFolderExtension>();
+
+            this.FolderWatcher.Folder = this.Folder.Get(context);
+            this.FolderWatcher.Filter = this.Filter.Get(context);
+
+            observeExtension.AddFileChangedCallback(this.FolderWatcher);
+
+            this.FolderWatcher.StartObservation();
+
+            context.CreateBookmark(observeExtension.Bookmark, this.OnFileChanged);
+        }
+
+        private void OnFileChanged(ActivityContext context, Bookmark bookmark, object value)
+        {
+            this.FolderWatcher.StopObservation();
+
+            this.Path.Set(context, (string)value);
+        }
+	}
+	
+    public sealed class ParseDataStep : CodeActivity
+    {
+        [RequiredArgument]
+        public InArgument<string> Path { get; set; }
+
+        public OutArgument<IDictionary<string, double>> ParsedValues { get; set; }
+
+        [Inject]
+        public IParser Parser { get; set; }    
+
+        protected override void Execute(CodeActivityContext context)
+        {
+            var filePath = this.Path.Get(context);
+
+            var result = this.Parser.Parse(filePath);
+
+            this.ParsedValues.Set(context, result);
+        }
+    }
+	
+    public sealed class TransformationStep : CodeActivity
+    {
+        [RequiredArgument]
+        public InArgument<IDictionary<string, double>> ParsedValues { get; set; }
+
+        public OutArgument<IDictionary<string, double>> TransformedValues { get; set; }
+
+        [Inject]
+        public ITransformer Transformer { get; set; }
+
+        protected override void Execute(CodeActivityContext context)
+        {
+            var parsed = this.ParsedValues.Get(context);
+
+            var transformed = this.Transformer.Transform(parsed);
+
+            this.TransformedValues.Set(context, transformed);
+        }
+    }
