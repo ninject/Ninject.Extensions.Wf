@@ -24,14 +24,26 @@ namespace Ninject.Extensions.Wf
     using System.Collections.ObjectModel;
     using System.Linq;
 
+    /// <summary>
+    /// Wraps the <see cref="WorkflowApplicationIdleEventArgs"/>.
+    /// </summary>
     public class NinjectWorkflowApplicationIdleEventArgs : NinjectWorkflowApplicationEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationIdleEventArgs"/> class.
+        /// </summary>
+        /// <param name="instanceId">The instance id.</param>
+        /// <param name="bookmarks">The bookmarks.</param>
         public NinjectWorkflowApplicationIdleEventArgs(Guid instanceId, ReadOnlyCollection<NinjectBookmarkInfo> bookmarks)
             : base(instanceId)
         {
             this.Bookmarks = bookmarks;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationIdleEventArgs"/> class.
+        /// </summary>
+        /// <param name="workflowApplicationIdleEventArgs">The <see cref="System.Activities.WorkflowApplicationIdleEventArgs"/> instance containing the event data.</param>
         public NinjectWorkflowApplicationIdleEventArgs(WorkflowApplicationIdleEventArgs workflowApplicationIdleEventArgs)
             : base(workflowApplicationIdleEventArgs)
         {
@@ -46,6 +58,10 @@ namespace Ninject.Extensions.Wf
             private set;
         }
 
+        /// <summary>
+        /// Gets the underlying <see cref="WorkflowApplicationIdleEventArgs"/>.
+        /// </summary>
+        /// <value>The <see cref="WorkflowApplicationIdleEventArgs"/>.</value>
         public new WorkflowApplicationIdleEventArgs Arguments
         {
             get { return (WorkflowApplicationIdleEventArgs) base.Arguments; }

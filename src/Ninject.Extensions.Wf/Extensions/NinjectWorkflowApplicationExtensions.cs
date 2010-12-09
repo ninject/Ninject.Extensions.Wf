@@ -21,8 +21,18 @@ namespace Ninject.Extensions.Wf.Extensions
 {
     using System.Activities;
 
+    /// <summary>
+    /// Contains extension methods for the <see cref="IWorkflowApplication"/>.
+    /// </summary>
     public static class NinjectWorkflowApplicationExtensions
     {
+        /// <summary>
+        /// Initializes the specified application.
+        /// </summary>
+        /// <typeparam name="TInput">The type of the input.</typeparam>
+        /// <param name="application">The application.</param>
+        /// <param name="workflowDefinition">The workflow definition.</param>
+        /// <param name="inputs">The inputs.</param>
         public static void Initialize<TInput>(this IWorkflowApplication application, Activity workflowDefinition, TInput inputs)
             where TInput : class
         {

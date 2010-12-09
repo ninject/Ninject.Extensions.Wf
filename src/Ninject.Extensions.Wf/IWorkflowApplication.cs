@@ -27,8 +27,12 @@ namespace Ninject.Extensions.Wf
     using System.Runtime.DurableInstancing;
     using Extensions;
 
+    /// <summary>
+    /// Interface definition for the workflow application.
+    /// </summary>
     public interface IWorkflowApplication : IResolveExtensions
     {
+#pragma warning disable 1584,1658
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplication.Unloaded"]/*' />
         /// <remarks>Underlying event arguments are wrapped for testing purpose.</remarks>
         Action<NinjectWorkflowApplicationEventArgs> Unloaded { get; set; }
@@ -163,31 +167,34 @@ namespace Ninject.Extensions.Wf
         /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginTerminate(System.String,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginTerminate(string reason, AsyncCallback callback, object state);
 
-        
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginTerminate(System.Exception,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginTerminate(Exception reason, AsyncCallback callback, object state);
 
-        
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginTerminate(System.String,System.TimeSpan,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginTerminate(string reason, TimeSpan timeout, AsyncCallback callback, object state);
 
-        
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginTerminate(System.Exception,System.TimeSpan,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginTerminate(Exception reason, TimeSpan timeout, AsyncCallback callback, object state);
 
-        
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginRun(System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginRun(AsyncCallback callback, object state);
 
-        
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginRun(System.TimeSpan,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginRun(TimeSpan timeout, AsyncCallback callback, object state);
 
-        
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginResumeBookmark(System.String,System.Object,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginResumeBookmark(string bookmarkName, object value, AsyncCallback callback, object state);
 
-        
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginResumeBookmark(System.String,System.Object,System.TimeSpan,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginResumeBookmark(string bookmarkName, object value, TimeSpan timeout,
                                                          AsyncCallback callback, object state);
 
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginResumeBookmark(System.Activities.Bookmark,System.Object,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginResumeBookmark(Bookmark bookmark, object value, AsyncCallback callback, object state);
 
+        /// <include file='../System.Activities.xml' path='/doc/members/member[@name="M:System.Activities.WorkflowApplication.BeginResumeBookmark(System.Activities.Bookmark,System.Object,System.TimeSpan,System.AsyncCallback,System.Object)"]/*' />
         IAsyncResult BeginResumeBookmark(Bookmark bookmark, object value, TimeSpan timeout,
                                                          AsyncCallback callback, object state);
+#pragma warning restore 1584,1658
     }
 }

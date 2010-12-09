@@ -22,27 +22,51 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
     using System;
     using System.Activities;
 
+    /// <summary>
+    /// An injector extension which allows to use delegates.
+    /// </summary>
     public class FuncActivityInjectorExtension : IActivityInjectorExtension
     {
         private readonly Func<Activity, bool> canProcess;
+
         private readonly Action<Activity> processAction;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FuncActivityInjectorExtension"/> class.
+        /// </summary>
+        /// <param name="processAction">The process action.</param>
         public FuncActivityInjectorExtension(Action<Activity> processAction)
             : this(activity => true, processAction)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FuncActivityInjectorExtension"/> class.
+        /// </summary>
+        /// <param name="canProcess">The can process action.</param>
+        /// <param name="processAction">The process action.</param>
         public FuncActivityInjectorExtension(Func<Activity, bool> canProcess, Action<Activity> processAction)
         {
             this.processAction = processAction;
             this.canProcess = canProcess;
         }
 
+        /// <summary>
+        /// Determines whether this instance can process the specified activity.
+        /// </summary>
+        /// <param name="activity">The activity.</param>
+        /// <returns>
+        /// <c>true</c> if this instance can process the specified activity; otherwise, <c>false</c>.
+        /// </returns>
         public bool CanProcess(Activity activity)
         {
             return this.canProcess(activity);
         }
 
+        /// <summary>
+        /// Processes the specified activity.
+        /// </summary>
+        /// <param name="activity">The activity.</param>
         public void Process(Activity activity)
         {
             this.processAction(activity);

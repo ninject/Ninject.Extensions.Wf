@@ -26,20 +26,30 @@ namespace Ninject.Extensions.Wf
     using Extensions;
     using Injection;
 
+
+    /// <summary>
+    /// Wraps the <see cref="WorkflowInvoker"/>.
+    /// </summary>
     public class NinjectWorkflowInvoker : ExtensionResolver, IWorkflowInvoker
     {
         private WorkflowInvoker workflowInvoker;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowInvoker"/> class.
+        /// </summary>
+        /// <param name="kernel">The kernel.</param>
         public NinjectWorkflowInvoker(IKernel kernel)
             : base(kernel)
         {
         }
 
+        /// <inheritdoc/>
         protected override WorkflowInstanceExtensionManager Extensions
         {
             get { return this.Invoker.Extensions; }
         }
 
+        /// <inheritdoc/>
         private WorkflowInvoker Invoker
         {
             get
@@ -58,149 +68,109 @@ namespace Ninject.Extensions.Wf
             }
         }
 
-        /// <summary>
-        /// Invokes a workflow asynchronously with the specified
-        /// System.Collections.Generic.IDictionary{TKey,TValue} of input
-        /// parameters, the specified time-out interval, and a unique
-        /// identifier.
-        /// </summary>
-        /// <param name="inputs">The dictionary of input parameters to the
-        /// workflow, keyed by argument name.</param>
-        /// <param name="timeout">The interval in which the workflow must
-        /// complete before it is aborted and a System.TimeoutException is
-        /// thrown.</param>
-        /// <param name="userState"> A user-provided object used to distinguish
-        /// this particular asynchronous invoke operation from other current
-        /// asynchronous invoke operations.</param>
+        /// <inheritdoc/>
         public void InvokeAsync(IDictionary<string, object> inputs, TimeSpan timeout, object userState)
         {
             this.Invoker.InvokeAsync(inputs, timeout, userState);
         }
 
-        /// <summary>
-        /// Invokes a workflow asynchronously using the specified
-        /// System.Collections.Generic.IDictionary{TKey,TValue} of input
-        /// parameters and a unique identifier.
-        /// </summary>
-        /// <param name="inputs">The dictionary of input parameters to the
-        /// workflow, keyed by argument name.</param>
-        /// <param name="userState">A user-provided object used to distinguish
-        /// this particular asynchronous invoke operation from other current
-        /// asynchronous invoke operations.</param>
+        /// <inheritdoc/>
         public void InvokeAsync(IDictionary<string, object> inputs, object userState)
         {
             this.Invoker.InvokeAsync(inputs, userState);
         }
 
-        /// <summary>
-        /// Invokes a workflow asynchronously with the specified
-        /// System.Collections.Generic.IDictionary{TKey,TValue} of input
-        /// parameters and the specified time-out interval.
-        /// </summary>
-        /// <param name="inputs">The dictionary of input parameters to the
-        /// workflow, keyed by argument name.</param>
-        /// <param name="timeout">The interval in which the workflow must
-        /// complete before it is aborted and a System.TimeoutException is
-        /// thrown.</param>
+        /// <inheritdoc/>
         public void InvokeAsync(IDictionary<string, object> inputs, TimeSpan timeout)
         {
             this.Invoker.InvokeAsync(inputs, timeout);
         }
 
-        /// <summary>
-        /// Invokes a workflow asynchronously using the specified
-        /// System.Collections.Generic.IDictionary{TKey,TValue} of input
-        /// parameters.
-        /// </summary>
-        /// <param name="inputs">The dictionary of input parameters to the
-        /// workflow, keyed by argument name.</param>
+        /// <inheritdoc/>
         public void InvokeAsync(IDictionary<string, object> inputs)
         {
             this.Invoker.InvokeAsync(inputs);
         }
 
-        /// <summary>
-        /// Invokes a workflow asynchronously with the specified time-out
-        /// interval and a unique identifier.
-        /// </summary>
-        /// <param name="timeout">The interval in which the workflow must
-        /// complete before it is aborted and a System.TimeoutException is
-        /// thrown.</param>
-        /// <param name="userState">A user-provided object used to distinguish
-        /// this particular asynchronous invoke operation from other current
-        /// asynchronous invoke operations.</param>
+        /// <inheritdoc/>
         public void InvokeAsync(TimeSpan timeout, object userState)
         {
             this.Invoker.InvokeAsync(timeout, userState);
         }
 
-        /// <summary>
-        /// Invokes a workflow asynchronously with the specified time-out interval.
-        /// </summary>
-        /// <param name="timeout">The interval in which the workflow must complete before it is aborted and a System.TimeoutException is thrown.</param>
+        /// <inheritdoc/>
         public void InvokeAsync(TimeSpan timeout)
         {
             this.Invoker.InvokeAsync(timeout);
         }
 
-        /// <summary>
-        /// Invokes a workflow asynchronously.
-        /// </summary>
+        /// <inheritdoc/>
         public void InvokeAsync()
         {
             this.Invoker.InvokeAsync();
         }
 
+        /// <inheritdoc/>
         public IDictionary<string,object> Invoke()
         {
             return this.Invoker.Invoke();
         }
 
+        /// <inheritdoc/>
         public IDictionary<string,object> Invoke(TimeSpan timeout)
         {
             return this.Invoker.Invoke(timeout);
         }
 
+        /// <inheritdoc/>
         public IDictionary<string,object> Invoke(IDictionary<string,object> inputs)
         {
             return this.Invoker.Invoke(inputs);
         }
 
+        /// <inheritdoc/>
         public IDictionary<string,object> Invoke(IDictionary<string,object> inputs, TimeSpan timeout)
         {
             return this.Invoker.Invoke(inputs, timeout);
         }
 
+        /// <inheritdoc/>
         public IDictionary<string,object> EndInvoke(IAsyncResult result)
         {
             return this.Invoker.EndInvoke(result);
         }
 
+        /// <inheritdoc/>
         public void CancelAsync(object userState)
         {
             this.Invoker.CancelAsync(userState);
         }
 
+        /// <inheritdoc/>
         public IAsyncResult BeginInvoke(AsyncCallback callback, object state)
         {
             return this.Invoker.BeginInvoke(callback, state);
         }
 
+        /// <inheritdoc/>
         public IAsyncResult BeginInvoke(TimeSpan timeout, AsyncCallback callback, object state)
         {
             return this.Invoker.BeginInvoke(timeout, callback, state);
         }
 
+        /// <inheritdoc/>
         public IAsyncResult BeginInvoke(IDictionary<string,object> inputs, AsyncCallback callback, object state)
         {
             return this.Invoker.BeginInvoke(inputs, callback, state);
         }
 
+        /// <inheritdoc/>
         public IAsyncResult BeginInvoke(IDictionary<string,object> inputs, TimeSpan timeout, AsyncCallback callback, object state)
         {
             return this.Invoker.BeginInvoke(inputs, timeout, callback, state);
         }
 
+        /// <inheritdoc/>
         public void Initialize(Activity workflowDefinition)
         {
             this.Invoker = new WorkflowInvoker(workflowDefinition);

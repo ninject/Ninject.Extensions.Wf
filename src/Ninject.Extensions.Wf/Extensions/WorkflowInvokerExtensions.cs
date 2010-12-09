@@ -21,8 +21,19 @@ namespace Ninject.Extensions.Wf.Extensions
 {
     using System.Activities;
 
+    /// <summary>
+    /// Provides extension methods for the workflow invoker.
+    /// </summary>
     public static class WorkflowInvokerExtensions
     {
+        /// <summary>
+        /// Invokes the specified workflow invoker.
+        /// </summary>
+        /// <typeparam name="TInput">The type of the input.</typeparam>
+        /// <typeparam name="TOutput">The type of the output.</typeparam>
+        /// <param name="workflowInvoker">The workflow invoker.</param>
+        /// <param name="inputs">The inputs which is serialized into a dictionary..</param>
+        /// <returns>The output deserialized.</returns>
         public static TOutput Invoke<TInput, TOutput>(this WorkflowInvoker workflowInvoker, TInput inputs) 
             where TOutput : class, new()
         {

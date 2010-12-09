@@ -22,6 +22,9 @@ namespace Ninject.Extensions.Wf
     using System;
     using System.Activities.Hosting;
 
+    /// <summary>
+    /// Wraps the <see cref="BookmarkScopeInfo"/>.
+    /// </summary>
     public class NinjectBookmarkScopeInfo
     {
         /// <summary>

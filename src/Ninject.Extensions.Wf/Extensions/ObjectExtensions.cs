@@ -21,8 +21,16 @@ namespace Ninject.Extensions.Wf.Extensions
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Contains extension methods for System.Object.
+    /// </summary>
     public static class ObjectExtensions
     {
+        /// <summary>
+        /// Turns the specified object into a dictionary by using the property key as dictionary key.
+        /// </summary>
+        /// <param name="value">The object to be serialized.</param>
+        /// <returns>A dictionary representing the object.</returns>
         public static IDictionary<string, object> ToDict(this object value)
         {
             var dictionary = new Dictionary<string, object>();

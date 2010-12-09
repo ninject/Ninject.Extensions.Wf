@@ -23,8 +23,18 @@ namespace Ninject.Extensions.Wf
     using System.Activities;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Wraps the <see cref="WorkflowApplicationCompletedEventArgs"/>.
+    /// </summary>
     public class NinjectWorkflowApplicationCompletedEventArgs : NinjectWorkflowApplicationEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationCompletedEventArgs"/> class.
+        /// </summary>
+        /// <param name="instanceId">The instance id.</param>
+        /// <param name="completionState">State of the completion.</param>
+        /// <param name="terminationException">The termination exception.</param>
+        /// <param name="outputs">The outputs.</param>
         public NinjectWorkflowApplicationCompletedEventArgs(Guid instanceId, ActivityInstanceState completionState, Exception terminationException, IDictionary<string, object > outputs) : base(instanceId)
         {
             this.CompletionState = completionState;
@@ -32,6 +42,10 @@ namespace Ninject.Extensions.Wf
             this.TerminationException = terminationException;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationCompletedEventArgs"/> class.
+        /// </summary>
+        /// <param name="workflowApplicationCompletedEventArgs">The <see cref="System.Activities.WorkflowApplicationCompletedEventArgs"/> instance containing the event data.</param>
         public NinjectWorkflowApplicationCompletedEventArgs(WorkflowApplicationCompletedEventArgs workflowApplicationCompletedEventArgs) : base(workflowApplicationCompletedEventArgs)
         {
             this.CompletionState = this.Arguments.CompletionState;
@@ -39,6 +53,10 @@ namespace Ninject.Extensions.Wf
             this.TerminationException = this.Arguments.TerminationException;
         }
 
+        /// <summary>
+        /// Gets the underlying <see cref="WorkflowApplicationCompletedEventArgs"/>.
+        /// </summary>
+        /// <value>The <see cref="WorkflowApplicationCompletedEventArgs"/>.</value>
         public new WorkflowApplicationCompletedEventArgs Arguments
         {
             get { return (WorkflowApplicationCompletedEventArgs)base.Arguments; }

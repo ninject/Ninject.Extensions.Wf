@@ -25,8 +25,19 @@ namespace Ninject.Extensions.Wf.Extensions
     using System.Linq;
     using System.Reflection;
 
+    /// <summary>
+    /// Contains extensions for dictionaries.
+    /// </summary>
     public static class IDictionaryExtensions
     {
+        /// <summary>
+        /// Turns a given dictionary into an object by assigning the values of
+        /// the keys in the dictionary to the public properties of the provided
+        /// type.
+        /// </summary>
+        /// <typeparam name="T">The type to be used for deserialization.</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <returns>The deserialized object.</returns>
         public static T ToObject<T>(this IDictionary<string, object> dictionary)
             where T : class, new()
         {
@@ -53,11 +64,23 @@ namespace Ninject.Extensions.Wf.Extensions
             return t;
         }
 
+        /// <summary>
+        /// Determines whether the keys presented in the dictionary are matching to the public properties.
+        /// </summary>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="publicProperties">The public properties.</param>
+        /// <returns><see langword="true"/> if they are matching; otherwise <see langword="false"/>.</returns>
         private static bool KeysAreNotEqual(IDictionary<string, object> dictionary, Dictionary<string, PropertyInfo> publicProperties)
         {
             return publicProperties.Keys.Except(dictionary.Keys).Count() != 0;
         }
 
+        /// <summary>
+        /// Determines whether the sizes are equal.
+        /// </summary>
+        /// <param name="dictionary">The dictionary</param>
+        /// <param name="publicProperties">The public properties</param>
+        /// <returns>true if the sizes are equal; otherwise false.</returns>
         private static bool SizeIsNotEqual(IDictionary<string, object> dictionary, Dictionary<string, PropertyInfo> publicProperties)
         {
             return publicProperties.Count() != dictionary.Count();

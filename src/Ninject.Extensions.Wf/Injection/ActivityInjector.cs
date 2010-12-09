@@ -25,11 +25,15 @@ namespace Ninject.Extensions.Wf.Injection
     using System.Linq;
     using Extensions;
 
+    /// <summary>
+    /// The activity injector is responsible for calling injector extensions for each resolved activity.
+    /// </summary>
     public class ActivityInjector : IActivityInjector
     {
         private readonly IActivityResolver activityResolver;
 
         private readonly IEnumerable<IActivityInjectorExtension> extensions;
+
         private readonly IInjectOnKernelExtension injectOnKernelExtension;
 
         /// <summary>

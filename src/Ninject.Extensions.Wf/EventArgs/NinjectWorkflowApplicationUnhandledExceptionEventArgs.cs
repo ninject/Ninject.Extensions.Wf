@@ -22,8 +22,18 @@ namespace Ninject.Extensions.Wf
     using System;
     using System.Activities;
 
+    /// <summary>
+    /// Event arguments which wraps <see cref="WorkflowApplicationUnhandledExceptionEventArgs"/>
+    /// </summary>
     public class NinjectWorkflowApplicationUnhandledExceptionEventArgs : NinjectWorkflowApplicationEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationUnhandledExceptionEventArgs"/> class.
+        /// </summary>
+        /// <param name="instanceId">The instance id.</param>
+        /// <param name="unhandledException">The unhandled exception.</param>
+        /// <param name="exceptionSource">The exception source.</param>
+        /// <param name="exceptionSourceInstanceId">The exception source instance id.</param>
         public NinjectWorkflowApplicationUnhandledExceptionEventArgs(Guid instanceId, Exception unhandledException, Activity exceptionSource, string exceptionSourceInstanceId)
             : base(instanceId)
         {
@@ -32,6 +42,10 @@ namespace Ninject.Extensions.Wf
             this.ExceptionSourceInstanceId = exceptionSourceInstanceId;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationUnhandledExceptionEventArgs"/> class.
+        /// </summary>
+        /// <param name="workflowApplicationUnhandledExceptionEventArgs">The <see cref="System.Activities.WorkflowApplicationUnhandledExceptionEventArgs"/> instance containing the event data.</param>
         public NinjectWorkflowApplicationUnhandledExceptionEventArgs(WorkflowApplicationUnhandledExceptionEventArgs workflowApplicationUnhandledExceptionEventArgs)
             : base(workflowApplicationUnhandledExceptionEventArgs)
         {
@@ -49,6 +63,10 @@ namespace Ninject.Extensions.Wf
         /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.WorkflowApplicationUnhandledExceptionEventArgs.ExceptionSourceInstanceId"]/*' />
         public string ExceptionSourceInstanceId { get; private set; }
 
+        /// <summary>
+        /// Gets the underlying <see cref="WorkflowApplicationUnhandledExceptionEventArgs"/>.
+        /// </summary>
+        /// <value>The <see cref="WorkflowApplicationUnhandledExceptionEventArgs"/>.</value>
         public new WorkflowApplicationUnhandledExceptionEventArgs Arguments
         {
             get { return (WorkflowApplicationUnhandledExceptionEventArgs)base.Arguments; }

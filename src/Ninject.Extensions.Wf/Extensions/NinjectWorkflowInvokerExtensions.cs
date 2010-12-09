@@ -22,6 +22,9 @@ namespace Ninject.Extensions.Wf.Extensions
 {
     using System;
 
+    /// <summary>
+    /// Contains extension methods for the <see cref="IWorkflowInvoker"/>.
+    /// </summary>
     public static class NinjectWorkflowInvokerExtensions
     {
         /// <summary>

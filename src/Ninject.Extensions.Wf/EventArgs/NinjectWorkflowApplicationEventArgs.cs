@@ -22,15 +22,26 @@ namespace Ninject.Extensions.Wf
     using System;
     using System.Activities;
 
+    /// <summary>
+    /// Wraps the <see cref="WorkflowApplicationEventArgs"/>.
+    /// </summary>
     public class NinjectWorkflowApplicationEventArgs : EventArgs
     {
         private readonly WorkflowApplicationEventArgs workflowApplicationArguments;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationEventArgs"/> class.
+        /// </summary>
+        /// <param name="instanceId">The instance id.</param>
         public NinjectWorkflowApplicationEventArgs(Guid instanceId)
         {
             this.InstanceId = instanceId;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationEventArgs"/> class.
+        /// </summary>
+        /// <param name="workflowApplicationArguments">The <see cref="System.Activities.WorkflowApplicationEventArgs"/> instance containing the event data.</param>
         internal NinjectWorkflowApplicationEventArgs(WorkflowApplicationEventArgs workflowApplicationArguments)
         {
             this.workflowApplicationArguments = workflowApplicationArguments;
@@ -38,6 +49,10 @@ namespace Ninject.Extensions.Wf
             this.InstanceId = this.Arguments.InstanceId;
         }
 
+        /// <summary>
+        /// Gets the underlying <see cref="WorkflowApplicationEventArgs"/>.
+        /// </summary>
+        /// <value>The <see cref="WorkflowApplicationEventArgs"/>.</value>
         public WorkflowApplicationEventArgs Arguments
         {
             get { return this.workflowApplicationArguments; }

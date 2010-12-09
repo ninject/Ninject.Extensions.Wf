@@ -5,8 +5,8 @@
 	<property name="product.company" value="bbv Software Services AG" overwrite="false"/>
 	<property name="product.duration" value="2010" overwrite="false"/>
 	<property name="product.description" value="WF Extension for Ninject" overwrite="false"/>
-	<property name="product.platforms" value="net-4.0,mono-2.0"  overwrite="false"/>
-	<property name="product.buildserverPlatforms" value="net-4.0,mono-2.0"  overwrite="false"/>
+	<property name="product.platforms" value="net-4.0"  overwrite="false"/>
+	<property name="product.buildserverPlatforms" value="net-4.0"  overwrite="false"/>
 	<property name="dependencies" value="Ninject" overwrite="false"/>
 
 	<include buildfile="Ninject.include" />

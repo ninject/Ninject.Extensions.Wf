@@ -22,13 +22,25 @@ namespace Ninject.Extensions.Wf
     using System;
     using System.Activities;
 
+    /// <summary>
+    /// Wraps the <see cref="WorkflowApplicationAbortedEventArgs"/>.
+    /// </summary>
     public class NinjectWorkflowApplicationAbortedEventArgs : NinjectWorkflowApplicationEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationAbortedEventArgs"/> class.
+        /// </summary>
+        /// <param name="instanceId">The instance id.</param>
+        /// <param name="reason">The reason.</param>
         public NinjectWorkflowApplicationAbortedEventArgs(Guid instanceId, Exception reason) : base(instanceId)
         {
             this.Reason = reason;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectWorkflowApplicationAbortedEventArgs"/> class.
+        /// </summary>
+        /// <param name="workflowApplicationAbortedEventArgs">The <see cref="System.Activities.WorkflowApplicationAbortedEventArgs"/> instance containing the event data.</param>
         public NinjectWorkflowApplicationAbortedEventArgs(WorkflowApplicationAbortedEventArgs workflowApplicationAbortedEventArgs) : base(workflowApplicationAbortedEventArgs)
         {
             this.Reason = workflowApplicationAbortedEventArgs.Reason;
@@ -40,6 +52,10 @@ namespace Ninject.Extensions.Wf
             get; private set;
         }
 
+        /// <summary>
+        /// Gets the underlying <see cref="WorkflowApplicationAbortedEventArgs"/>.
+        /// </summary>
+        /// <value>The <see cref="WorkflowApplicationAbortedEventArgs"/>.</value>
         public new WorkflowApplicationAbortedEventArgs Arguments
         {
             get { return (WorkflowApplicationAbortedEventArgs) base.Arguments; }

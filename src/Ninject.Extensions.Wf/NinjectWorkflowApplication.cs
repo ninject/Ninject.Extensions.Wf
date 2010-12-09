@@ -28,6 +28,9 @@ namespace Ninject.Extensions.Wf
     using Extensions;
     using Injection;
 
+    /// <summary>
+    /// Wraps the <see cref="WorkflowApplication"/>.
+    /// </summary>
     public class NinjectWorkflowApplication : ExtensionResolver, IWorkflowApplication
     {
         private Action<NinjectWorkflowApplicationCompletedEventArgs> completedAction;
@@ -53,11 +56,16 @@ namespace Ninject.Extensions.Wf
         {
         }
 
+        /// <inheritdoc />
         protected override WorkflowInstanceExtensionManager Extensions
         {
             get { return this.Application.Extensions; }
         }
 
+        /// <summary>
+        /// Gets or sets the application.
+        /// </summary>
+        /// <value>The application.</value>
         private WorkflowApplication Application
         {
             get
@@ -94,7 +102,11 @@ namespace Ninject.Extensions.Wf
         /// <inheritdoc />
         public Action<NinjectWorkflowApplicationEventArgs> Unloaded
         {
-            get { return this.unloadedAction; }
+            get
+            {
+                return this.unloadedAction;
+            }
+
             set
             {
                 this.unloadedAction = value;
@@ -142,7 +154,11 @@ namespace Ninject.Extensions.Wf
         /// <inheritdoc />
         public Action<NinjectWorkflowApplicationIdleEventArgs> Idle
         {
-            get { return this.idleAction; }
+            get
+            {
+                return this.idleAction;
+            }
+
             set
             {
                 this.idleAction = value;
@@ -441,6 +457,9 @@ namespace Ninject.Extensions.Wf
             return this.Application.BeginResumeBookmark(bookmark, value, timeout, callback, state);
         }
 
+        /// <summary>
+        /// Adds the extensions.
+        /// </summary>
         private void AddExtensions()
         {
             this.AddSingletonExtension<ActivityDependencyInjection>();
