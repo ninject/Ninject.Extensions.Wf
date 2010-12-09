@@ -160,7 +160,7 @@ The extensions are collected upon creation of the IActivityInjector. The order o
 
 Possible side effects?
 
-The default activity resolver uses WorkflowInspectionServices.GetActivities recursively to retrieve all activities under a certrain root activity.
+The default activity resolver uses WorkflowInspectionServices.GetActivities recursively to retrieve all activities under a certain root activity.
 This can have the following side effects (extract from MSDN):
 
 To retrieve a specific activity instead of enumerating all of the activities, 
@@ -176,4 +176,4 @@ You know it better?
 
 If you have a smarter idea how to resolve all activities then you can swap out the internals of the extension. Simply rebind IActivityResolver.
 
-this.Bind<IActivityResolver>().To<YourSmarterComponent>();
+this.Rebind<IActivityResolver>().To<YourSmarterComponent>();
