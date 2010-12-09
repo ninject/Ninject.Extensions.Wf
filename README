@@ -15,6 +15,8 @@ We have the following key problems now with classical Windows Workflow Foundatio
 	(3) For event processing we need extensions which might need external dependencies.
 	(4) How to unit test WorkflowInvoker and WorkflowApplication events like Completed, Faulted etc.
 
+The workflow	
+	
     public class FileInputTransformationWorkflow : Activity
     {
         [RequiredArgument]
@@ -133,8 +135,45 @@ We have the following key problems now with classical Windows Workflow Foundatio
         }
     }
 	
+Workflow Hosting
+
+	var workflow = this.kernel.Get<IWorkflowApplication>();
+
+	// or use dictionary<string,object>
+	var inputs = new { Folder = @"C:\temp\", Filter = "*.txt" };
+
+	workflow.Initialize(new FileInputTransformationWorkflow(), inputs);
+	
+	// The binding for extensions must be transient to profit from the workflow foundation scoping.
+	workflow.AddTransientExtension<IObserveFolderExtension>();	
+	workflow.AddSingletonExtension<ISomeOtherExtension>();	
+	
 How to hook into the injection chain?
+
+In some cases you want to perform additional stuff on the activities. For example register certain activities on an Event Broker etc.
+This can be achieved by implementing IActivityInjectorExtension. With CanProcess the extension must indicate whether it likes to
+process a certain activity or not. In the Process method the actual operation such as registering on event broker etc. can be done.
 
 this.Bind<IActivityInjectorExtension>().To<YourExtension>();
 
 The extensions are collected upon creation of the IActivityInjector. The order of the extension invocation is not predictable.	
+
+Possible side effects?
+
+The default activity resolver uses WorkflowInspectionServices.GetActivities recursively to retrieve all activities under a certrain root activity.
+This can have the following side effects (extract from MSDN):
+
+To retrieve a specific activity instead of enumerating all of the activities, 
+Resolve is used. Both Resolve and GetActivities perform metadata caching if
+WorkflowInspectionServices.CacheMetadata has not been previously called. 
+If CacheMetadata has been called then GetActivities is based on the existing metadata.
+Therefore, if tree changes have been made since the last call to CacheMetadata, 
+GetActivities might give unexpected results. If changes have been made to the workflow 
+after calling GetActivities, metadata can be re-cached by calling the ActivityValidationServices Validate
+method. Caching metadata is discussed in the next section.
+
+You know it better?
+
+If you have a smarter idea how to resolve all activities then you can swap out the internals of the extension. Simply rebind IActivityResolver.
+
+this.Bind<IActivityResolver>().To<YourSmarterComponent>();
