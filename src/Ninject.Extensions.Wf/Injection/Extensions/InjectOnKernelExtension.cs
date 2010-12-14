@@ -19,10 +19,17 @@
 
 namespace Ninject.Extensions.Wf.Injection.Extensions
 {
+    /// <summary>
+    /// Special internal extension which does build up the activities by using kernel inject.
+    /// </summary>
     internal class InjectOnKernelExtension : FuncActivityInjectorExtension, IInjectOnKernelExtension
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InjectOnKernelExtension"/> class.
+        /// </summary>
+        /// <param name="kernel">The kernel.</param>
         public InjectOnKernelExtension(IKernel kernel)
-            : base(a => kernel.Inject(a))
+            : base((a, r) => kernel.Inject(a))
         {
         }
     }

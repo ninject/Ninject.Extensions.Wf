@@ -19,6 +19,7 @@
 
 namespace Ninject.Extensions.Wf.Injection.Extensions
 {
+    using System.Activities.Statements;
     using Model;
     using Xunit;
 
@@ -38,7 +39,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
 
-            this.testee.Process(activityWithDependencyAndAttribute);
+            this.testee.Process(activityWithDependencyAndAttribute, null);
 
             Assert.NotNull(activityWithDependencyAndAttribute.Dependency);
         }
@@ -50,9 +51,21 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             TestActivityWithDependency activityWithDependency = SetupActivityWithDependency();
 
-            this.testee.Process(activityWithDependency);
+            this.testee.Process(activityWithDependency, null);
 
             Assert.Null(activityWithDependency.Dependency);
+        }
+
+        [Fact]
+        public void Process_MustNotFullFillDependencyOnRootActivity()
+        {
+            this.SetupDependencyBinding();
+
+            TestActivityWithDependencyAndAttribute root = SetupActivityWithDependencyAttribute();
+
+            this.testee.Process(new WriteLine(), root);
+
+            Assert.Null(root.Dependency);
         }
 
         [Fact]
@@ -60,7 +73,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
         {
             TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
 
-            Assert.Throws<ActivationException>(() => this.testee.Process(activityWithDependencyAndAttribute));
+            Assert.Throws<ActivationException>(() => this.testee.Process(activityWithDependencyAndAttribute, null));
         }
 
         private static TestActivityWithDependencyAndAttribute SetupActivityWithDependencyAttribute()

@@ -31,16 +31,18 @@ namespace Ninject.Extensions.Wf.Injection
         /// <summary>
         /// Determines whether this instance can process the specified activity.
         /// </summary>
-        /// <param name="activity">The activity.</param>
+        /// <param name="activity">The activity which is a possible candidate for processing.</param>
+        /// <param name="root">The root activity as defined by the workflow definition.</param>
         /// <returns>
         /// <c>true</c> if this instance can process the specified activity; otherwise, <c>false</c>.
         /// </returns>
-        bool CanProcess(Activity activity);
+        bool CanProcess(Activity activity, Activity root);
 
         /// <summary>
         /// Processes the specified activity.
         /// </summary>
-        /// <param name="activity">The activity.</param>
-        void Process(Activity activity);
+        /// <param name="activity">The activity to be processed.</param>
+        /// <param name="root">The root activity as defined by the workflow definition.</param>
+        void Process(Activity activity, Activity root);
     }
 }

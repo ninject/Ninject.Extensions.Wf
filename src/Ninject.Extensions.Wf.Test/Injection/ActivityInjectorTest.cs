@@ -21,6 +21,7 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System;
     using System.Activities;
+    using System.Activities.Statements;
     using System.Collections.Generic;
     using System.Text;
     using Extensions;
@@ -30,15 +31,19 @@ namespace Ninject.Extensions.Wf.Injection
 
     public class ActivityInjectorTest : KernelProvidingBase
     {
-        private Mock<IActivityResolver> activityResolver;
+        private readonly Mock<IActivityResolver> activityResolver;
 
-        private Mock<IActivityInjectorExtension> extension;
+        private readonly Mock<IActivityInjectorExtension> extension;
 
-        private Mock<IActivityInjectorExtension> anotherExtension;
+        private readonly Mock<IActivityInjectorExtension> anotherExtension;
 
-        private Mock<IInjectOnKernelExtension> injectOnKernelExtension;
+        private readonly Mock<IInjectOnKernelExtension> injectOnKernelExtension;
 
-        private ActivityInjector testee;
+        private readonly Sequence rootActivity;
+
+        private readonly TestActivityWithDependencyAndAttribute childActivity;
+
+        private readonly ActivityInjector testee;
 
         public ActivityInjectorTest()
         {
@@ -47,6 +52,9 @@ namespace Ninject.Extensions.Wf.Injection
             this.injectOnKernelExtension = new Mock<IInjectOnKernelExtension>();
 
             this.activityResolver = new Mock<IActivityResolver>();
+
+            this.rootActivity = new Sequence();
+            this.childActivity = new TestActivityWithDependencyAndAttribute();
 
             this.testee = new ActivityInjector(this.activityResolver.Object, new List<IActivityInjectorExtension> { this.extension.Object, this.injectOnKernelExtension.Object, this.anotherExtension.Object });
         }
@@ -67,29 +75,30 @@ namespace Ninject.Extensions.Wf.Injection
         }
 
         [Fact]
-        public void Inject_WhenCanProcessIndicatesTrue_MustProcessActivityOnExtension()
+        public void Inject_WhenCanProcessIndicatesTrue_MustProcessActivityWithRootOnExtension()
         {
             this.SetupDependencyBinding();
+            this.SetupActivityResolver();
 
-            var activity = this.SetupActivityResolver();
-            this.extension.Setup(e => e.CanProcess(activity)).Returns(true);
+            this.extension.Setup(e => e.CanProcess(It.IsAny<Activity>(), It.IsAny<Activity>())).Returns(true);
 
-            this.testee.Inject(activity);
+            this.testee.Inject(this.rootActivity);
 
-            this.extension.Verify(e => e.Process(activity));
+            this.extension.Verify(e => e.Process(this.rootActivity, this.rootActivity));
+            this.extension.Verify(e => e.Process(this.childActivity, this.rootActivity));
         }
 
         [Fact]
-        public void Inject_WhenCanProcessIndicatesFalse_MustNotProcessActivityOnExtension()
+        public void Inject_WhenCanProcessIndicatesFalse_MustNotProcessActivityWithRootOnExtension()
         {
             this.SetupDependencyBinding();
+            this.SetupActivityResolver();
 
-            var activity = this.SetupActivityResolver();
-            this.extension.Setup(e => e.CanProcess(activity)).Returns(false);
+            this.extension.Setup(e => e.CanProcess(It.IsAny<Activity>(), It.IsAny<Activity>())).Returns(false);
 
-            this.testee.Inject(activity);
+            this.testee.Inject(this.rootActivity);
 
-            this.extension.Verify(e => e.Process(activity), Times.Never());
+            this.extension.Verify(e => e.Process(It.IsAny<Activity>(), It.IsAny<Activity>()), Times.Never());
         }
 
         [Fact]
@@ -98,48 +107,32 @@ namespace Ninject.Extensions.Wf.Injection
             var builder = new StringBuilder();
             
             this.SetupDependencyBinding();
+            this.SetupActivityResolver();
 
-            var activity = this.SetupActivityResolver();
-            this.extension.Setup(e => e.CanProcess(activity)).Returns(true);
-            this.extension.Setup(e => e.Process(activity)).Callback<Activity>(a => builder.AppendLine("Extension"));
+            this.extension.Setup(e => e.CanProcess(It.IsAny<Activity>(), It.IsAny<Activity>())).Returns(true);
+            this.extension.Setup(e => e.Process(It.IsAny<Activity>(), It.IsAny<Activity>())).Callback<Activity, Activity>((a, r) => builder.AppendLine("Extension"));
 
-            this.anotherExtension.Setup(e => e.CanProcess(activity)).Returns(true);
-            this.anotherExtension.Setup(e => e.Process(activity)).Callback<Activity>(a => builder.AppendLine("AnotherExtension"));
+            this.anotherExtension.Setup(e => e.CanProcess(It.IsAny<Activity>(), It.IsAny<Activity>())).Returns(true);
+            this.anotherExtension.Setup(e => e.Process(It.IsAny<Activity>(), It.IsAny<Activity>())).Callback<Activity, Activity>((a, r) => builder.AppendLine("AnotherExtension"));
 
-            this.injectOnKernelExtension.Setup(e => e.CanProcess(activity)).Returns(true);
-            this.injectOnKernelExtension.Setup(e => e.Process(activity)).Callback<Activity>(a => builder.AppendLine("InjectOnKernelExtension"));
+            this.injectOnKernelExtension.Setup(e => e.CanProcess(It.IsAny<Activity>(), It.IsAny<Activity>())).Returns(true);
+            this.injectOnKernelExtension.Setup(e => e.Process(It.IsAny<Activity>(), It.IsAny<Activity>())).Callback<Activity, Activity>((a, r) => builder.AppendLine("InjectOnKernelExtension"));
 
-            this.testee.Inject(activity);
+            this.testee.Inject(this.rootActivity);
 
-            Assert.Equal("InjectOnKernelExtension\r\nExtension\r\nAnotherExtension\r\n", builder.ToString());
+            Assert.Equal("InjectOnKernelExtension\r\nExtension\r\nAnotherExtension\r\nInjectOnKernelExtension\r\nExtension\r\nAnotherExtension\r\n", builder.ToString());
         }
 
-        private TestActivityWithDependencyAndAttribute SetupActivityResolver()
-        {
-            TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
-            this.SetupActivityResolver(activityWithDependencyAndAttribute);
-            return activityWithDependencyAndAttribute;
-        }
-
-        private void SetupActivityResolver(Activity activity)
+        private void SetupActivityResolver()
         {
             var activities = new List<Activity>
                                             {
-                                                activity
+                                                this.rootActivity,
+                                                this.childActivity,
                                             };
 
-            this.activityResolver.Setup(resolver => resolver.GetActivities(activity))
+            this.activityResolver.Setup(resolver => resolver.GetActivities(this.rootActivity))
                 .Returns(activities);
-        }
-
-        private static TestActivityWithDependencyAndAttribute SetupActivityWithDependencyAttribute()
-        {
-            return new TestActivityWithDependencyAndAttribute();
-        }
-
-        private static TestActivityWithDependency SetupActivityWithDependency()
-        {
-            return new TestActivityWithDependency();
         }
     }
 }

@@ -27,16 +27,16 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
     /// </summary>
     public class FuncActivityInjectorExtension : IActivityInjectorExtension
     {
-        private readonly Func<Activity, bool> canProcess;
+        private readonly Func<Activity, Activity, bool> canProcess;
 
-        private readonly Action<Activity> processAction;
+        private readonly Action<Activity, Activity> processAction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FuncActivityInjectorExtension"/> class.
         /// </summary>
         /// <param name="processAction">The process action.</param>
-        public FuncActivityInjectorExtension(Action<Activity> processAction)
-            : this(activity => true, processAction)
+        public FuncActivityInjectorExtension(Action<Activity, Activity> processAction)
+            : this((activity, root) => true, processAction)
         {
         }
 
@@ -45,7 +45,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
         /// </summary>
         /// <param name="canProcess">The can process action.</param>
         /// <param name="processAction">The process action.</param>
-        public FuncActivityInjectorExtension(Func<Activity, bool> canProcess, Action<Activity> processAction)
+        public FuncActivityInjectorExtension(Func<Activity, Activity, bool> canProcess, Action<Activity, Activity> processAction)
         {
             this.processAction = processAction;
             this.canProcess = canProcess;
@@ -55,21 +55,23 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
         /// Determines whether this instance can process the specified activity.
         /// </summary>
         /// <param name="activity">The activity.</param>
+        /// <param name="root"></param>
         /// <returns>
         /// <c>true</c> if this instance can process the specified activity; otherwise, <c>false</c>.
         /// </returns>
-        public bool CanProcess(Activity activity)
+        public bool CanProcess(Activity activity, Activity root)
         {
-            return this.canProcess(activity);
+            return this.canProcess(activity, root);
         }
 
         /// <summary>
         /// Processes the specified activity.
         /// </summary>
         /// <param name="activity">The activity.</param>
-        public void Process(Activity activity)
+        /// <param name="root"></param>
+        public void Process(Activity activity, Activity root)
         {
-            this.processAction(activity);
+            this.processAction(activity, root);
         }
     }
 }

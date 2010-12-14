@@ -67,9 +67,9 @@ namespace Ninject.Extensions.Wf.Injection
             {
                 Activity activity1 = activity;
 
-                this.injectOnKernelExtension.Process(activity1);
+                this.injectOnKernelExtension.Process(activity1, root);
 
-                this.extensions.Where(e => e.CanProcess(activity1)).ToList().ForEach(e => e.Process(activity1));
+                this.extensions.Where(e => e.CanProcess(activity1, root)).ToList().ForEach(e => e.Process(activity1, root));
             }
         }
     }

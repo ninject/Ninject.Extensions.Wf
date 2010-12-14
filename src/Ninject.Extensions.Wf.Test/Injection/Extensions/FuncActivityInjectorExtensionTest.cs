@@ -30,9 +30,9 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
         [Fact]
         public void CanProcess_WithActionOnlyConstructor_MustReturnTrue()
         {
-            var testee = CreateTestee(a => { });
+            var testee = CreateTestee((a, r) => { });
 
-            var result = testee.CanProcess(new WriteLine());
+            var result = testee.CanProcess(new WriteLine(), new Sequence());
 
             Assert.True(result);
         }
@@ -42,9 +42,9 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
         {
             bool wasCalled = false;
 
-            var testee = CreateTestee(a => { wasCalled = true; });
+            var testee = CreateTestee((a, r) => { wasCalled = true; });
 
-            testee.Process(new WriteLine());
+            testee.Process(new WriteLine(), new Sequence());
 
             Assert.True(wasCalled, "Process action was not called");
         }
@@ -54,9 +54,9 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
         {
             var wasCalled = false;
 
-            var testee = CreateTestee(a => { wasCalled = true; return false; }, a => { });
+            var testee = CreateTestee((a, r) => { wasCalled = true; return false; }, (a, r) => { });
 
-            testee.CanProcess(new WriteLine());
+            testee.CanProcess(new WriteLine(), new Sequence());
 
             Assert.True(wasCalled, "CanProcess action was not called");
         }
@@ -67,20 +67,33 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
             Activity activity = null;
             var writeLine = new WriteLine();
 
-            var testee = CreateTestee(a => { activity = a; return false; }, a => { });
+            var testee = CreateTestee((a, r) => { activity = a; return false; }, (a, r) => { });
 
-            testee.CanProcess(writeLine);
+            testee.CanProcess(writeLine, new Sequence());
             
             Assert.Same(writeLine, activity);
+        }
+
+        [Fact]
+        public void CanProcess_WithConstructor_MustPassRootActivityToCanProcessDelegate()
+        {
+            Activity root = null;
+            var sequence = new Sequence();
+
+            var testee = CreateTestee((a, r) => { root = r; return false; }, (a, r) => { });
+
+            testee.CanProcess(new WriteLine(), sequence);
+
+            Assert.Same(sequence, root);
         }
 
         [Fact]
         public void Process_WithConstructor_MustCallProcessDelegate()
         {
             bool wasCalled = false;
-            var testee = CreateTestee(f => { return true; }, a => { wasCalled = true; });
+            var testee = CreateTestee((a, r) => { return true; }, (a, r) => { wasCalled = true; });
 
-            testee.Process(new WriteLine());
+            testee.Process(new WriteLine(), new Sequence());
         
             Assert.True(wasCalled);
         }
@@ -91,11 +104,24 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
             Activity activity = null;
             var writeLine = new WriteLine();
 
-            var testee = CreateTestee(f => { return true; }, a => { activity = a; });
+            var testee = CreateTestee((a, r) => { return true; }, (a, r) => { activity = a; });
 
-            testee.Process(writeLine);
+            testee.Process(writeLine, new Sequence());
 
             Assert.Same(writeLine, activity);
+        }
+
+        [Fact]
+        public void Process_WithConstructor_MustPassRootActivityToProcessDelegate()
+        {
+            Activity root = null;
+            var sequence = new Sequence();
+
+            var testee = CreateTestee((a, r) => { return true; }, (a, r) => { root = r; });
+
+            testee.Process(new WriteLine(), sequence);
+
+            Assert.Same(sequence, root);
         }
 
         [Theory,
@@ -103,19 +129,19 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
             InlineData(false)]
         public void CanProcess_WithConstructor_MustReturnResultOfCanProcessDelegate(bool canProcessResult)
         {
-            var testee = CreateTestee(f => { return canProcessResult; }, a => { });
+            var testee = CreateTestee((a, r) => { return canProcessResult; }, (a, r) => { });
 
-            var result = testee.CanProcess(new WriteLine());
+            var result = testee.CanProcess(new WriteLine(), new Sequence());
 
             Assert.Equal(canProcessResult, result);
         }
 
-        private static IActivityInjectorExtension CreateTestee(Action<Activity> action)
+        private static IActivityInjectorExtension CreateTestee(Action<Activity, Activity> action)
         {
             return new FuncActivityInjectorExtension(action);
         }
 
-        private static IActivityInjectorExtension CreateTestee(Func<Activity, bool> canProcess, Action<Activity> action)
+        private static IActivityInjectorExtension CreateTestee(Func<Activity, Activity, bool> canProcess, Action<Activity, Activity> action)
         {
             return new FuncActivityInjectorExtension(canProcess, action);
         }
