@@ -64,6 +64,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\BindingWhenSyntaxTest.cs" />
     <Compile Include="Extensions\ExtensionResolverTest.cs" />
     <Compile Include="Extensions\RequestExtensionsTest.cs" />
     <Compile Include="Injection\ActivityDependencyInjectionTest.cs" />

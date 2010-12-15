@@ -19,6 +19,8 @@
 
 namespace Ninject.Extensions.Wf.Extensions
 {
+    using System;
+    using System.Activities;
     using Syntax;
 
     /// <summary>
@@ -26,5 +28,34 @@ namespace Ninject.Extensions.Wf.Extensions
     /// </summary>
     public static class BindingWhenSyntaxExtensions
     {
+        /// <summary>
+        /// Indicates that the binding should be used only for requests that support the specified condition.
+        /// </summary>
+        /// <typeparam name="T">The type used in the binding.</typeparam>
+        /// <param name="whenSyntax">The when syntax.</param>
+        /// <param name="condition">The condition.</param>
+        /// <returns>The syntax</returns>
+        public static IBindingInNamedWithOrOnSyntax<T> WhenInjectedIntoActivity<T>(this IBindingWhenSyntax<T> whenSyntax, Func<Activity, bool> condition)
+        {
+            return whenSyntax.When(request => request.HasRootActivityParameter()
+                 && condition(request.GetRootActivityParameter().Root));
+        }
+
+        /// <summary>
+        /// Indicates that the binding should be used only for injections on the specified activity type.
+        /// </summary>
+        /// <typeparam name="T">The type used in the binding.</typeparam>
+        /// <param name="whenSyntax">The when syntax.</param>
+        /// <param name="parent">The type.</param>
+        /// <returns>The syntax.</returns>
+        public static IBindingInNamedWithOrOnSyntax<T> WhenInjectedIntoActivity<T>(this IBindingWhenSyntax<T> whenSyntax, Type parent)
+        {
+            if (!typeof(Activity).IsAssignableFrom(parent))
+            {
+                throw new ArgumentException("Provided type must be an activity!", "parent");
+            }
+
+            return whenSyntax.WhenInjectedIntoActivity(activity => activity.GetType().Equals(parent));
+        }
     }
 }
