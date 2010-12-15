@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="IRequestExtensions.cs" company="bbv Software Services AG">
+// <copyright file="RequestExtensions.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -38,6 +38,13 @@ namespace Ninject.Extensions.Wf.Extensions
             return request.Parameters.OfType<RootActivityParameter>().SingleOrDefault();
         }
 
+        /// <summary>
+        /// Determines whether the request contains a <see cref="RootActivityParameter"/>.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// <c>true</c> if the request contains a <see cref="RootActivityParameter"/>; otherwise, <c>false</c>.
+        /// </returns>
         public static bool HasRootActivityParameter(this IRequest request)
         {
             return GetRootActivityParameter(request) != null;

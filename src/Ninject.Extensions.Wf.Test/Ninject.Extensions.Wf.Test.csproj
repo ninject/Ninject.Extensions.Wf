@@ -65,7 +65,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Extensions\ExtensionResolverTest.cs" />
-    <Compile Include="Extensions\IRequestExtensionsTest.cs" />
+    <Compile Include="Extensions\RequestExtensionsTest.cs" />
     <Compile Include="Injection\ActivityDependencyInjectionTest.cs" />
     <Compile Include="Injection\ActivityInjectorTest.cs" />
     <Compile Include="Injection\ActivityResolverTest.cs" />

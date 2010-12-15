@@ -61,8 +61,8 @@
     <Compile Include="EventArgs\NinjectWorkflowApplicationIdleEventArgs.cs" />
     <Compile Include="EventArgs\NinjectWorkflowApplicationUnhandledExceptionEventArgs.cs" />
     <Compile Include="Extensions\ExtensionResolver.cs" />
-    <Compile Include="Extensions\IBindingWhenSyntaxExtensions.cs" />
-    <Compile Include="Extensions\IRequestExtensions.cs" />
+    <Compile Include="Extensions\BindingWhenSyntaxExtensions.cs" />
+    <Compile Include="Extensions\RequestExtensions.cs" />
     <Compile Include="Injection\ActivityDependencyInjection.cs" />
     <Compile Include="Injection\ActivityInjector.cs" />
     <Compile Include="Injection\ActivityResolver.cs" />
