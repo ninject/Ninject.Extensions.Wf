@@ -81,6 +81,7 @@
     <Compile Include="NinjectWorkflowInvoker.cs" />
     <Compile Include="Extensions\NinjectWorkflowInvokerExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Parameters\RootActivityParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\WorkflowInvokerExtensions.cs" />
   </ItemGroup>

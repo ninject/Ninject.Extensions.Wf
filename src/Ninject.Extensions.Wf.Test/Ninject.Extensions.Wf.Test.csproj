@@ -77,6 +77,7 @@
     <Compile Include="Extensions\IDictionaryExtensionsTest.cs" />
     <Compile Include="KernelProvidingBase.cs" />
     <Compile Include="Extensions\ObjectExtensionsTest.cs" />
+    <Compile Include="Parameters\RootActivityParameterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

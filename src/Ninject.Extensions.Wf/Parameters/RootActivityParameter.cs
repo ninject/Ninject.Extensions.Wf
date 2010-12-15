@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="InjectOnKernelExtension.cs" company="bbv Software Services AG">
+// <copyright file="RootActivityParameter.cs" company="bbv Software Services AG">
 //   Copyright (c) 2010 bbv Software Services AG
 //   Author: Daniel Marbach
 //
@@ -17,22 +17,29 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf
+namespace Ninject.Extensions.Wf.Parameters
 {
-    using Parameters;
+    using System.Activities;
+    using Ninject.Parameters;
 
     /// <summary>
-    /// Special internal extension which does build up the activities by using kernel inject.
+    /// Parameter which provides access to the root activity.
     /// </summary>
-    internal class InjectOnKernelExtension : FuncActivityInjectorExtension, IInjectOnKernelExtension
+    public class RootActivityParameter : Parameter
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InjectOnKernelExtension"/> class.
+        /// Initializes a new instance of the <see cref="RootActivityParameter"/> class.
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
-        public InjectOnKernelExtension(IKernel kernel)
-            : base((a, r) => kernel.Inject(a, new RootActivityParameter(r)))
+        /// <param name="root">The root activity.</param>
+        public RootActivityParameter(Activity root)
+            : base("RootActivity", ctx => null, true)
         {
+            this.Root = root;
         }
+
+        /// <summary>
+        /// Gets the root activity of the current request.
+        /// </summary>
+        public Activity Root { get; private set; }
     }
 }

@@ -20,7 +20,10 @@
 namespace Ninject.Extensions.Wf.Injection.Extensions
 {
     using System.Activities.Statements;
+    using System.Linq;
+    using Activation;
     using Model;
+    using Parameters;
     using Xunit;
 
     public class InjectOnKernelExtensionTest : KernelProvidingBase
@@ -74,6 +77,25 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
             TestActivityWithDependencyAndAttribute activityWithDependencyAndAttribute = SetupActivityWithDependencyAttribute();
 
             Assert.Throws<ActivationException>(() => this.testee.Process(activityWithDependencyAndAttribute, null));
+        }
+
+        [Fact]
+        public void Process_MustAddRootActivityParameterToRequest()
+        {
+            IRequest request = null;
+
+            this.Kernel.Bind<IDependency>().To<Dependency>()
+                .When(r =>
+                          {
+                              request = r;
+                              return true;
+                          });
+
+            TestActivityWithDependencyAndAttribute root = SetupActivityWithDependencyAttribute();
+
+            this.testee.Process(root, root);
+
+            Assert.True(request.Parameters.OfType<RootActivityParameter>().Single() != null);
         }
 
         private static TestActivityWithDependencyAndAttribute SetupActivityWithDependencyAttribute()
