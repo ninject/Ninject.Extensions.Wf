@@ -17,13 +17,12 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Injection
+namespace Ninject.Extensions.Wf
 {
     using System;
     using System.Activities;
     using System.Collections.Generic;
     using System.Linq;
-    using Extensions;
 
     /// <summary>
     /// The activity injector is responsible for calling injector extensions for each resolved activity.

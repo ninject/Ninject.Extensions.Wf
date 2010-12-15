@@ -17,7 +17,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Injection
+namespace Ninject.Extensions.Wf
 {
     using System.Activities.Hosting;
     using System.Collections.Generic;

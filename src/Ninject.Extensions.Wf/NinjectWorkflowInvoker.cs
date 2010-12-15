@@ -24,7 +24,6 @@ namespace Ninject.Extensions.Wf
     using System.Activities.Hosting;
     using System.Collections.Generic;
     using Extensions;
-    using Injection;
 
 
     /// <summary>

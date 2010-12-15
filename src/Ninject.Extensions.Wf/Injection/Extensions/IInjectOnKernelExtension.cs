@@ -17,7 +17,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Injection.Extensions
+namespace Ninject.Extensions.Wf
 {
     /// <summary>
     /// Special marker interface which differentiates the inject on kernel

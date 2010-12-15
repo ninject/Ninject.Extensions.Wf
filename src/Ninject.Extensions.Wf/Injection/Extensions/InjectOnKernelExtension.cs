@@ -17,7 +17,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Wf.Injection.Extensions
+namespace Ninject.Extensions.Wf
 {
     /// <summary>
     /// Special internal extension which does build up the activities by using kernel inject.

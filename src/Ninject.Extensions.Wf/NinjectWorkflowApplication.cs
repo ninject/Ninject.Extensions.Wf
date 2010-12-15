@@ -26,7 +26,6 @@ namespace Ninject.Extensions.Wf
     using System.Collections.ObjectModel;
     using System.Runtime.DurableInstancing;
     using Extensions;
-    using Injection;
 
     /// <summary>
     /// Wraps the <see cref="WorkflowApplication"/>.
