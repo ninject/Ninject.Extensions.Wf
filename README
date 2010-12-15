@@ -148,6 +148,20 @@ Workflow Hosting
 	workflow.AddTransientExtension<IObserveFolderExtension>();	
 	workflow.AddSingletonExtension<ISomeOtherExtension>();	
 	
+Conditional bindings?
+
+Activities can be reused. In the example the ParseDataStep could not only be used in FileInputTransformationWorkflow it might also be used in a SlightlyDifferentInputTransformationWorkflow which uses
+another IParser implementation. Therefore you would need to define a binding to IParser depending on in which workflow the ParseDataStep would be reused. This is possible with the
+BindingWhenSyntaxExtensions!
+
+this.Bind<IParser>().To<Parser>().WhenInjectedIntoActivity(typeof(FileInputTransformationWorkflow));
+this.Bind<IParser>().To<SlightlyDifferentParser>().WhenInjectedIntoActivity(typeof(SlightlyDifferentInputTransformationWorkflow));
+
+or even more fancier stuff like
+
+this.Bind<IParser>().To<Parser>().WhenInjectedIntoActivity(root => fancyCondition: bool);
+this.Bind<IParser>().To<SlightlyDifferentParser>().WhenInjectedIntoActivity(root => anotherFancyCondition: bool);
+	
 How to hook into the injection chain?
 
 In some cases you want to perform additional stuff on the activities. For example register certain activities on an Event Broker etc.
