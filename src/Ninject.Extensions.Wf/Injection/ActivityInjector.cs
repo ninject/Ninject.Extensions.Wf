@@ -31,7 +31,7 @@ namespace Ninject.Extensions.Wf
     {
         private readonly IActivityResolver activityResolver;
 
-        private readonly IEnumerable<IActivityInjectorExtension> extensions;
+        private readonly IList<IActivityInjectorExtension> extensions;
 
         private readonly IInjectOnKernelExtension injectOnKernelExtension;
 
@@ -42,7 +42,6 @@ namespace Ninject.Extensions.Wf
         /// <param name="extensions">The extensions.</param>
         public ActivityInjector(IActivityResolver activityResolver, IEnumerable<IActivityInjectorExtension> extensions)
         {
-            this.extensions = extensions;
             this.activityResolver = activityResolver;
             this.injectOnKernelExtension = extensions.OfType<IInjectOnKernelExtension>().SingleOrDefault();
 
@@ -51,7 +50,7 @@ namespace Ninject.Extensions.Wf
                 throw new InvalidOperationException("IInjectOnKernelExtension not found!");
             }
 
-            this.extensions = extensions.Where(e => !e.Equals(this.injectOnKernelExtension));
+            this.extensions = extensions.Where(e => !e.Equals(this.injectOnKernelExtension)).ToList();
         }
 
         /// <summary>
@@ -68,7 +67,9 @@ namespace Ninject.Extensions.Wf
 
                 this.injectOnKernelExtension.Process(activity1, root);
 
-                this.extensions.Where(e => e.CanProcess(activity1, root)).ToList().ForEach(e => e.Process(activity1, root));
+                this.extensions.Where(e => e.CanProcess(activity1, root))
+                    .ToList()
+                    .ForEach(e => e.Process(activity1, root));
             }
         }
     }
