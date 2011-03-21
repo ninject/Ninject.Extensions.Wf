@@ -24,7 +24,6 @@
 				<include name="System.dll"/>
 				<include name="System.Activities.dll"/>
 				<include name="System.Runtime.DurableInstancing.dll"/>
-				<include name="System.Web.dll"/>
 				<include name="System.Core.dll"/>
 				<include name="${path.lib}/Ninject/${build.platform}/Ninject.dll"/>
 			</references>
@@ -46,7 +45,6 @@
 				<include name="System.dll"/>
 				<include name="System.Activities.dll"/>
 				<include name="System.Runtime.DurableInstancing.dll"/>
-				<include name="System.Web.dll"/>
 				<include name="System.Core.dll"/>
                 <include name="${path.lib}/CommonServiceLocator/Microsoft.Practices.ServiceLocation.dll"/>
             </references>
@@ -80,7 +78,6 @@
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
 				<include name="System.Activities.dll"/>
-				<include name="System.Web.dll"/>
 				<include name="System.Core.dll"/>
 				<include name="Moq.dll"/>
 				<include name="xunit.dll"/>
@@ -124,7 +121,6 @@
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
 				<include name="System.ServiceModel.dll"/>
-				<include name="System.Web.dll"/>
 				<include name="System.Core.dll"/>
                 <include name="System.Windows.dll"/>
                 <include name="System.Windows.Browser.dll"/>
