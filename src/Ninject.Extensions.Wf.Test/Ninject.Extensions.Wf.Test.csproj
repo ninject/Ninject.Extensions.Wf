@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq">
-      <HintPath>..\..\tools\moq\net-3.5\Moq.dll</HintPath>
+      <HintPath>..\..\tools\moq\NET40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\..\lib\Ninject\net-4.0\Ninject.dll</HintPath>
@@ -44,14 +44,6 @@
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Activities" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="xunit">
       <HintPath>..\..\tools\xunit.net\xunit.dll</HintPath>
     </Reference>
@@ -80,24 +72,13 @@
     <Compile Include="Extensions\ObjectExtensionsTest.cs" />
     <Compile Include="Parameters\RootActivityParameterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Injection\SimpleHierarchy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ninject.Extensions.Wf\Ninject.Extensions.Wf.csproj">
       <Project>{FE55376A-4BA8-40F4-9D60-CE7B26B98E7A}</Project>
       <Name>Ninject.Extensions.Wf</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <XamlAppdef Include="Injection\SimpleFlat.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </XamlAppdef>
-  </ItemGroup>
-  <ItemGroup>
-    <XamlAppdef Include="Injection\SimpleHierarchy.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </XamlAppdef>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

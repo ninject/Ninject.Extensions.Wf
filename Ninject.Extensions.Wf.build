@@ -10,7 +10,7 @@
 	<property name="dependencies" value="Ninject" overwrite="false"/>
 
 	<include buildfile="Ninject.include" />
-	<target name="all" depends="core"/>
+	<target name="all" depends="core test"/>
 
 	<target name="core" depends="init">
 		<csc noconfig="true" warnaserror="true" target="library" debug="${build.debug}" optimize="${build.optimize}" define="${build.defines}" output="${current.path.build}/${product.assembly}" doc="${current.path.build}/${product.docfile}" keyfile="${path.src}/${product.keyfile}">
@@ -61,6 +61,7 @@
 		<copy todir="${current.path.test}">
 			<fileset basedir="${path.tools.xunit}">
 				<include name="xunit.dll"/>
+				<include name="xunit.extensions.dll"/>
 				<include name="xunit.should.dll"/>
 			</fileset>
 		</copy>
@@ -83,9 +84,11 @@
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
 				<include name="System.Activities.dll"/>
+				<include name="System.Runtime.DurableInstancing.dll"/>
 				<include name="System.Core.dll"/>
 				<include name="Moq.dll"/>
 				<include name="xunit.dll"/>
+				<include name="xunit.extensions.dll"/>
 				<include name="xunit.should.dll"/>
 				<include name="${product.assembly}"/>
 				<include name="${path.lib}/Ninject/${build.platform}/Ninject.dll"/>

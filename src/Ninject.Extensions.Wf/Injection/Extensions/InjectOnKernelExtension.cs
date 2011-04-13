@@ -24,7 +24,7 @@ namespace Ninject.Extensions.Wf
     /// <summary>
     /// Special internal extension which does build up the activities by using kernel inject.
     /// </summary>
-    internal class InjectOnKernelExtension : FuncActivityInjectorExtension, IInjectOnKernelExtension
+    public class InjectOnKernelExtension : FuncActivityInjectorExtension, IInjectOnKernelExtension
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InjectOnKernelExtension"/> class.

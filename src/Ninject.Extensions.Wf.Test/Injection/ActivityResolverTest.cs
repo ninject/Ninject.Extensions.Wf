@@ -21,9 +21,9 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System;
     using System.Activities;
+    using System.Activities.Expressions;
     using System.Activities.Statements;
     using System.Linq;
-    using Microsoft.VisualBasic.Activities;
     using Xunit;
 
     public class ActivityResolverTest
@@ -36,20 +36,6 @@ namespace Ninject.Extensions.Wf.Injection
         }
 
         [Fact]
-        public void GetActivies_MustGetActiviesInFlatWorkflow()
-        {
-            SimpleFlat flat = new SimpleFlat();
-
-            var result = this.testee.GetActivities(flat);
-
-            Assert.IsType(typeof(SimpleFlat), result.ElementAt(0));
-            Assert.IsType(typeof(Sequence), result.ElementAt(1));
-            Assert.IsType(typeof(WriteLine), result.ElementAt(2));
-            Assert.IsType(typeof(WriteLine), result.ElementAt(3));
-            Assert.IsType(typeof(WriteLine), result.ElementAt(4));
-        }
-
-        [Fact]
         public void GetActivites_MustGetActiviesInHierarchy()
         {
             SimpleHierarchy hierarchy = new SimpleHierarchy();
@@ -59,7 +45,7 @@ namespace Ninject.Extensions.Wf.Injection
             Assert.IsType(typeof(SimpleHierarchy), result.ElementAt(0));
             Assert.IsType(typeof(Sequence), result.ElementAt(1));
             Assert.IsType(typeof(If), result.ElementAt(2));
-            Assert.IsType(typeof(VisualBasicValue<Boolean>), result.ElementAt(3));
+            Assert.IsType(typeof(LambdaValue<bool>), result.ElementAt(3));
             Assert.IsAssignableFrom(typeof(CodeActivity<string>), result.ElementAt(4));
             Assert.IsType(typeof(Parallel), result.ElementAt(5));
             Assert.IsType(typeof(WriteLine), result.ElementAt(6));

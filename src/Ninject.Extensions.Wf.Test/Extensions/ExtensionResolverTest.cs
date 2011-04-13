@@ -21,7 +21,7 @@ namespace Ninject.Extensions.Wf.Extensions
 {
     using System;
     using System.Activities.Hosting;
-    using Ninject.Extensions.Wf.Injection.Model;
+    using Injection.Model;
     using Moq;
     using Moq.Protected;
     using Xunit;

@@ -23,7 +23,7 @@ namespace Ninject.Extensions.Wf
     /// Special marker interface which differentiates the inject on kernel
     /// extension from the other extensions.
     /// </summary>
-    internal interface IInjectOnKernelExtension : IActivityInjectorExtension
+    public interface IInjectOnKernelExtension : IActivityInjectorExtension
     {
     }
 }
