@@ -22,6 +22,9 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
     using System.Activities.Statements;
     using System.Linq;
     using Activation;
+
+    using FluentAssertions;
+
     using Model;
     using Parameters;
     using Xunit;
@@ -44,7 +47,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             this.testee.Process(activityWithDependencyAndAttribute, null);
 
-            Assert.NotNull(activityWithDependencyAndAttribute.Dependency);
+            activityWithDependencyAndAttribute.Dependency.Should().NotBeNull();
         }
 
         [Fact]
@@ -56,7 +59,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             this.testee.Process(activityWithDependency, null);
 
-            Assert.Null(activityWithDependency.Dependency);
+            activityWithDependency.Dependency.Should().BeNull();
         }
 
         [Fact]
@@ -68,7 +71,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             this.testee.Process(new WriteLine(), root);
 
-            Assert.Null(root.Dependency);
+            root.Dependency.Should().BeNull();
         }
 
         [Fact]
@@ -95,7 +98,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             this.testee.Process(root, root);
 
-            Assert.True(request.Parameters.OfType<RootActivityParameter>().Single() != null);
+            request.Parameters.OfType<RootActivityParameter>().Single().Should().NotBeNull();
         }
 
         private static TestActivityWithDependencyAndAttribute SetupActivityWithDependencyAttribute()

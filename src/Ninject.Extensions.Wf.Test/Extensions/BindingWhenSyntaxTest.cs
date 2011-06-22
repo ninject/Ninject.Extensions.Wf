@@ -20,6 +20,9 @@
 namespace Ninject.Extensions.Wf.Extensions
 {
     using System;
+
+    using FluentAssertions;
+
     using Injection.Model;
     using Parameters;
     using Xunit;
@@ -43,7 +46,7 @@ namespace Ninject.Extensions.Wf.Extensions
 
             this.Kernel.Inject(activity, new RootActivityParameter(activity));
 
-            Assert.NotNull(activity.Dependency);
+            activity.Dependency.Should().NotBeNull();
         }
 
         [Fact]
@@ -78,7 +81,7 @@ namespace Ninject.Extensions.Wf.Extensions
 
             this.Kernel.Inject(activity, new RootActivityParameter(activity));
 
-            Assert.NotNull(activity.Dependency);
+            activity.Dependency.Should().NotBeNull();
         }
 
         [Fact]

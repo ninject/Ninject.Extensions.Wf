@@ -24,6 +24,9 @@ namespace Ninject.Extensions.Wf.Injection
     using System.Activities.Expressions;
     using System.Activities.Statements;
     using System.Linq;
+
+    using FluentAssertions;
+
     using Xunit;
 
     public class ActivityResolverTest
@@ -42,17 +45,17 @@ namespace Ninject.Extensions.Wf.Injection
 
             var result = this.testee.GetActivities(hierarchy);
 
-            Assert.IsType(typeof(SimpleHierarchy), result.ElementAt(0));
-            Assert.IsType(typeof(Sequence), result.ElementAt(1));
-            Assert.IsType(typeof(If), result.ElementAt(2));
-            Assert.IsType(typeof(LambdaValue<bool>), result.ElementAt(3));
-            Assert.IsAssignableFrom(typeof(CodeActivity<string>), result.ElementAt(4));
-            Assert.IsType(typeof(Parallel), result.ElementAt(5));
-            Assert.IsType(typeof(WriteLine), result.ElementAt(6));
-            Assert.IsType(typeof(WriteLine), result.ElementAt(7));
-            Assert.IsType(typeof(Sequence), result.ElementAt(8));
-            Assert.IsType(typeof(WriteLine), result.ElementAt(9));
-            Assert.IsType(typeof(WriteLine), result.ElementAt(10));
+            result.ElementAt(0).Should().BeOfType<SimpleHierarchy>();
+            result.ElementAt(1).Should().BeOfType<Sequence>();
+            result.ElementAt(2).Should().BeOfType<If>();
+            result.ElementAt(3).Should().BeOfType<LambdaValue<bool>>();
+            result.ElementAt(4).Should().BeAssignableTo<CodeActivity<string>>();
+            result.ElementAt(5).Should().BeOfType<Parallel>();
+            result.ElementAt(6).Should().BeOfType<WriteLine>();
+            result.ElementAt(7).Should().BeOfType<WriteLine>();
+            result.ElementAt(8).Should().BeOfType<Sequence>();
+            result.ElementAt(9).Should().BeOfType<WriteLine>();
+            result.ElementAt(10).Should().BeOfType<WriteLine>();
         }
 
         [Fact]

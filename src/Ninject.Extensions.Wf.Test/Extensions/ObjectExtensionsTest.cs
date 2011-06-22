@@ -19,6 +19,8 @@
 
 namespace Ninject.Extensions.Wf.Extensions
 {
+    using FluentAssertions;
+
     using Xunit;
 
     public class ObjectExtensionsTest
@@ -26,7 +28,7 @@ namespace Ninject.Extensions.Wf.Extensions
         [Fact]
         public void ToDictionary_WhenNoPropertiesDefined_MustReturnEmptyDictionary()
         {
-            Assert.Empty(new Empty().ToDict());
+            new Empty().ToDict().Should().BeEmpty();
         }
 
         [Fact]
@@ -34,9 +36,9 @@ namespace Ninject.Extensions.Wf.Extensions
         {
             var result = new PropertyOnly { SomeData = "Foo", SomeInt = 2 }.ToDict();
 
-            Assert.Equal(2, result.Count);
-            Assert.Equal("Foo", result["SomeData"]);
-            Assert.Equal(2, result["SomeInt"]);
+            result.Count.Should().Be(2);
+            result["SomeData"].Should().Be("Foo");
+            result["SomeInt"].Should().Be(2);
         }
 
         [Fact]
@@ -44,10 +46,10 @@ namespace Ninject.Extensions.Wf.Extensions
         {
             var result = new Inherited { SomeData = "Foo", SomeInt = 2, SomeDouble = 1.0d }.ToDict();
 
-            Assert.Equal(3, result.Count);
-            Assert.Equal("Foo", result["SomeData"]);
-            Assert.Equal(2, result["SomeInt"]);
-            Assert.Equal(1.0d, result["SomeDouble"]);
+            result.Count.Should().Be(3);
+            result["SomeData"].Should().Be("Foo");
+            result["SomeInt"].Should().Be(2);
+            result["SomeDouble"].Should().Be(1.0d);
         }
 
         private class Empty

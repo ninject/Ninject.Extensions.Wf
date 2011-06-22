@@ -21,6 +21,9 @@ namespace Ninject.Extensions.Wf.Extensions
 {
     using System;
     using System.Collections.Generic;
+
+    using FluentAssertions;
+
     using Xunit;
 
     public class IDictionaryExtensionsTest
@@ -37,8 +40,8 @@ namespace Ninject.Extensions.Wf.Extensions
         {
             Input input = new Dictionary<string, object> { { "Name", "Marbach" }, { "Surname", "Daniel" } }.ToObject<Input>();
 
-            Assert.Equal("Marbach", input.Name);
-            Assert.Equal("Daniel", input.Surname);
+            input.Name.Should().Be("Marbach");
+            input.Surname.Should().Be("Daniel");
         }
 
         [Fact]

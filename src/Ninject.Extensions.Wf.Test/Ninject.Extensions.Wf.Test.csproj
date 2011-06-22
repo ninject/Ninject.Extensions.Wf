@@ -35,6 +35,9 @@
     <NoWarn>3016</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\..\tools\FluentAssertions\Net-4.0\FluentAssertions.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\tools\moq\NET40\Moq.dll</HintPath>
     </Reference>

@@ -21,6 +21,9 @@
 namespace Ninject.Extensions.Wf.Parameters
 {
     using System.Activities.Statements;
+
+    using FluentAssertions;
+
     using Xunit;
 
     public class RootActivityParameterTest
@@ -30,7 +33,7 @@ namespace Ninject.Extensions.Wf.Parameters
         {
             var testee = new RootActivityParameter(new WriteLine());
 
-            Assert.Equal("RootActivity", testee.Name);
+            testee.Name.Should().Be("RootActivity");
         }
 
         [Fact]
@@ -40,7 +43,7 @@ namespace Ninject.Extensions.Wf.Parameters
 
             var testee = new RootActivityParameter(writeLine);
 
-            Assert.Same(writeLine, testee.Root);
+            testee.Root.Should().BeSameAs(writeLine);
         }
 
         [Fact]
@@ -48,7 +51,7 @@ namespace Ninject.Extensions.Wf.Parameters
         {
             var testee = new RootActivityParameter(new WriteLine());
 
-            Assert.True(testee.ShouldInherit);
+            testee.ShouldInherit.Should().BeTrue();
         }
     }
 }

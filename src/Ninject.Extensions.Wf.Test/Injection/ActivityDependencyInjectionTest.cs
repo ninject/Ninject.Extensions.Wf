@@ -21,6 +21,9 @@ namespace Ninject.Extensions.Wf.Injection
 {
     using System.Activities;
     using System.Activities.Statements;
+
+    using FluentAssertions;
+
     using Moq;
     using Xunit;
 
@@ -39,7 +42,7 @@ namespace Ninject.Extensions.Wf.Injection
         [Fact]
         public void GetAdditionalExtensions_MustReturnEmptyEnumerable()
         {
-            Assert.Empty(this.testee.GetAdditionalExtensions());
+            this.testee.GetAdditionalExtensions().Should().BeEmpty();
         }
 
         [Fact]

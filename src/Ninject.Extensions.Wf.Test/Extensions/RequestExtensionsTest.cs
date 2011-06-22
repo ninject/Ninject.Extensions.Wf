@@ -22,6 +22,9 @@ namespace Ninject.Extensions.Wf.Extensions
     using System.Activities.Statements;
     using System.Collections.Generic;
     using Activation;
+
+    using FluentAssertions;
+
     using Moq;
     using Ninject.Parameters;
     using Parameters;
@@ -43,7 +46,7 @@ namespace Ninject.Extensions.Wf.Extensions
 
             var parameter = this.request.Object.GetRootActivityParameter();
 
-            Assert.NotNull(parameter);
+            parameter.Should().NotBeNull();
         }
 
         [Fact]
@@ -53,7 +56,7 @@ namespace Ninject.Extensions.Wf.Extensions
 
             var parameter = this.request.Object.GetRootActivityParameter();
 
-            Assert.Null(parameter);
+            parameter.Should().BeNull();
         }
 
         [Fact]
@@ -63,7 +66,7 @@ namespace Ninject.Extensions.Wf.Extensions
 
             var result = this.request.Object.HasRootActivityParameter();
 
-            Assert.True(result);
+            result.Should().BeTrue();
         }
 
         [Fact]
@@ -73,7 +76,7 @@ namespace Ninject.Extensions.Wf.Extensions
 
             var result = this.request.Object.HasRootActivityParameter();
 
-            Assert.False(result);
+            result.Should().BeFalse();
         }
 
         private static List<IParameter> GetParameterListWithRootActivityParameter()

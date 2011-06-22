@@ -22,6 +22,9 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
     using System;
     using System.Activities;
     using System.Activities.Statements;
+
+    using FluentAssertions;
+
     using Xunit;
     using Xunit.Extensions;
 
@@ -34,7 +37,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             var result = testee.CanProcess(new WriteLine(), new Sequence());
 
-            Assert.True(result);
+            result.Should().BeTrue();
         }
 
         [Fact]
@@ -46,7 +49,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             testee.Process(new WriteLine(), new Sequence());
 
-            Assert.True(wasCalled, "Process action was not called");
+            wasCalled.Should().BeTrue("Process action was not called");
         }
 
         [Fact]
@@ -58,7 +61,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             testee.CanProcess(new WriteLine(), new Sequence());
 
-            Assert.True(wasCalled, "CanProcess action was not called");
+            wasCalled.Should().BeTrue("Process action was not called");
         }
 
         [Fact]
@@ -71,7 +74,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             testee.CanProcess(writeLine, new Sequence());
             
-            Assert.Same(writeLine, activity);
+            activity.Should().BeSameAs(writeLine);
         }
 
         [Fact]
@@ -84,7 +87,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             testee.CanProcess(new WriteLine(), sequence);
 
-            Assert.Same(sequence, root);
+            root.Should().BeSameAs(sequence);
         }
 
         [Fact]
@@ -94,8 +97,8 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
             var testee = CreateTestee((a, r) => { return true; }, (a, r) => { wasCalled = true; });
 
             testee.Process(new WriteLine(), new Sequence());
-        
-            Assert.True(wasCalled);
+
+            wasCalled.Should().BeTrue("Process action was not called");
         }
 
         [Fact]
@@ -108,7 +111,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             testee.Process(writeLine, new Sequence());
 
-            Assert.Same(writeLine, activity);
+            activity.Should().BeSameAs(writeLine);
         }
 
         [Fact]
@@ -121,7 +124,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             testee.Process(new WriteLine(), sequence);
 
-            Assert.Same(sequence, root);
+            root.Should().BeSameAs(sequence);
         }
 
         [Theory,
@@ -133,7 +136,7 @@ namespace Ninject.Extensions.Wf.Injection.Extensions
 
             var result = testee.CanProcess(new WriteLine(), new Sequence());
 
-            Assert.Equal(canProcessResult, result);
+            result.Should().Be(canProcessResult);
         }
 
         private static IActivityInjectorExtension CreateTestee(Action<Activity, Activity> action)

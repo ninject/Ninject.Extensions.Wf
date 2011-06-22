@@ -25,6 +25,9 @@ namespace Ninject.Extensions.Wf.Injection
     using System.Collections.Generic;
     using System.Text;
     using Extensions;
+
+    using FluentAssertions;
+
     using Model;
     using Moq;
     using Xunit;
@@ -120,7 +123,8 @@ namespace Ninject.Extensions.Wf.Injection
 
             this.testee.Inject(this.rootActivity);
 
-            Assert.Equal("InjectOnKernelExtension\r\nExtension\r\nAnotherExtension\r\nInjectOnKernelExtension\r\nExtension\r\nAnotherExtension\r\n", builder.ToString());
+            builder.ToString().Should().Be(
+                "InjectOnKernelExtension\r\nExtension\r\nAnotherExtension\r\nInjectOnKernelExtension\r\nExtension\r\nAnotherExtension\r\n");
         }
 
         private void SetupActivityResolver()
