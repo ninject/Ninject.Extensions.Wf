@@ -48,7 +48,11 @@ namespace Ninject.Extensions.Wf
             this.BookmarkInfo = bookmarkInfo;
             this.BookmarkName = this.BookmarkInfo.BookmarkName;
             this.OwnerDisplayName = this.BookmarkInfo.OwnerDisplayName;
-            this.ScopeInfo = new NinjectBookmarkScopeInfo(this.BookmarkInfo.ScopeInfo);
+
+            if (this.BookmarkInfo.ScopeInfo != null)
+            {
+                this.ScopeInfo = new NinjectBookmarkScopeInfo(this.BookmarkInfo.ScopeInfo);
+            }
         }
 
         /// <include file='../../System.Activities.xml' path='/doc/members/member[@name="P:System.Activities.Hosting.BookmarkInfo.BookmarkName"]/*' />
